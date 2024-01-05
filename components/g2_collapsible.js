@@ -8,21 +8,36 @@ class GuiCollaspible extends HTMLElement {
         const styles = String.raw `
         <style>
 
-        .header{
-            cursor : pointer;
-            background-color : #222;
-            margin : 0;
-            margin-top : 0.25em;
-            padding-left : 0.5em; 
-        }
+            .header{
+                cursor : pointer;
+                background-color : #222;
+                margin : 0;
+                margin-top : 0.25em;
+                padding-left : 0.5em; 
+            }
 
-        .header:hover{
-            filter: brightness(1.2);
-        }
+            .header:hover{
+                filter: brightness(1.2);
+            }
 
-        .content{
-            padding : 0.5em;
-        }
+            .header.closed{
+                font-weight : bold;
+            }
+            .content{
+                padding : 0.5em;
+                padding-left : 0.5em;
+                padding-right : 0.5em;
+                overflow-y : hidden;
+                height : auto;
+                transition : all 0.1s;
+            }
+            .content.closed{
+                height : 0;
+                padding-top : 0;
+                padding-bottom : 0;
+            }
+            
+        
         </style>`;
         const template = String.raw `
             
@@ -37,8 +52,14 @@ class GuiCollaspible extends HTMLElement {
         `;
         this.template_fragment = document.createRange().createContextualFragment(template);
         (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.appendChild(this.template_fragment.cloneNode(true));
+        this.header_el = this.shadowRoot.querySelector(".header");
+        this.content_el = this.shadowRoot.querySelector(".content");
     }
     connectedCallback() {
+        this.header_el.addEventListener("click", (event) => {
+            this.header_el.classList.toggle("closed");
+            this.content_el.classList.toggle("closed");
+        });
     }
     static get observedAttributes() {
         return ['title'];
