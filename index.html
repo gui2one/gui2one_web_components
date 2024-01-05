@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Page</title>
+
+    <script type="module" src="components/g2_title.js"></script>
+    <script type="module" src="components/g2_input_float.js"></script>
+
+    <style>
+
+        html{
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* :root{
+            --accent-color-x : red;
+            --accent-color-y : green;
+            --accent-color-z : blue;
+        } */
+
+        .vector{
+            display: flex;
+            gap : 2px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Components</h1>
+    <gui-title>Hey !!!</gui-title>
+    <div class="vector">
+        <gui-input-float color="red" label="x" default_value="1"> </gui-input-float>
+        <gui-input-float color="green" label="y" default_value="1"></gui-input-float>
+        <gui-input-float color="blue" label="z" default_value="1"></gui-input-float>
+    </div>
+</body>
+</html>
