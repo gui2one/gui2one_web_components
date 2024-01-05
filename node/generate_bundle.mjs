@@ -24,12 +24,13 @@ for(let cur_file of all)
 }
 
 const output_path = path.join(SRC_DIR, "bundle.js");
-// fs.writeFile(path.join(SRC_DIR, "bundle.js"), buffers[0].buffer );
-// fs.appendFile()
-fs.writeFile(output_path, "");
+
+
+fs.writeFile(output_path, ""); // clear file content
 for(let item of buffers)
 {
     item.filename;
-    
-    fs.appendFile(output_path, item.buffer );
+    await fs.appendFile(output_path, "\n");
+    await fs.appendFile(output_path, "// "+item.filename + "\n")
+    await fs.appendFile(output_path, item.buffer );
 }

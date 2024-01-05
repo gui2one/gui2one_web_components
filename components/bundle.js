@@ -1,3 +1,89 @@
+
+// g2_collapsible.js
+"use strict";
+class GuiCollaspible extends HTMLElement {
+    constructor() {
+        var _a;
+        super();
+        this._title = "collaspible";
+        this.attachShadow({ mode: "open" });
+        const styles = String.raw `
+        <style>
+
+            .header{
+                cursor : pointer;
+                background-color : #222;
+                margin : 0;
+                margin-top : 0.25em;
+                padding-left : 0.5em; 
+            }
+
+            .header:hover{
+                filter: brightness(1.2);
+            }
+
+            .header.closed{
+                font-weight : bold;
+            }
+            .content{
+                padding : 0.5em;
+                padding-left : 0.5em;
+                padding-right : 0.5em;
+                overflow-y : hidden;
+                height : auto;
+                transition : all 0.1s;
+            }
+            .content.closed{
+                height : 0;
+                padding-top : 0;
+                padding-bottom : 0;
+            }
+            
+        
+        </style>`;
+        const template = String.raw `
+            
+            ${styles}
+
+            <div class="wrapper">
+                <div class="header"><span>${this.title}</span></div>
+                <div class="content">
+                    <slot></slot>
+                </div>
+            </div>
+        `;
+        this.template_fragment = document.createRange().createContextualFragment(template);
+        (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.appendChild(this.template_fragment.cloneNode(true));
+        this.header_el = this.shadowRoot.querySelector(".header");
+        this.content_el = this.shadowRoot.querySelector(".content");
+    }
+    connectedCallback() {
+        this.header_el.addEventListener("click", (event) => {
+            this.header_el.classList.toggle("closed");
+            this.content_el.classList.toggle("closed");
+        });
+    }
+    static get observedAttributes() {
+        return ['title'];
+    }
+    set title(val) {
+        this._title = val;
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        var _a;
+        switch (name) {
+            case 'title':
+                this.title = newValue;
+                let span = (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.querySelector(".header>span");
+                span.innerText = newValue;
+                break;
+            default: break;
+        }
+    }
+}
+customElements.define("gui-collapsible", GuiCollaspible);
+
+// g2_input_float.js
 "use strict";
 class GuiInputFloat extends HTMLElement {
     constructor() {
@@ -208,6 +294,8 @@ class GuiInputFloat extends HTMLElement {
     }
 }
 customElements.define("gui-input-float", GuiInputFloat);
+
+// g2_input_vector.js
 "use strict";
 class GuiInputVector extends HTMLElement {
     constructor() {
@@ -295,88 +383,8 @@ class GuiInputVector extends HTMLElement {
     }
 }
 customElements.define("gui-input-vector", GuiInputVector);
-"use strict";
-class GuiCollaspible extends HTMLElement {
-    constructor() {
-        var _a;
-        super();
-        this._title = "collaspible";
-        this.attachShadow({ mode: "open" });
-        const styles = String.raw `
-        <style>
 
-            .header{
-                cursor : pointer;
-                background-color : #222;
-                margin : 0;
-                margin-top : 0.25em;
-                padding-left : 0.5em; 
-            }
-
-            .header:hover{
-                filter: brightness(1.2);
-            }
-
-            .header.closed{
-                font-weight : bold;
-            }
-            .content{
-                padding : 0.5em;
-                padding-left : 0.5em;
-                padding-right : 0.5em;
-                overflow-y : hidden;
-                height : auto;
-                transition : all 0.1s;
-            }
-            .content.closed{
-                height : 0;
-                padding-top : 0;
-                padding-bottom : 0;
-            }
-            
-        
-        </style>`;
-        const template = String.raw `
-            
-            ${styles}
-
-            <div class="wrapper">
-                <div class="header"><span>${this.title}</span></div>
-                <div class="content">
-                    <slot></slot>
-                </div>
-            </div>
-        `;
-        this.template_fragment = document.createRange().createContextualFragment(template);
-        (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.appendChild(this.template_fragment.cloneNode(true));
-        this.header_el = this.shadowRoot.querySelector(".header");
-        this.content_el = this.shadowRoot.querySelector(".content");
-    }
-    connectedCallback() {
-        this.header_el.addEventListener("click", (event) => {
-            this.header_el.classList.toggle("closed");
-            this.content_el.classList.toggle("closed");
-        });
-    }
-    static get observedAttributes() {
-        return ['title'];
-    }
-    set title(val) {
-        this._title = val;
-    }
-    attributeChangedCallback(name, oldValue, newValue) {
-        var _a;
-        switch (name) {
-            case 'title':
-                this.title = newValue;
-                let span = (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.querySelector(".header>span");
-                span.innerText = newValue;
-                break;
-            default: break;
-        }
-    }
-}
-customElements.define("gui-collapsible", GuiCollaspible);
+// g2_panel.js
 "use strict";
 class GuiPanel extends HTMLElement {
     constructor() {
@@ -457,6 +465,8 @@ class GuiPanel extends HTMLElement {
     }
 }
 customElements.define("gui-panel", GuiPanel);
+
+// g2_title.js
 "use strict";
 class GuiTitle extends HTMLElement {
     constructor() {
