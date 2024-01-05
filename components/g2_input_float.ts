@@ -43,18 +43,20 @@ class GuiInputFloat extends HTMLElement{
             .wrapper{
                 position : relative;
                 display : flex;
-                align-items : center;
+                align-items: stretch;
                 width : max-content;
+                font-size : 0.9rem;
             }
 
             .label{
+                
+                
                 color : white;
                 position : relative;
                 padding-left : 0.5em;
                 padding-right : 0.5em;
                 background-color : ${this._color};
                 border-radius : 2px 0 0 2px;
-                height : 100%;
                 vertical-align : middle;
                 padding-top : var(--padding-top);
                 padding-bottom : var(--padding-bottom);
@@ -70,7 +72,6 @@ class GuiInputFloat extends HTMLElement{
             .value_div{
                 padding-left : 0.2em;
                 position : relative;
-                height : 100%;
                 overflow : hidden;
                 border-radius : 0 2px 2px 0;
                 background-color : darkgrey;
@@ -85,7 +86,7 @@ class GuiInputFloat extends HTMLElement{
                 height : calc(100% - 2px );
                 width : 8ch;
                 border : none;
-                height: 100%;
+                height: max-content;
                 background-color : transparent;
             }
 

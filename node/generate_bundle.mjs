@@ -11,9 +11,9 @@ for(let cur_file of all)
     // console.log(path.extname(cur_file));
 
     if( path.extname(cur_file) === ".js" && cur_file !== "bundle.js"){
-        console.log(cur_file);
+        console.log("Collecting "+cur_file);
         let content = await fs.readFile(path.join(SRC_DIR, cur_file));
-        // console.log(content);
+        
         let data = {
             filename : cur_file,
             buffer : content
@@ -33,4 +33,6 @@ for(let item of buffers)
     await fs.appendFile(output_path, "\n");
     await fs.appendFile(output_path, "// "+item.filename + "\n")
     await fs.appendFile(output_path, item.buffer );
+
 }
+console.log(`---Done writing ${output_path} to disk---`);

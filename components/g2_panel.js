@@ -11,10 +11,12 @@ class GuiPanel extends HTMLElement {
                     top : 0px;
                     right : 0px;
                     padding : 0.5em;
-                    /* overflow-y : auto; */
+                    /* margin-bottom : 1em; */
+                    overflow-y : auto;
                     /* outline : 1px solid red; */
                     box-shadow : -2px 2px 8px #0001;
                     border-radius : 0 0 0 3px;
+                    height : 100%;
                     max-height : 100vh;
                     color : white;
                     background-color : #111;
@@ -25,7 +27,12 @@ class GuiPanel extends HTMLElement {
                     cursor: default;
                     user-select : none;
                 }
-
+                #wrapper:after{
+                    content : " ";
+                    position : absolute;
+                    width : 100%;
+                    height : 30px;
+                }
                 #wrapper.hidden{
                     transform : translate3d(100%,0,0 );
                 }

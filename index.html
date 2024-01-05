@@ -4,22 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Demo Page</title>
-<!-- 
+
     <script type="module" src="components/g2_title.js"></script>
     <script type="module" src="components/g2_input_float.js"></script>
     <script type="module" src="components/g2_input_vector.js"></script>
     <script type="module" src="components/g2_collapsible.js"></script>
-    <script type="module" src="components/g2_panel.js"></script> -->
-    <script type="module" src="components/bundle.js"></script>
+    <script type="module" src="components/g2_panel.js"></script>
+    <!-- <script type="module" src="components/bundle.js"></script> -->
 
     <style>
 
+        *, *::before, *::after{
+            padding : 0;
+            margin : 0;
+            box-sizing : border-box;
+        }
         html{
             font-family: 'Courier New', Courier, monospace;
             font-family : sans-serif;
-            height : 100vh;
-            overflow: hidden;
+            max-height : 100vh;
+            
             cursor: none;
+            padding : 0;
+            margin : 0;
+        }
+        body{
+            max-height : 100vh;
+            overflow: hidden;
+        }
+
+        #full_wrapper{
+            /* height : 100vh; */
+            overflow-y: hidden;
         }
 
         /* :root{
@@ -35,25 +51,36 @@
     </style>
 </head>
 <body>
-    <h1>Components</h1>
-    <gui-title>Hey !!!</gui-title>
-     
-    <gui-panel>
-        <h3>Panel</h3>
-        <gui-collapsible title="Collapse me !">
-            
-            <gui-input-float id="float_input" color="grey" label="Scale" default_value=3.14> </gui-input-float>
-        </gui-collapsible>
+    <div id="full_wrapper">
 
-        <gui-collapsible title="Transforms">
-
-            <gui-input-vector id="position" default_scalar=0 label="position"></gui-input-vector>
-            <gui-input-vector id="rotation" default_scalar=0 label="rotation"></gui-input-vector>
-            <gui-input-vector id="scale" default_scalar=1 label="scale"></gui-input-vector>
-        </gui-collapsible>
-
-
-    </gui-panel>
+        <h1>Components</h1>
+        <gui-title>Hey !!!</gui-title>
+         
+        <gui-panel>
+            <h3>Panel</h3>
+            <gui-collapsible title="Collapse me !">
+                <gui-input-float id="float_input" color="grey" label="Scale" default_value=3.14> </gui-input-float>
+            </gui-collapsible>
+    
+            <gui-collapsible title="Transforms">
+                <gui-input-vector id="position" default_scalar=0 label="position"></gui-input-vector>
+                <gui-input-vector id="rotation" default_scalar=0 label="rotation"></gui-input-vector>
+                <gui-input-vector id="scale" default_scalar=1 label="scale"></gui-input-vector>
+            </gui-collapsible>
+            <gui-collapsible title="Transforms">
+                <gui-input-vector id="position" default_scalar=0 label="position"></gui-input-vector>
+                <gui-input-vector id="rotation" default_scalar=0 label="rotation"></gui-input-vector>
+                <gui-input-vector id="scale" default_scalar=1 label="scale"></gui-input-vector>
+            </gui-collapsible>
+            <gui-collapsible title="Transforms">
+                <gui-input-vector id="position" default_scalar=0 label="position"></gui-input-vector>
+                <gui-input-vector id="rotation" default_scalar=0 label="rotation"></gui-input-vector>
+                <gui-input-vector id="scale" default_scalar=1 label="scale"></gui-input-vector>
+            </gui-collapsible>
+    
+    
+        </gui-panel>
+    </div>
     <script>
         let scale = document.querySelector("#scale");
         // console.log(scale);

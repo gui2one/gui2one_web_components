@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "watch": "tsc-watch --project .",
-    "build": "tsc --project ."
+    "build": "tsc --project .",
+    "gen" : "node ./node/generate_bundle.mjs"
   },
   "keywords": [],
   "author": "",
