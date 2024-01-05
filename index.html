@@ -8,14 +8,17 @@
     <script type="module" src="components/g2_title.js"></script>
     <script type="module" src="components/g2_input_float.js"></script>
     <script type="module" src="components/g2_input_vector.js"></script>
+    <script type="module" src="components/g2_collapsible.js"></script>
     <script type="module" src="components/g2_panel.js"></script>
 
     <style>
 
         html{
             font-family: 'Courier New', Courier, monospace;
+            font-family : sans-serif;
             height : 100vh;
             overflow: hidden;
+            cursor: none;
         }
 
         /* :root{
@@ -36,10 +39,18 @@
      
     <gui-panel>
         <h3>Panel</h3>
-        <gui-input-float id="float_input" color="orange" label="Answer" default_value=3.14> </gui-input-float>
-        <gui-input-vector id="position" default_scalar=0 label="position"></gui-input-vector>
-        <gui-input-vector id="rotation" default_scalar=0 label="rotation"></gui-input-vector>
-        <gui-input-vector id="scale" default_scalar=1 label="scale"></gui-input-vector>
+        <gui-collapsible title="Collapse me !">
+            
+            <gui-input-float id="float_input" color="grey" label="Scale" default_value=3.14> </gui-input-float>
+        </gui-collapsible>
+
+        <gui-collapsible title="Transforms">
+
+            <gui-input-vector id="position" default_scalar=0 label="position"></gui-input-vector>
+            <gui-input-vector id="rotation" default_scalar=0 label="rotation"></gui-input-vector>
+            <gui-input-vector id="scale" default_scalar=1 label="scale"></gui-input-vector>
+        </gui-collapsible>
+
 
     </gui-panel>
     <script>

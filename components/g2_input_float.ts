@@ -17,9 +17,11 @@ class GuiInputFloat extends HTMLElement{
     drag_start_pos : number = 0;
     ctrl_pressed : boolean = false;
     shift_pressed : boolean = false;
+    
     constructor()
     {
         super();
+
         this.attachShadow({mode : "open"});
         this._value = 0.0;
         this.label = "X";
@@ -32,11 +34,12 @@ class GuiInputFloat extends HTMLElement{
             <style>
 
             :host{
-                --padding-top : 0.5em;
-                --padding-bottom : 0.5em;
-                --padding-left : 0.3em;
-                --padding-right : 0.3em;
+                --padding-top : 0.3em;
+                --padding-bottom : 0.3em;
+                --padding-left : 0.15em;
+                --padding-right : 0.15em;
             }
+
             .wrapper{
                 position : relative;
                 display : flex;
@@ -50,46 +53,50 @@ class GuiInputFloat extends HTMLElement{
                 padding-left : 0.5em;
                 padding-right : 0.5em;
                 background-color : ${this._color};
-                border-radius : 3px 0 0 3px;
+                border-radius : 2px 0 0 2px;
                 height : 100%;
-                /* border : none; */
                 vertical-align : middle;
                 padding-top : var(--padding-top);
                 padding-bottom : var(--padding-bottom);
                 user-select : none;
 
-                cursor : e-resize;
+                cursor : e-resize;   
             }
+
+            .label span{
+                opacity : 0.8;                
+            }
+
             .value_div{
                 padding-left : 0.2em;
                 position : relative;
                 height : 100%;
                 overflow : hidden;
-                border-radius : 0 3px 3px 0;
+                border-radius : 0 2px 2px 0;
                 background-color : darkgrey;
                 padding-top : var(--padding-top);
                 padding-bottom : var(--padding-bottom);
                 padding-left : var(--padding-left);
-                
             }
+
             input{
                 color : white;
                 font-weight : bold;
                 height : calc(100% - 2px );
                 width : 8ch;
                 border : none;
+                height: 100%;
                 background-color : transparent;
-
             }
 
             </style>        
-        ` 
+        `;
         const template = String.raw`
 
             ${this.styles}
 
             <div class="wrapper">
-                <div class="label">${this.label}</div>
+                <div class="label"><span>${this.label}<span></div>
                 <div class="value_div">
                     <input type=number step="0.1" value=${this.value} />
                 </div>
@@ -100,6 +107,10 @@ class GuiInputFloat extends HTMLElement{
         this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
    
         this.label_el = this.shadowRoot!.querySelector(".label") as HTMLDivElement;
+        let label_span = this.label_el.querySelector("span") as HTMLSpanElement;
+
+                
+        // label_span.style.opacity = "0.8";   
         this.value_input = this.shadowRoot!.querySelector("input") as HTMLInputElement
 
 
@@ -155,7 +166,7 @@ class GuiInputFloat extends HTMLElement{
             }else if( event.button === 1)
             {
                 this.value_input.value = this.default_value.toString();
-                this._value = this.default_value;
+                this.value = this.default_value;
             }    
         })
 
@@ -229,13 +240,18 @@ class GuiInputFloat extends HTMLElement{
                 // this.color = newValue; 
                 // console.log(this.label_el);
                 this.label_el.style.backgroundColor = newValue;
+                
+                
                 break;
             case 'label' :
                 this.label = newValue; 
-                this.label_el.innerText = newValue
+                this.label_el.innerHTML = `<span>${newValue}</span>`;
+        
                 break;                
             case 'default_value' :
                 this.default_value = parseFloat(newValue);
+                this.value = this.default_value;
+                
                 break;                
             default : 
                 break;

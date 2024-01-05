@@ -1,0 +1,56 @@
+{
+	// Place your gui2one_web_components workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+
+		"Web Component": {
+		"scope": "javascript,typescript",
+		"prefix": "web",
+		"body": [
+			"class $1 extends HTMLElement{",
+			"\ttemplate_fragment : DocumentFragment;",
+			"\tconstructor(){",
+			"\t\tsuper();",
+			
+			"\t\tthis.attachShadow({mode : \"open\"});",
+
+			"\t\tconst styles = String.raw`<style></style>`;",
+			"\t\tconst template = String.raw`",
+			"\t\t\t\\${styles}",
+			"\t\t\t<slot></slot>",
+			"\t\t\t<h6>My Component</h6>",
+			
+			"\t\t`;",
+			"\t\tthis.template_fragment = document.createRange().createContextualFragment(template);",
+			"\t\tthis.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));",
+			"\t}",
+			"\n",
+			"\tconnectedCallback(){",
+			"\t}",
+			"\n",
+			"\tstatic get observedAttributes(){",
+			"\t\treturn [];",
+			"\t}",
+			"\n",
+			"\tattributeChangedCallback(name : string, oldValue : any, newValue : any) {",
+			"\t",
+			"\t}",
+			"}",
+			"customElements.define(\"$2\", $1);"
+		],
+		"description": "Log output to console"
+	}
+}

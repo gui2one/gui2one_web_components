@@ -21,6 +21,10 @@ class GuiInputVector extends HTMLElement{
                 .wrapper{
                     margin-top : 3px;
                 }
+
+                .label{
+                    font-family : sans-serif;
+                }
             </style>
         `;
 
