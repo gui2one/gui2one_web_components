@@ -119,7 +119,6 @@ class GuiInputFloat extends HTMLElement{
             }
         })
         document.addEventListener("keyup", (event : KeyboardEvent) => {
-            console.log(event);
             
             if(event.key == "Control")
             {
@@ -135,6 +134,11 @@ class GuiInputFloat extends HTMLElement{
         })
         this.value_input.addEventListener("input", (event : Event)=>{
             this._value = parseFloat(this.value_input.value);
+        })
+        this.value_input.addEventListener("keypress", (event : KeyboardEvent)=>{
+            if(event.key === "Enter"){
+                this.value_input.blur()
+            }
         })
 
         this.label_el.addEventListener("mousedown", (event : MouseEvent)=>{

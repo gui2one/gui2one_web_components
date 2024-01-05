@@ -98,7 +98,6 @@ class GuiInputFloat extends HTMLElement {
             }
         });
         document.addEventListener("keyup", (event) => {
-            console.log(event);
             if (event.key == "Control") {
                 this.ctrl_pressed = false;
                 // console.log("ctrl_pressed ", this.ctrl_pressed);
@@ -110,6 +109,11 @@ class GuiInputFloat extends HTMLElement {
         });
         this.value_input.addEventListener("input", (event) => {
             this._value = parseFloat(this.value_input.value);
+        });
+        this.value_input.addEventListener("keypress", (event) => {
+            if (event.key === "Enter") {
+                this.value_input.blur();
+            }
         });
         this.label_el.addEventListener("mousedown", (event) => {
             if (event.button === 0) {
