@@ -7,6 +7,7 @@
 
     <script type="module" src="components/g2_title.js"></script>
     <script type="module" src="components/g2_input_float.js"></script>
+    <script type="module" src="components/g2_input_vector.js"></script>
 
     <style>
 
@@ -29,10 +30,25 @@
 <body>
     <h1>Components</h1>
     <gui-title>Hey !!!</gui-title>
-    <div class="vector">
-        <gui-input-float color="red" label="x" default_value="1"> </gui-input-float>
-        <gui-input-float color="green" label="y" default_value="1"></gui-input-float>
-        <gui-input-float color="blue" label="z" default_value="1"></gui-input-float>
-    </div>
+
+    <gui-input-float id="float_input" color="orange" label="Answer" default_value=3.14> </gui-input-float>
+
+
+
+    <gui-input-vector id="position"></gui-input-vector>
+
+
+    <script>
+        let pos = document.querySelector("#position");
+        console.log(pos);
+
+        pos.addEventListener("changed", (event)=>{
+            console.log(event.target.value);
+        })
+        let float_input = document.querySelector("#float_input");
+        float_input.addEventListener("changed", (event)=>{
+            console.log(event.target.value)
+        })
+    </script>
 </body>
 </html>

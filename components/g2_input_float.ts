@@ -137,8 +137,13 @@ class GuiInputFloat extends HTMLElement{
         })
         this.value_input.addEventListener("keypress", (event : KeyboardEvent)=>{
             if(event.key === "Enter"){
-                this.value_input.blur()
+                this.value_input.blur();
+                this.triggerChange();
             }
+        })
+
+        this.value_input.addEventListener("blur", (event : Event)=>{
+            this.triggerChange();
         })
 
         this.label_el.addEventListener("mousedown", (event : MouseEvent)=>{
@@ -180,14 +185,25 @@ class GuiInputFloat extends HTMLElement{
         })
     }
 
+
     static get observedAttributes(){
         return ['label', 'color', "default_value"];
     }
 
+    triggerChange(){
+        let ev = new Event("changed", {
+            // bubbles : true,
+            // composed : false,
+            
+        });
+        
+        this.dispatchEvent(ev);
+    }
     set value(val : number)
     {
         this._value = val;
         this.value_input.value = val.toString();
+        this.triggerChange();
     }
 
     get value()
@@ -225,6 +241,12 @@ class GuiInputFloat extends HTMLElement{
         }
         // your code...
       }
+
+    handleEvent(event : Event)
+    {
+        console.log("Event on Custom Float Component");
+        
+    }
 }
 
 customElements.define("gui-input-float", GuiInputFloat);
