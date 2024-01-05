@@ -11,7 +11,7 @@ class GuiInputFloat extends HTMLElement {
         this.ctrl_pressed = false;
         this.shift_pressed = false;
         this.attachShadow({ mode: "open" });
-        this._value = 42.0;
+        this._value = 0.0;
         this.label = "X";
         this.color = "hotpink";
         this.is_mouse_down = false;
@@ -179,7 +179,8 @@ class GuiInputFloat extends HTMLElement {
     attributeChangedCallback(name, oldValue, newValue) {
         switch (name) {
             case 'color':
-                this.color = newValue;
+                // this.color = newValue; 
+                // console.log(this.label_el);
                 this.label_el.style.backgroundColor = newValue;
                 break;
             case 'label':

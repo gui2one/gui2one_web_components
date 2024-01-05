@@ -1,11 +1,15 @@
 class GuiInputVector extends HTMLElement{
     template_fragment : DocumentFragment;
 
+    label_el : HTMLDivElement;
     input_x : GuiInputFloat;
     input_y : GuiInputFloat;
     input_z : GuiInputFloat;
-
+    default_scalar : number = 0;
+    label : string = "Vector";
+    
     private _value : number[] = [0,0,0];
+    private _default_value : number[] = [0,0,0];
     constructor()
     {
         super();
@@ -23,17 +27,20 @@ class GuiInputVector extends HTMLElement{
         const template_str = String.raw`
 
             ${styles}
-
-            <div class="wrapper" style="display : flex; gap:5px;">
-                <gui-input-float id="input_x" color="red"   label="x" default_value="1"> </gui-input-float>
-                <gui-input-float id="input_y" color="green" label="y" default_value="1"></gui-input-float>
-                <gui-input-float id="input_z" color="blue"  label="z" default_value="1"></gui-input-float>
+            <div class="wrapper">
+                <div class="label">${this.label}</div>
+                <div class="floats" style="display : flex; gap:5px;">
+                    <gui-input-float id="input_x" color="red"   label="x" default_value="${this.default_scalar}"> </gui-input-float>
+                    <gui-input-float id="input_y" color="green" label="y" default_value="${this.default_scalar}"></gui-input-float>
+                    <gui-input-float id="input_z" color="blue"  label="z" default_value="${this.default_scalar}"></gui-input-float>
+                </div>
             </div>
         `;
 
         this.template_fragment = document.createRange().createContextualFragment(template_str);
         this.shadowRoot!.appendChild(this.template_fragment.cloneNode(true));
     
+        this.label_el = this.shadowRoot!.querySelector(".label") as HTMLDivElement; 
         this.input_x = this.shadowRoot!.querySelector("#input_x") as GuiInputFloat;
         this.input_y = this.shadowRoot!.querySelector("#input_y") as GuiInputFloat;
         this.input_z = this.shadowRoot!.querySelector("#input_z") as GuiInputFloat;
@@ -58,7 +65,34 @@ class GuiInputVector extends HTMLElement{
 
     connectedCallback()
     {
+        this.input_x.default_value = this.default_scalar;
+        this.input_y.default_value = this.default_scalar;
+        this.input_z.default_value = this.default_scalar;
+        
+    }
 
+    static get observedAttributes()
+    {
+        return ["default_scalar", "label"];
+    }
+
+    attributeChangedCallback(name : string, oldValue : any, newValue : any)
+    {
+        switch(name)
+        {
+            case 'default_scalar' :
+                this.default_scalar = parseFloat(newValue);
+                this.input_x.value = this.default_scalar;
+                this.input_y.value = this.default_scalar;
+                this.input_z.value = this.default_scalar;
+                break;
+            case 'label' :
+                this.label = newValue;
+                this.label_el.innerText = newValue;
+                break;
+            default : 
+                break;
+        }
     }
 
     get value() : number[]{
@@ -69,6 +103,7 @@ class GuiInputVector extends HTMLElement{
     {
         this._value = val;
     }
+
 }
 
 

@@ -8,11 +8,14 @@
     <script type="module" src="components/g2_title.js"></script>
     <script type="module" src="components/g2_input_float.js"></script>
     <script type="module" src="components/g2_input_vector.js"></script>
+    <script type="module" src="components/g2_panel.js"></script>
 
     <style>
 
         html{
             font-family: 'Courier New', Courier, monospace;
+            height : 100vh;
+            overflow: hidden;
         }
 
         /* :root{
@@ -30,19 +33,20 @@
 <body>
     <h1>Components</h1>
     <gui-title>Hey !!!</gui-title>
+     
+    <gui-panel>
+        <h3>Panel</h3>
+        <gui-input-float id="float_input" color="orange" label="Answer" default_value=3.14> </gui-input-float>
+        <gui-input-vector id="position" default_scalar=0 label="position"></gui-input-vector>
+        <gui-input-vector id="rotation" default_scalar=0 label="rotation"></gui-input-vector>
+        <gui-input-vector id="scale" default_scalar=1 label="scale"></gui-input-vector>
 
-    <gui-input-float id="float_input" color="orange" label="Answer" default_value=3.14> </gui-input-float>
-
-
-
-    <gui-input-vector id="position"></gui-input-vector>
-
-
+    </gui-panel>
     <script>
-        let pos = document.querySelector("#position");
-        console.log(pos);
+        let scale = document.querySelector("#scale");
+        // console.log(scale);
 
-        pos.addEventListener("changed", (event)=>{
+        scale.addEventListener("changed", (event)=>{
             console.log(event.target.value);
         })
         let float_input = document.querySelector("#float_input");

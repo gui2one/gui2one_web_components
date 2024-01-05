@@ -21,7 +21,7 @@ class GuiInputFloat extends HTMLElement{
     {
         super();
         this.attachShadow({mode : "open"});
-        this._value = 42.0;
+        this._value = 0.0;
         this.label = "X";
         this.color = "hotpink";
 
@@ -226,7 +226,8 @@ class GuiInputFloat extends HTMLElement{
         switch(name)
         {
             case 'color' :
-                this.color = newValue; 
+                // this.color = newValue; 
+                // console.log(this.label_el);
                 this.label_el.style.backgroundColor = newValue;
                 break;
             case 'label' :
