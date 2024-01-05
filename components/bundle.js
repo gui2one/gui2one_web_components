@@ -1,173 +1,4 @@
 "use strict";
-class GuiCollaspible extends HTMLElement {
-    constructor() {
-        var _a;
-        super();
-        this._title = "collaspible";
-        this.attachShadow({ mode: "open" });
-        const styles = String.raw `
-        <style>
-
-            .header{
-                cursor : pointer;
-                background-color : #222;
-                margin : 0;
-                margin-top : 0.25em;
-                padding-left : 0.5em; 
-            }
-
-            .header:hover{
-                filter: brightness(1.2);
-            }
-
-            .header.closed{
-                font-weight : bold;
-            }
-            .content{
-                padding : 0.5em;
-                padding-left : 0.5em;
-                padding-right : 0.5em;
-                overflow-y : hidden;
-                height : auto;
-                transition : all 0.1s;
-            }
-            .content.closed{
-                height : 0;
-                padding-top : 0;
-                padding-bottom : 0;
-            }
-            
-        
-        </style>`;
-        const template = String.raw `
-            
-            ${styles}
-
-            <div class="wrapper">
-                <div class="header"><span>${this.title}</span></div>
-                <div class="content">
-                    <slot></slot>
-                </div>
-            </div>
-        `;
-        this.template_fragment = document.createRange().createContextualFragment(template);
-        (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.appendChild(this.template_fragment.cloneNode(true));
-        this.header_el = this.shadowRoot.querySelector(".header");
-        this.content_el = this.shadowRoot.querySelector(".content");
-    }
-    connectedCallback() {
-        this.header_el.addEventListener("click", (event) => {
-            this.header_el.classList.toggle("closed");
-            this.content_el.classList.toggle("closed");
-        });
-    }
-    static get observedAttributes() {
-        return ['title'];
-    }
-    set title(val) {
-        this._title = val;
-    }
-    attributeChangedCallback(name, oldValue, newValue) {
-        var _a;
-        switch (name) {
-            case 'title':
-                this.title = newValue;
-                let span = (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.querySelector(".header>span");
-                span.innerText = newValue;
-                break;
-            default: break;
-        }
-    }
-}
-customElements.define("gui-collapsible", GuiCollaspible);
-"use strict";
-class GuiInputVector extends HTMLElement {
-    constructor() {
-        super();
-        this.default_scalar = 0;
-        this.label = "Vector";
-        this._value = [0, 0, 0];
-        this._default_value = [0, 0, 0];
-        this.attachShadow({ mode: "open" });
-        const styles = String.raw `
-            <style>
-
-                .wrapper{
-                    margin-top : 3px;
-                }
-
-                .label{
-                    font-family : sans-serif;
-                }
-            </style>
-        `;
-        const template_str = String.raw `
-
-            ${styles}
-            <div class="wrapper">
-                <div class="label">${this.label}</div>
-                <div class="floats" style="display : flex; gap:5px;">
-                    <gui-input-float id="input_x" color="red"   label="x" default_value="${this.default_scalar}"> </gui-input-float>
-                    <gui-input-float id="input_y" color="green" label="y" default_value="${this.default_scalar}"></gui-input-float>
-                    <gui-input-float id="input_z" color="blue"  label="z" default_value="${this.default_scalar}"></gui-input-float>
-                </div>
-            </div>
-        `;
-        this.template_fragment = document.createRange().createContextualFragment(template_str);
-        this.shadowRoot.appendChild(this.template_fragment.cloneNode(true));
-        this.label_el = this.shadowRoot.querySelector(".label");
-        this.input_x = this.shadowRoot.querySelector("#input_x");
-        this.input_y = this.shadowRoot.querySelector("#input_y");
-        this.input_z = this.shadowRoot.querySelector("#input_z");
-        this.input_x.addEventListener("changed", (event) => {
-            let val = event.target.value;
-            this.value[0] = val;
-            this.dispatchEvent(new Event("changed"));
-        });
-        this.input_y.addEventListener("changed", (event) => {
-            let val = event.target.value;
-            this.value[1] = val;
-            this.dispatchEvent(new Event("changed"));
-        });
-        this.input_z.addEventListener("changed", (event) => {
-            let val = event.target.value;
-            this.value[2] = val;
-            this.dispatchEvent(new Event("changed"));
-        });
-    }
-    connectedCallback() {
-        this.input_x.default_value = this.default_scalar;
-        this.input_y.default_value = this.default_scalar;
-        this.input_z.default_value = this.default_scalar;
-    }
-    static get observedAttributes() {
-        return ["default_scalar", "label"];
-    }
-    attributeChangedCallback(name, oldValue, newValue) {
-        switch (name) {
-            case 'default_scalar':
-                this.default_scalar = parseFloat(newValue);
-                this.input_x.value = this.default_scalar;
-                this.input_y.value = this.default_scalar;
-                this.input_z.value = this.default_scalar;
-                break;
-            case 'label':
-                this.label = newValue;
-                this.label_el.innerText = newValue;
-                break;
-            default:
-                break;
-        }
-    }
-    get value() {
-        return [this.input_x.value, this.input_y.value, this.input_z.value];
-    }
-    set value(val) {
-        this._value = val;
-    }
-}
-customElements.define("gui-input-vector", GuiInputVector);
-"use strict";
 class GuiInputFloat extends HTMLElement {
     constructor() {
         var _a;
@@ -377,6 +208,175 @@ class GuiInputFloat extends HTMLElement {
     }
 }
 customElements.define("gui-input-float", GuiInputFloat);
+"use strict";
+class GuiInputVector extends HTMLElement {
+    constructor() {
+        super();
+        this.default_scalar = 0;
+        this.label = "Vector";
+        this._value = [0, 0, 0];
+        this._default_value = [0, 0, 0];
+        this.attachShadow({ mode: "open" });
+        const styles = String.raw `
+            <style>
+
+                .wrapper{
+                    margin-top : 3px;
+                }
+
+                .label{
+                    font-family : sans-serif;
+                }
+            </style>
+        `;
+        const template_str = String.raw `
+
+            ${styles}
+            <div class="wrapper">
+                <div class="label">${this.label}</div>
+                <div class="floats" style="display : flex; gap:5px;">
+                    <gui-input-float id="input_x" color="red"   label="x" default_value="${this.default_scalar}"> </gui-input-float>
+                    <gui-input-float id="input_y" color="green" label="y" default_value="${this.default_scalar}"></gui-input-float>
+                    <gui-input-float id="input_z" color="blue"  label="z" default_value="${this.default_scalar}"></gui-input-float>
+                </div>
+            </div>
+        `;
+        this.template_fragment = document.createRange().createContextualFragment(template_str);
+        this.shadowRoot.appendChild(this.template_fragment.cloneNode(true));
+        this.label_el = this.shadowRoot.querySelector(".label");
+        this.input_x = this.shadowRoot.querySelector("#input_x");
+        this.input_y = this.shadowRoot.querySelector("#input_y");
+        this.input_z = this.shadowRoot.querySelector("#input_z");
+        this.input_x.addEventListener("changed", (event) => {
+            let val = event.target.value;
+            this.value[0] = val;
+            this.dispatchEvent(new Event("changed"));
+        });
+        this.input_y.addEventListener("changed", (event) => {
+            let val = event.target.value;
+            this.value[1] = val;
+            this.dispatchEvent(new Event("changed"));
+        });
+        this.input_z.addEventListener("changed", (event) => {
+            let val = event.target.value;
+            this.value[2] = val;
+            this.dispatchEvent(new Event("changed"));
+        });
+    }
+    connectedCallback() {
+        this.input_x.default_value = this.default_scalar;
+        this.input_y.default_value = this.default_scalar;
+        this.input_z.default_value = this.default_scalar;
+    }
+    static get observedAttributes() {
+        return ["default_scalar", "label"];
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case 'default_scalar':
+                this.default_scalar = parseFloat(newValue);
+                this.input_x.value = this.default_scalar;
+                this.input_y.value = this.default_scalar;
+                this.input_z.value = this.default_scalar;
+                break;
+            case 'label':
+                this.label = newValue;
+                this.label_el.innerText = newValue;
+                break;
+            default:
+                break;
+        }
+    }
+    get value() {
+        return [this.input_x.value, this.input_y.value, this.input_z.value];
+    }
+    set value(val) {
+        this._value = val;
+    }
+}
+customElements.define("gui-input-vector", GuiInputVector);
+"use strict";
+class GuiCollaspible extends HTMLElement {
+    constructor() {
+        var _a;
+        super();
+        this._title = "collaspible";
+        this.attachShadow({ mode: "open" });
+        const styles = String.raw `
+        <style>
+
+            .header{
+                cursor : pointer;
+                background-color : #222;
+                margin : 0;
+                margin-top : 0.25em;
+                padding-left : 0.5em; 
+            }
+
+            .header:hover{
+                filter: brightness(1.2);
+            }
+
+            .header.closed{
+                font-weight : bold;
+            }
+            .content{
+                padding : 0.5em;
+                padding-left : 0.5em;
+                padding-right : 0.5em;
+                overflow-y : hidden;
+                height : auto;
+                transition : all 0.1s;
+            }
+            .content.closed{
+                height : 0;
+                padding-top : 0;
+                padding-bottom : 0;
+            }
+            
+        
+        </style>`;
+        const template = String.raw `
+            
+            ${styles}
+
+            <div class="wrapper">
+                <div class="header"><span>${this.title}</span></div>
+                <div class="content">
+                    <slot></slot>
+                </div>
+            </div>
+        `;
+        this.template_fragment = document.createRange().createContextualFragment(template);
+        (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.appendChild(this.template_fragment.cloneNode(true));
+        this.header_el = this.shadowRoot.querySelector(".header");
+        this.content_el = this.shadowRoot.querySelector(".content");
+    }
+    connectedCallback() {
+        this.header_el.addEventListener("click", (event) => {
+            this.header_el.classList.toggle("closed");
+            this.content_el.classList.toggle("closed");
+        });
+    }
+    static get observedAttributes() {
+        return ['title'];
+    }
+    set title(val) {
+        this._title = val;
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        var _a;
+        switch (name) {
+            case 'title':
+                this.title = newValue;
+                let span = (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.querySelector(".header>span");
+                span.innerText = newValue;
+                break;
+            default: break;
+        }
+    }
+}
+customElements.define("gui-collapsible", GuiCollaspible);
 "use strict";
 class GuiPanel extends HTMLElement {
     constructor() {

@@ -23,11 +23,13 @@ for(let cur_file of all)
     }
 }
 
+const output_path = path.join(SRC_DIR, "bundle.js");
 // fs.writeFile(path.join(SRC_DIR, "bundle.js"), buffers[0].buffer );
 // fs.appendFile()
+fs.writeFile(output_path, "");
 for(let item of buffers)
 {
     item.filename;
     
-    fs.appendFile(path.join(SRC_DIR, "bundle.js"), item.buffer );
+    fs.appendFile(output_path, item.buffer );
 }
