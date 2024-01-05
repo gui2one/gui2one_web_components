@@ -8,6 +8,8 @@ class GuiInputFloat extends HTMLElement {
         this._label = '';
         this._color = "";
         this.drag_start_pos = 0;
+        this.ctrl_pressed = false;
+        this.shift_pressed = false;
         this.attachShadow({ mode: "open" });
         this._value = 42.0;
         this.label = "X";
@@ -87,6 +89,25 @@ class GuiInputFloat extends HTMLElement {
         this.value_input = this.shadowRoot.querySelector("input");
     }
     connectedCallback() {
+        document.addEventListener("keydown", (event) => {
+            if (event.ctrlKey) {
+                this.ctrl_pressed = true;
+            }
+            if (event.shiftKey) {
+                this.shift_pressed = true;
+            }
+        });
+        document.addEventListener("keyup", (event) => {
+            console.log(event);
+            if (event.key == "Control") {
+                this.ctrl_pressed = false;
+                // console.log("ctrl_pressed ", this.ctrl_pressed);
+            }
+            if (event.key == "Shift") {
+                this.shift_pressed = false;
+                // console.log("shift_pressed ", this.shift_pressed);
+            }
+        });
         this.value_input.addEventListener("input", (event) => {
             this._value = parseFloat(this.value_input.value);
         });
@@ -108,18 +129,18 @@ class GuiInputFloat extends HTMLElement {
                     this.value_preview = 0;
                 }
             }
-            else if (event.button === 1) {
-            }
         });
         document.addEventListener("mousemove", (event) => {
             if (this.is_mouse_down) {
                 let diff = (event.pageX - this.drag_start_pos);
                 let mult = 0.1;
+                if (this.ctrl_pressed)
+                    mult *= 0.1;
+                else if (this.shift_pressed)
+                    mult *= 5.0;
                 diff *= mult;
                 this.value_input.value = (this.value + diff).toString();
                 this.value_preview = (this.value + diff);
-                // this.value = this._value + diff;
-                // console.log(diff);
             }
         });
     }

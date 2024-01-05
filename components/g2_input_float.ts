@@ -15,6 +15,8 @@ class GuiInputFloat extends HTMLElement{
     is_dragging : boolean;
 
     drag_start_pos : number = 0;
+    ctrl_pressed : boolean = false;
+    shift_pressed : boolean = false;
     constructor()
     {
         super();
@@ -106,11 +108,35 @@ class GuiInputFloat extends HTMLElement{
     
     connectedCallback(){
 
+        document.addEventListener("keydown", (event : KeyboardEvent) => {
+            if(event.ctrlKey)
+            {
+                this.ctrl_pressed = true;
+            }
+            if(event.shiftKey)
+            {
+                this.shift_pressed = true;
+            }
+        })
+        document.addEventListener("keyup", (event : KeyboardEvent) => {
+            console.log(event);
+            
+            if(event.key == "Control")
+            {
+                this.ctrl_pressed = false;
+                // console.log("ctrl_pressed ", this.ctrl_pressed);
+                
+            }
+            if(event.key == "Shift")
+            {
+                this.shift_pressed = false;
+                // console.log("shift_pressed ", this.shift_pressed);
+            }
+        })
         this.value_input.addEventListener("input", (event : Event)=>{
             this._value = parseFloat(this.value_input.value);
-            
-        
         })
+
         this.label_el.addEventListener("mousedown", (event : MouseEvent)=>{
             
             if( event.button === 0)
@@ -121,36 +147,31 @@ class GuiInputFloat extends HTMLElement{
             {
                 this.value_input.value = this.default_value.toString();
                 this._value = this.default_value;
-            }
-            
-            
+            }    
         })
+
         document.addEventListener("mouseup", (event : MouseEvent)=>{
             this.is_mouse_down = false;
             if( event.button === 0)
             {
-
                 if(this.value_preview !== 0)
                 {
                     this.value = this.value_preview;
                     this.value_preview = 0;
                 }
-            }else if(event.button === 1)
-            {
-
             }
-            
         })
+
         document.addEventListener("mousemove", (event : MouseEvent)=>{
             if(this.is_mouse_down)
             {
                 let diff = (event.pageX - this.drag_start_pos);
                 let mult = 0.1;
+                if( this.ctrl_pressed ) mult *= 0.1;
+                else if (this.shift_pressed) mult *= 5.0;
                 diff *= mult;
                 this.value_input.value = (this.value + diff).toString();
                 this.value_preview = (this.value + diff);
-                // this.value = this._value + diff;
-                // console.log(diff);
             }
         })
     }
