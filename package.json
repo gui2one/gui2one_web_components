@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "tsc-watch --project ."
+    "watch": "tsc-watch --project .",
+    "build": "tsc --project ."
   },
   "keywords": [],
   "author": "",
