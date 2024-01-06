@@ -6,15 +6,50 @@ class GuiPanel extends HTMLElement{
         this.attachShadow({mode : "open"});
         const styles = String.raw`
             <style>
+                .panel{
+                    --scrollbar-width : 8px;
+                    --scrollbar-track-color : darkgray;
+                    --scrollbar-thumb-color : gray;
+                }
+                        /* For WebKit browsers (Chrome, Safari) */
+                        ::-webkit-scrollbar {
+                        width: var(--scrollbar-width);
+                        }
+
+                        ::-webkit-scrollbar-thumb {
+                        background-color: var(--scrollbar-thumb-color);
+                        border-radius: 6px;
+                        }
+
+                        ::-webkit-scrollbar-track {
+                        background-color: var(--scrollbar-track-color);
+                        }
+
+                        /* For Firefox */
+                        * {
+                        scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+                        }
+
+                        *::-webkit-scrollbar {
+                        width: var(--scrollbar-width);
+                        }
+
+                        *::-webkit-scrollbar-thumb {
+                        background-color: var(--scrollbar-thumb-color);
+                        border-radius: 6px;
+                        }
+
+                        *::-webkit-scrollbar-track {
+                        background-color: var(--scrollbar-track-color);
+}                
                 #wrapper{
                     position : fixed;
                     top : 0px;
                     right : 0px;
                     padding : 0.5em;
-                    /* margin-bottom : 1em; */
-                    /* overflow-x : visible; */
-                     /* overflow-y : auto; */
-                    /* outline : 1px solid red; */
+                    padding-bottom : 0;
+                    padding-top : 0;
+
                     box-shadow : -2px 2px 8px #0001;
                     border-radius : 0 0 0 3px;
                     height : 100%;
