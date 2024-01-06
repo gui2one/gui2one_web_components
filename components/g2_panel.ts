@@ -13,35 +13,35 @@ class GuiPanel extends HTMLElement{
                 }
                         /* For WebKit browsers (Chrome, Safari) */
                         ::-webkit-scrollbar {
-                        width: var(--scrollbar-width);
+                            width: var(--scrollbar-width);
                         }
 
                         ::-webkit-scrollbar-thumb {
-                        background-color: var(--scrollbar-thumb-color);
-                        border-radius: 6px;
+                            background-color: var(--scrollbar-thumb-color);
+                            border-radius: 6px;
                         }
 
                         ::-webkit-scrollbar-track {
-                        background-color: var(--scrollbar-track-color);
+                            background-color: var(--scrollbar-track-color);
                         }
 
                         /* For Firefox */
                         * {
-                        scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+                            scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
                         }
 
                         *::-webkit-scrollbar {
-                        width: var(--scrollbar-width);
+                            width: var(--scrollbar-width);
                         }
 
                         *::-webkit-scrollbar-thumb {
-                        background-color: var(--scrollbar-thumb-color);
-                        border-radius: 6px;
+                            background-color: var(--scrollbar-thumb-color);
+                            border-radius: 6px;
                         }
 
                         *::-webkit-scrollbar-track {
-                        background-color: var(--scrollbar-track-color);
-}                
+                            background-color: var(--scrollbar-track-color);
+                        }                
                 #wrapper{
                     position : fixed;
                     top : 0px;
@@ -71,16 +71,19 @@ class GuiPanel extends HTMLElement{
                 .panel{
                     position : relative;
                     overflow-y : auto;
-                    height : 100%;
+                    height : calc(100% - 20px);
                 }
                 .panel:after{
                     content : " ";
                     position : absolute;
                     width : 100%;
-                    height : 30px;
+                    height : 5px;
                 }
+
                 .close_btn{
+                    position : relative;
                     cursor : pointer;
+                    height : 20px;
                 }
 
                 .close_btn:hover{
@@ -105,8 +108,8 @@ class GuiPanel extends HTMLElement{
             ${styles}
             <div id="wrapper">
                 <div class="open_btn"></div>
+                <div class="close_btn">X</div>
                 <div class="panel">
-                    <div class="close_btn">X</div>
                     <slot></slot>
                 </div>
             </div>
