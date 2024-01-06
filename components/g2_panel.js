@@ -7,17 +7,18 @@ class GuiPanel extends HTMLElement {
         const styles = String.raw `
             <style>
                 #wrapper{
-                    position : absolute;
+                    position : fixed;
                     top : 0px;
                     right : 0px;
                     padding : 0.5em;
                     /* margin-bottom : 1em; */
-                    overflow-y : auto;
+                    /* overflow-x : visible; */
+                     /* overflow-y : auto; */
                     /* outline : 1px solid red; */
                     box-shadow : -2px 2px 8px #0001;
                     border-radius : 0 0 0 3px;
                     height : 100%;
-                    max-height : 100vh;
+                    max-height : 100%;
                     color : white;
                     background-color : #111;
 
@@ -27,16 +28,22 @@ class GuiPanel extends HTMLElement {
                     cursor: default;
                     user-select : none;
                 }
-                #wrapper:after{
+
+                #wrapper.hidden{
+                    transform : translate3d(100%,0,0 );
+                }
+
+                .panel{
+                    position : relative;
+                    overflow-y : auto;
+                    height : 100%;
+                }
+                .panel:after{
                     content : " ";
                     position : absolute;
                     width : 100%;
                     height : 30px;
                 }
-                #wrapper.hidden{
-                    transform : translate3d(100%,0,0 );
-                }
-
                 .close_btn{
                     cursor : pointer;
                 }
@@ -49,7 +56,7 @@ class GuiPanel extends HTMLElement {
                     position : absolute;
                     width : 25px;
                     height : 25px;
-                    background-color : transparent; 
+                    background-color : red; 
                     top : 0;
                     left : 0;  
                     z-index : 2;
@@ -62,8 +69,10 @@ class GuiPanel extends HTMLElement {
             ${styles}
             <div id="wrapper">
                 <div class="open_btn"></div>
-                <div class="close_btn">X</div>
-                <slot></slot>
+                <div class="panel">
+                    <div class="close_btn">X</div>
+                    <slot></slot>
+                </div>
             </div>
         `;
         this.template_fragment = document.createRange().createContextualFragment(template);
