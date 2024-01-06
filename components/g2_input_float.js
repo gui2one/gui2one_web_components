@@ -35,8 +35,6 @@ class GuiInputFloat extends HTMLElement {
             }
 
             .label{
-                
-                
                 color : white;
                 position : relative;
                 padding-left : 0.5em;
@@ -60,14 +58,15 @@ class GuiInputFloat extends HTMLElement {
                 position : relative;
                 overflow : hidden;
                 border-radius : 0 2px 2px 0;
-                background-color : darkgrey;
+                background-color : #eee;
                 padding-top : var(--padding-top);
                 padding-bottom : var(--padding-bottom);
                 padding-left : var(--padding-left);
+                
             }
 
             input{
-                color : white;
+                color : #222;
                 font-weight : bold;
                 height : calc(100% - 2px );
                 width : 8ch;
@@ -132,7 +131,7 @@ class GuiInputFloat extends HTMLElement {
                 this.is_mouse_down = true;
                 this.drag_start_pos = event.clientX;
             }
-            else if (event.button === 1) {
+            else if (event.button === 2) {
                 this.value_input.value = this.default_value.toString();
                 this.value = this.default_value;
             }

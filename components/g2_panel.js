@@ -11,6 +11,7 @@ class GuiPanel extends HTMLElement {
                     --scrollbar-track-color : darkgray;
                     --scrollbar-thumb-color : gray;
                 }
+                
                         /* For WebKit browsers (Chrome, Safari) */
                         ::-webkit-scrollbar {
                             width: var(--scrollbar-width);
@@ -58,7 +59,7 @@ class GuiPanel extends HTMLElement {
                     background-color : #111;
 
                     transition : transform;
-                    transition-duration : 0.2s;
+                    transition-duration : 0.1s;
 
                     cursor: default;
                     user-select : none;
@@ -70,24 +71,56 @@ class GuiPanel extends HTMLElement {
 
                 .panel{
                     position : relative;
-                    overflow-y : auto;
-                    height : calc(100% - 20px);
+                    overflow-y : scroll;
+                    height : calc(100% - 50px);
+                    width : 100%;
                 }
                 .panel:after{
                     content : " ";
                     position : absolute;
                     width : 100%;
-                    height : 5px;
+                    height : 30px;
                 }
 
                 .close_btn{
                     position : relative;
+                    top : 0;
                     cursor : pointer;
-                    height : 20px;
+                    height : calc(50px);
+                    margin-top : 2px;
+                    margin-left : 0px;
+                    opacity : 0.5;
+                    /* outline : 1px solid white; */
+                    width : 100%;
                 }
 
                 .close_btn:hover{
-                    opacity : 0.5;
+                    opacity : 0.25;
+                }
+
+                .close_btn::before{
+                    content : '';
+                    position : absolute;
+                    top : 0; 
+                    left : 0;
+                    width : 4px;
+                    height : 100%;
+                    border-radius : 5px;
+                    background-color : #eee;
+                    transform-origin : 50% 50%;
+                    transform :  translateX(20px) rotate(45deg);
+                }
+                .close_btn::after{
+                    content : '';
+                    position : absolute;
+                    top : 0; 
+                    left : 0;
+                    width : 4px;
+                    height : 100%;
+                    border-radius : 5px;
+                    background-color : #eee;
+                    transform-origin : 50% 50%;
+                    transform : translateX(20px) rotate(-45deg);
                 }
 
                 .open_btn{
@@ -105,9 +138,9 @@ class GuiPanel extends HTMLElement {
         const template = String.raw `
             
             ${styles}
-            <div id="wrapper">
+            <div id="wrapper" oncontextmenu="return false;">
                 <div class="open_btn"></div>
-                <div class="close_btn">X</div>
+                <div class="close_btn"></div>
                 <div class="panel">
                     <slot></slot>
                 </div>

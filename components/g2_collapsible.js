@@ -9,11 +9,14 @@ class GuiCollaspible extends HTMLElement {
         <style>
 
             .header{
+                display : flex;
+                align-items : center;
                 cursor : pointer;
                 background-color : #222;
                 margin : 0;
                 margin-top : 0.25em;
                 padding-left : 0.5em; 
+                height : 30px;
             }
 
             .header:hover{
@@ -44,8 +47,8 @@ class GuiCollaspible extends HTMLElement {
             ${styles}
 
             <div class="wrapper">
-                <div class="header"><span>${this.title}</span></div>
-                <div class="content">
+                <div class="header closed"><span>${this.title}</span></div>
+                <div class="content closed">
                     <slot></slot>
                 </div>
             </div>

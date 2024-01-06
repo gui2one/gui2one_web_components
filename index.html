@@ -9,6 +9,7 @@
     <script type="module" src="components/g2_input_float.js"></script>
     <script type="module" src="components/g2_input_vector.js"></script>
     <script type="module" src="components/g2_collapsible.js"></script>
+    <script type="module" src="components/g2_accordion.js"></script>
     <script type="module" src="components/g2_panel.js"></script>
     <!-- <script type="module" src="components/bundle.js"></script> -->
 
@@ -53,22 +54,26 @@
         <gui-title>Hey !!!</gui-title>
          
         <gui-panel>
-            <h3>Panel</h3>
+            <br />
+            <gui-accordion>
+                <gui-collapsible title="hello">Hello</gui-collapsible>
+                <gui-collapsible title="good bye">Good Bye</gui-collapsible>
+            </gui-accordion>
             <gui-collapsible title="Collapse me !">
                 <gui-input-float id="float_input" color="grey" label="Scale" default_value=3.14> </gui-input-float>
             </gui-collapsible>
     
-            <gui-collapsible title="Transforms">
+            <gui-collapsible title="Transforms 1">
                 <gui-input-vector id="position" default_scalar=0 label="position"></gui-input-vector>
                 <gui-input-vector id="rotation" default_scalar=0 label="rotation"></gui-input-vector>
                 <gui-input-vector id="scale" default_scalar=1 label="scale"></gui-input-vector>
             </gui-collapsible>
-            <gui-collapsible title="Transforms">
+            <gui-collapsible title="Transforms 2">
                 <gui-input-vector id="position" default_scalar=0 label="position"></gui-input-vector>
                 <gui-input-vector id="rotation" default_scalar=0 label="rotation"></gui-input-vector>
                 <gui-input-vector id="scale" default_scalar=1 label="scale"></gui-input-vector>
             </gui-collapsible>
-            <gui-collapsible title="Transforms">
+            <gui-collapsible title="Transforms 3">
                 <gui-input-vector id="position" default_scalar=0 label="position"></gui-input-vector>
                 <gui-input-vector id="rotation" default_scalar=0 label="rotation"></gui-input-vector>
                 <gui-input-vector id="scale" default_scalar=1 label="scale"></gui-input-vector>
