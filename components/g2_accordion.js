@@ -12,6 +12,7 @@ class GuiAccordion extends HTMLElement {
         </style>`;
         const template = String.raw `
             ${styles}
+            <h5>Accordion !!</h5>
             <slot></slot>
         `;
         this.template_fragment = document.createRange().createContextualFragment(template);

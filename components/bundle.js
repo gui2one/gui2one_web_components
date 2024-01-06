@@ -1,4 +1,35 @@
 
+// g2_accordion.js
+"use strict";
+class GuiAccordion extends HTMLElement {
+    constructor() {
+        var _a;
+        super();
+        this.attachShadow({ mode: "open" });
+        const styles = String.raw `<style>
+
+            :host{
+                background-color : red;
+            }
+        </style>`;
+        const template = String.raw `
+            ${styles}
+            <h5>Accordion !!</h5>
+            <slot></slot>
+        `;
+        this.template_fragment = document.createRange().createContextualFragment(template);
+        (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.appendChild(this.template_fragment.cloneNode(true));
+    }
+    connectedCallback() {
+    }
+    static get observedAttributes() {
+        return [];
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+    }
+}
+customElements.define("gui-accordion", GuiAccordion);
+
 // g2_collapsible.js
 "use strict";
 class GuiCollaspible extends HTMLElement {
@@ -115,8 +146,9 @@ class GuiInputFloat extends HTMLElement {
             .wrapper{
                 position : relative;
                 display : flex;
-                align-items : center;
+                align-items: stretch;
                 width : max-content;
+                font-size : 0.9rem;
             }
 
             .label{
@@ -126,7 +158,6 @@ class GuiInputFloat extends HTMLElement {
                 padding-right : 0.5em;
                 background-color : ${this._color};
                 border-radius : 2px 0 0 2px;
-                height : 100%;
                 vertical-align : middle;
                 padding-top : var(--padding-top);
                 padding-bottom : var(--padding-bottom);
@@ -142,22 +173,22 @@ class GuiInputFloat extends HTMLElement {
             .value_div{
                 padding-left : 0.2em;
                 position : relative;
-                height : 100%;
                 overflow : hidden;
                 border-radius : 0 2px 2px 0;
-                background-color : darkgrey;
+                background-color : #eee;
                 padding-top : var(--padding-top);
                 padding-bottom : var(--padding-bottom);
                 padding-left : var(--padding-left);
+                
             }
 
             input{
-                color : white;
+                color : #222;
                 font-weight : bold;
                 height : calc(100% - 2px );
                 width : 8ch;
                 border : none;
-                height: 100%;
+                height: max-content;
                 background-color : transparent;
             }
 
@@ -217,7 +248,7 @@ class GuiInputFloat extends HTMLElement {
                 this.is_mouse_down = true;
                 this.drag_start_pos = event.clientX;
             }
-            else if (event.button === 1) {
+            else if (event.button === 2) {
                 this.value_input.value = this.default_value.toString();
                 this.value = this.default_value;
             }
@@ -310,6 +341,7 @@ class GuiInputVector extends HTMLElement {
 
                 .wrapper{
                     margin-top : 3px;
+                    font-size : 0.9em;
                 }
 
                 .label{
@@ -393,21 +425,60 @@ class GuiPanel extends HTMLElement {
         this.attachShadow({ mode: "open" });
         const styles = String.raw `
             <style>
+                .panel{
+                    --scrollbar-width : 8px;
+                    --scrollbar-track-color : darkgray;
+                    --scrollbar-thumb-color : gray;
+                }
+                
+                        /* For WebKit browsers (Chrome, Safari) */
+                        ::-webkit-scrollbar {
+                            width: var(--scrollbar-width);
+                        }
+
+                        ::-webkit-scrollbar-thumb {
+                            background-color: var(--scrollbar-thumb-color);
+                            border-radius: 6px;
+                        }
+
+                        ::-webkit-scrollbar-track {
+                            background-color: var(--scrollbar-track-color);
+                        }
+
+                        /* For Firefox */
+                        * {
+                            scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+                        }
+
+                        *::-webkit-scrollbar {
+                            width: var(--scrollbar-width);
+                        }
+
+                        *::-webkit-scrollbar-thumb {
+                            background-color: var(--scrollbar-thumb-color);
+                            border-radius: 6px;
+                        }
+
+                        *::-webkit-scrollbar-track {
+                            background-color: var(--scrollbar-track-color);
+                        }                
                 #wrapper{
-                    position : absolute;
+                    position : fixed;
                     top : 0px;
                     right : 0px;
                     padding : 0.5em;
-                    /* overflow-y : auto; */
-                    /* outline : 1px solid red; */
+                    padding-bottom : 0;
+                    padding-top : 0;
+
                     box-shadow : -2px 2px 8px #0001;
                     border-radius : 0 0 0 3px;
-                    max-height : 100vh;
+                    height : 100%;
+                    max-height : 100%;
                     color : white;
                     background-color : #111;
 
                     transition : transform;
-                    transition-duration : 0.2s;
+                    transition-duration : 0.1s;
 
                     cursor: default;
                     user-select : none;
@@ -417,19 +488,65 @@ class GuiPanel extends HTMLElement {
                     transform : translate3d(100%,0,0 );
                 }
 
+                .panel{
+                    position : relative;
+                    overflow-y : scroll;
+                    height : calc(100% - 50px);
+                    width : 100%;
+                }
+                .panel:after{
+                    content : " ";
+                    position : absolute;
+                    width : 100%;
+                    height : 30px;
+                }
+
                 .close_btn{
+                    position : relative;
+                    top : 0;
                     cursor : pointer;
+                    height : calc(50px);
+                    margin-top : 2px;
+                    margin-left : 0px;
+                    opacity : 0.5;
+                    /* outline : 1px solid white; */
+                    width : 100%;
                 }
 
                 .close_btn:hover{
-                    opacity : 0.5;
+                    opacity : 0.25;
+                }
+
+                .close_btn::before{
+                    content : '';
+                    position : absolute;
+                    top : 0; 
+                    left : 0;
+                    width : 4px;
+                    height : 100%;
+                    border-radius : 5px;
+                    background-color : #eee;
+                    transform-origin : 50% 50%;
+                    transform :  translateX(20px) rotate(45deg);
+                }
+                .close_btn::after{
+                    content : '';
+                    position : absolute;
+                    top : 0; 
+                    left : 0;
+                    width : 4px;
+                    height : 100%;
+                    border-radius : 5px;
+                    background-color : #eee;
+                    transform-origin : 50% 50%;
+                    transform : translateX(20px) rotate(-45deg);
                 }
 
                 .open_btn{
                     position : absolute;
                     width : 25px;
                     height : 25px;
-                    background-color : transparent; 
+                    background-color : red; 
                     top : 0;
                     left : 0;  
                     z-index : 2;
@@ -440,10 +557,12 @@ class GuiPanel extends HTMLElement {
         const template = String.raw `
             
             ${styles}
-            <div id="wrapper">
+            <div id="wrapper" oncontextmenu="return false;">
                 <div class="open_btn"></div>
-                <div class="close_btn">X</div>
-                <slot></slot>
+                <div class="close_btn"></div>
+                <div class="panel">
+                    <slot></slot>
+                </div>
             </div>
         `;
         this.template_fragment = document.createRange().createContextualFragment(template);

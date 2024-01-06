@@ -6,7 +6,7 @@
   "scripts": {
     "watch": "tsc-watch --project .",
     "build": "tsc --project .",
-    "gen" : "node ./node/generate_bundle.mjs"
+    "gen" : "npm run build && node ./node/generate_bundle.mjs"
   },
   "keywords": [],
   "author": "",
