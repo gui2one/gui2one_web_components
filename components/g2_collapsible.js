@@ -3,6 +3,7 @@ class GuiCollaspible extends HTMLElement {
     constructor() {
         var _a;
         super();
+        this.closed = true;
         this._title = "collaspible";
         this.attachShadow({ mode: "open" });
         const styles = String.raw `
@@ -62,7 +63,7 @@ class GuiCollaspible extends HTMLElement {
         });
     }
     static get observedAttributes() {
-        return ['title'];
+        return ['title', 'closed'];
     }
     set title(val) {
         this._title = val;
@@ -74,6 +75,23 @@ class GuiCollaspible extends HTMLElement {
                 this.title = newValue;
                 let span = (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.querySelector(".header>span");
                 span.innerText = newValue;
+                break;
+            case 'closed':
+                if (newValue === "")
+                    this.closed = true;
+                else if (newValue === "true")
+                    this.closed = true;
+                else if (newValue === "false")
+                    this.closed = false;
+                7;
+                if (this.closed) {
+                    this.header_el.classList.add("closed");
+                    this.content_el.classList.add("closed");
+                }
+                else {
+                    this.header_el.classList.remove("closed");
+                    this.content_el.classList.remove("closed");
+                }
                 break;
             default: break;
         }

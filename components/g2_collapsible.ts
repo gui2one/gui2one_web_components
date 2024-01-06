@@ -1,6 +1,7 @@
 class GuiCollaspible extends HTMLElement{
     template_fragment : DocumentFragment;
 
+    closed : boolean = true;
     _title : string = "collaspible";
     header_el : HTMLDivElement;
     content_el : HTMLDivElement;
@@ -73,7 +74,7 @@ class GuiCollaspible extends HTMLElement{
 
     static get observedAttributes()
     {
-        return ['title'];
+        return ['title', 'closed'];
     }
 
     set title(val : string)
@@ -87,6 +88,22 @@ class GuiCollaspible extends HTMLElement{
                 this.title = newValue;
                 let span = this.shadowRoot?.querySelector(".header>span") as HTMLSpanElement;
                 span.innerText = newValue;
+                break;
+            case 'closed' :
+                if(newValue === "") this.closed = true;
+                else if(newValue === "true") this.closed = true;
+                else if(newValue === "false") this.closed = false;7
+
+                if(this.closed)
+                {
+
+                    this.header_el.classList.add("closed");
+                    this.content_el.classList.add("closed");
+                }else{
+                    this.header_el.classList.remove("closed");
+                    this.content_el.classList.remove("closed");
+                }
+                
                 break;
             default : break;
         }
