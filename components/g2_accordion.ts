@@ -1,5 +1,6 @@
 class GuiAccordion extends HTMLElement{
     template_fragment : DocumentFragment;
+    collapsibles : GuiCollaspible[] = [];
     constructor(){
         super();
         this.attachShadow({mode : "open"});
@@ -13,42 +14,43 @@ class GuiAccordion extends HTMLElement{
         this.template_fragment = document.createRange().createContextualFragment(template);
         this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
 
+
+
         
     }
-    updateCollapsibles() {
-        let collapsibles = this.shadowRoot!.querySelectorAll("gui-collapsible");
-        console.log(collapsibles);
+    open(theone : GuiCollaspible) {
+        this.collapsibles.forEach((item, index)=>{
+            // console.log(item, index);
+            if(item !== theone){
+                item.setAttribute("closed", "true");
+            }
+        })
     }
 
     connectedCallback(){
         const slot = this.shadowRoot!.querySelector('slot') as HTMLSlotElement;
         
-        // console.log(slot?.hasChildNodes());
+        this.collapsibles = [];
+        
         slot?.addEventListener("slotchange", ()=>{
-            let collapsibles = slot.querySelectorAll("gui-collaspible");
             for(let node of slot?.assignedNodes())
             {
                 if(node.nodeName === 'GUI-COLLAPSIBLE'){
-                    console.log(node);
-                    
-                }
-                
+
+                    let coll = node as GuiCollaspible;
+                    coll.addEventListener("open", (ev : Event)=>{
+                        this.open(ev.target as GuiCollaspible)
+                    })
+                    this.collapsibles.push(coll);
+                }        
             }
         })
-        
-        // for(let node of slot?.assignedNodes())
-        // {
-        //     console.log(node);
-            
-        // }
     }
 
     adoptedCallBack()
     {
-        console.log("adopted");
-        
+        console.log("adopted");   
     }
-
 
     static get observedAttributes(){
         return [];
