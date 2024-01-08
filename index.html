@@ -56,15 +56,14 @@
          
         <gui-panel>
 
-            <gui-accordion>
-                <gui-collapsible title="hello" closed="false">
+            <!-- <gui-accordion> -->
+                <gui-collapsible title="Misc Options" closed="false">
                     <gui-checkbox id="checkbox1" label="active stuff"></gui-checkbox>
-                    <gui-checkbox id="checkbox2" label="Do thing"></gui-checkbox>
-                    <gui-checkbox id="checkbox3"></gui-checkbox>
-
+                    <gui-checkbox id="checkbox2" label="Do thing" ></gui-checkbox>
+                    <gui-checkbox id="checkbox3" label="ok"></gui-checkbox>
                 </gui-collapsible>
-                <gui-collapsible title="good bye">Good Bye</gui-collapsible>
-                <gui-collapsible title="Collapse me !">
+
+                <gui-collapsible title="World Scale">
                     <gui-input-float id="float_input" color="grey" label="Scale" default_value=3.14> </gui-input-float>
                 </gui-collapsible>
         
@@ -73,17 +72,19 @@
                     <gui-input-vector id="rotation" default_scalar=0 label="rotation"></gui-input-vector>
                     <gui-input-vector id="scale" default_scalar=1 label="scale"></gui-input-vector>
                 </gui-collapsible>
+                
                 <gui-collapsible title="Transforms 2">
                     <gui-input-vector id="position" default_scalar=0 label="position"></gui-input-vector>
                     <gui-input-vector id="rotation" default_scalar=0 label="rotation"></gui-input-vector>
                     <gui-input-vector id="scale" default_scalar=1 label="scale"></gui-input-vector>
                 </gui-collapsible>
+                
                 <gui-collapsible title="Transforms 3">
                     <gui-input-vector id="position" default_scalar=0 label="position"></gui-input-vector>
                     <gui-input-vector id="rotation" default_scalar=0 label="rotation"></gui-input-vector>
                     <gui-input-vector id="scale" default_scalar=1 label="scale"></gui-input-vector>
                 </gui-collapsible>
-            </gui-accordion>
+            <!-- </gui-accordion> -->
     
     
         </gui-panel>
