@@ -37,6 +37,10 @@ export class GuiCheckbox extends HTMLElement{
                 width : 50%;
                 cursor : pointer;
             }
+
+            label.checked{
+                background-color : green;
+            }
             input[type=checkbox]
             {
                 visibility : hidden;
@@ -59,16 +63,20 @@ export class GuiCheckbox extends HTMLElement{
                 left : 0;
                 top : 0;
                 width : 100%;
-                height : 100%;
-                background-color : orange;
+                height : 10px;
+                /* background-color : red; */
                 border-radius : 0px 3px 3px 0px;
+                border : 6px solid white;
+                border-top : none;
+                border-right : none;
+                transform : rotate(-45deg) scale(0.6);
             }
         </style>`;
         const template = String.raw`
             ${styles}
 
             <div id="wrapper">
-            <label for="checkbox">${this.label}</label>
+            <label for="checkbox" class=" ${this.value ? 'checked': ''}">${this.label}</label>
             <div class="pretty ${this.value ? 'checked': ''}">
             </div>
             <input id="checkbox" type="checkbox" ${this.value ? 'checked': ''} />
@@ -86,6 +94,7 @@ export class GuiCheckbox extends HTMLElement{
             // console.log(event);
             this.value = checkbox.toggleAttribute("checked");
             this.pretty_el.classList.toggle("checked");
+            this.label_el.classList.toggle("checked");
             let ev = new Event("change");
             this.dispatchEvent(ev);
         })

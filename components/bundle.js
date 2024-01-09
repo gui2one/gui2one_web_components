@@ -87,6 +87,10 @@ export class GuiCheckbox extends HTMLElement {
                 width : 50%;
                 cursor : pointer;
             }
+
+            label.checked{
+                background-color : green;
+            }
             input[type=checkbox]
             {
                 visibility : hidden;
@@ -109,16 +113,20 @@ export class GuiCheckbox extends HTMLElement {
                 left : 0;
                 top : 0;
                 width : 100%;
-                height : 100%;
-                background-color : orange;
+                height : 10px;
+                /* background-color : red; */
                 border-radius : 0px 3px 3px 0px;
+                border : 6px solid white;
+                border-top : none;
+                border-right : none;
+                transform : rotate(-45deg) scale(0.6);
             }
         </style>`;
         const template = String.raw `
             ${styles}
 
             <div id="wrapper">
-            <label for="checkbox">${this.label}</label>
+            <label for="checkbox" class=" ${this.value ? 'checked' : ''}">${this.label}</label>
             <div class="pretty ${this.value ? 'checked' : ''}">
             </div>
             <input id="checkbox" type="checkbox" ${this.value ? 'checked' : ''} />
@@ -134,6 +142,7 @@ export class GuiCheckbox extends HTMLElement {
             // console.log(event);
             this.value = checkbox.toggleAttribute("checked");
             this.pretty_el.classList.toggle("checked");
+            this.label_el.classList.toggle("checked");
             let ev = new Event("change");
             this.dispatchEvent(ev);
         });
@@ -366,7 +375,7 @@ export class GuiInputFloat extends HTMLElement {
 
             ${this.styles}
 
-            <div class="wrapper">
+            <div class="wrapper" oncontextmenu="return false;">
                 <div class="label"><span>${this._label}<span></div>
                 <div class="value_div">
                     <input type=number step="0.1" value=${this.value} />
@@ -480,7 +489,7 @@ export class GuiInputFloat extends HTMLElement {
                 break;
             case 'label':
                 this.label = newValue;
-                this.label_el.innerHTML = `<span>${newValue}</span>`;
+                // this.label_el.innerHTML = `<span>${newValue}</span>`;
                 break;
             case 'default_value':
                 this.default_value = parseFloat(newValue);
@@ -726,7 +735,8 @@ export class GuiPanel extends HTMLElement {
         const template = String.raw `
             
             ${styles}
-            <div id="wrapper" oncontextmenu="return false;">
+            <!-- <div id="wrapper" oncontextmenu="return false;"> -->
+            <div id="wrapper" >
                 <div class="open_btn"></div>
                 <div class="close_btn"></div>
                 <div class="panel">

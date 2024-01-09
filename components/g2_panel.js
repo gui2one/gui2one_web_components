@@ -137,7 +137,8 @@ export class GuiPanel extends HTMLElement {
         const template = String.raw `
             
             ${styles}
-            <div id="wrapper" oncontextmenu="return false;">
+            <!-- <div id="wrapper" oncontextmenu="return false;"> -->
+            <div id="wrapper" >
                 <div class="open_btn"></div>
                 <div class="close_btn"></div>
                 <div class="panel">
