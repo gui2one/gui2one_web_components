@@ -30,6 +30,7 @@ export class GuiInputFloat extends HTMLElement{
         this.is_mouse_down = false;
         this.is_dragging = false;
         
+        this._label ="wtf ?";
         this.styles = String.raw`
             <style>
 
