@@ -1,7 +1,7 @@
 export class GuiCheckbox extends HTMLElement{
     template_fragment : DocumentFragment;
 
-    label : string = "toggle";
+    _label : string = "toggle";
     label_el : HTMLLabelElement;
     pretty_el : HTMLDivElement;
     value : boolean = true;
@@ -76,7 +76,7 @@ export class GuiCheckbox extends HTMLElement{
             ${styles}
 
             <div id="wrapper">
-            <label for="checkbox" class=" ${this.value ? 'checked': ''}">${this.label}</label>
+            <label for="checkbox" class=" ${this.value ? 'checked': ''}">${this._label}</label>
             <div class="pretty ${this.value ? 'checked': ''}">
             </div>
             <input id="checkbox" type="checkbox" ${this.value ? 'checked': ''} />
@@ -110,6 +110,13 @@ export class GuiCheckbox extends HTMLElement{
     }
 
 
+    set label(str : string)
+    {
+        if(this.label_el)
+        {
+            this.label_el.innerHTML = `<span>${str}</span>`
+        }
+    }
     attributeChangedCallback(name : string, oldValue : any, newValue : any) {
         switch(name)
         {
@@ -118,7 +125,7 @@ export class GuiCheckbox extends HTMLElement{
                 break;
             case 'label':
                 this.label = newValue
-                this.label_el.innerText = newValue;
+                // this.label_el.innerText = newValue;
                 break;
             default : break
         }
