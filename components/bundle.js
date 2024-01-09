@@ -366,7 +366,7 @@ export class GuiInputFloat extends HTMLElement {
             ${this.styles}
 
             <div class="wrapper">
-                <div class="label"><span>${this.label}<span></div>
+                <div class="label"><span>${this._label}<span></div>
                 <div class="value_div">
                     <input type=number step="0.1" value=${this.value} />
                 </div>
