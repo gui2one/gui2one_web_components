@@ -231,7 +231,10 @@ export class GuiInputFloat extends HTMLElement{
     set label(str : string)
     {
         this._label = str;
-        this.label_el.innerHTML = `<span>${str}</span>`;
+        if(this.label_el)
+        {
+            this.label_el.innerHTML = `<span>${str}</span>`;
+        }
     }
 
 
