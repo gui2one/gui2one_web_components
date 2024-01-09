@@ -55,7 +55,7 @@ export class GuiCheckbox extends HTMLElement {
     constructor() {
         var _a;
         super();
-        this.label = "toggle";
+        this._label = "toggle";
         this.value = true;
         this.attachShadow({ mode: "open" });
         const styles = String.raw `<style>
@@ -126,7 +126,7 @@ export class GuiCheckbox extends HTMLElement {
             ${styles}
 
             <div id="wrapper">
-            <label for="checkbox" class=" ${this.value ? 'checked' : ''}">${this.label}</label>
+            <label for="checkbox" class=" ${this.value ? 'checked' : ''}">${this._label}</label>
             <div class="pretty ${this.value ? 'checked' : ''}">
             </div>
             <input id="checkbox" type="checkbox" ${this.value ? 'checked' : ''} />
@@ -152,6 +152,11 @@ export class GuiCheckbox extends HTMLElement {
     static get observedAttributes() {
         return ["label"];
     }
+    set label(str) {
+        if (this.label_el) {
+            this.label_el.innerHTML = `<span>${str}</span>`;
+        }
+    }
     attributeChangedCallback(name, oldValue, newValue) {
         switch (name) {
             case 'value':
@@ -159,7 +164,7 @@ export class GuiCheckbox extends HTMLElement {
                 break;
             case 'label':
                 this.label = newValue;
-                this.label_el.innerText = newValue;
+                // this.label_el.innerText = newValue;
                 break;
             default: break;
         }
