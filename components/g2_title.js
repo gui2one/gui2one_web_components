@@ -1,5 +1,4 @@
-"use strict";
-class GuiTitle extends HTMLElement {
+export class GuiTitle extends HTMLElement {
     constructor() {
         super();
         this.title = 'Hello, World!';

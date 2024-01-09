@@ -1,4 +1,4 @@
-class GuiInputFloat extends HTMLElement{
+export class GuiInputFloat extends HTMLElement{
     
     private _value : number;
     value_preview : number = 0;

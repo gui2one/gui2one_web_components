@@ -1,5 +1,4 @@
-"use strict";
-class GuiCheckbox extends HTMLElement {
+export class GuiCheckbox extends HTMLElement {
     constructor() {
         var _a;
         super();

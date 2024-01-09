@@ -1,5 +1,4 @@
-"use strict";
-class GuiCollaspible extends HTMLElement {
+export class GuiCollaspible extends HTMLElement {
     constructor() {
         var _a;
         super();

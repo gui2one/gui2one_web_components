@@ -1,4 +1,5 @@
-class GuiAccordion extends HTMLElement{
+import { GuiCollaspible } from "./g2_collapsible";
+export class GuiAccordion extends HTMLElement{
     template_fragment : DocumentFragment;
     collapsibles : GuiCollaspible[] = [];
     constructor(){

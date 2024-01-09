@@ -1,5 +1,4 @@
-"use strict";
-class GuiInputVector extends HTMLElement {
+export class GuiInputVector extends HTMLElement {
     constructor() {
         super();
         this.default_scalar = 0;

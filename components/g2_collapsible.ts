@@ -1,4 +1,4 @@
-class GuiCollaspible extends HTMLElement{
+export class GuiCollaspible extends HTMLElement{
     template_fragment : DocumentFragment;
 
     closed : boolean = true;

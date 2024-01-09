@@ -1,5 +1,4 @@
-"use strict";
-class GuiAccordion extends HTMLElement {
+export class GuiAccordion extends HTMLElement {
     constructor() {
         var _a;
         super();

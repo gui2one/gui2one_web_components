@@ -1,4 +1,4 @@
-class GuiPanel extends HTMLElement{
+export class GuiPanel extends HTMLElement{
     template_fragment : DocumentFragment;
     constructor()
     {

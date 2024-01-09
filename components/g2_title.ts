@@ -1,4 +1,4 @@
-class GuiTitle extends HTMLElement {
+export class GuiTitle extends HTMLElement {
   title: string = 'Hello, World!';
 
   constructor() {
@@ -23,5 +23,5 @@ class GuiTitle extends HTMLElement {
   }
 }
   
-  // Register the custom element
-  customElements.define('gui-title', GuiTitle);
+// Register the custom element
+customElements.define('gui-title', GuiTitle);

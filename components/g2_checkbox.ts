@@ -1,4 +1,4 @@
-class GuiCheckbox extends HTMLElement{
+export class GuiCheckbox extends HTMLElement{
     template_fragment : DocumentFragment;
 
     label : string = "toggle";

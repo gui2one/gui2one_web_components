@@ -1,26 +1,46 @@
 
 // g2_accordion.js
-"use strict";
-class GuiAccordion extends HTMLElement {
+export class GuiAccordion extends HTMLElement {
     constructor() {
         var _a;
         super();
+        this.collapsibles = [];
         this.attachShadow({ mode: "open" });
         const styles = String.raw `<style>
 
-            :host{
-                background-color : red;
-            }
         </style>`;
         const template = String.raw `
             ${styles}
-            <h5>Accordion !!</h5>
             <slot></slot>
         `;
         this.template_fragment = document.createRange().createContextualFragment(template);
         (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.appendChild(this.template_fragment.cloneNode(true));
     }
+    open(theone) {
+        this.collapsibles.forEach((item, index) => {
+            // console.log(item, index);
+            if (item !== theone) {
+                item.setAttribute("closed", "true");
+            }
+        });
+    }
     connectedCallback() {
+        const slot = this.shadowRoot.querySelector('slot');
+        this.collapsibles = [];
+        slot === null || slot === void 0 ? void 0 : slot.addEventListener("slotchange", () => {
+            for (let node of slot === null || slot === void 0 ? void 0 : slot.assignedNodes()) {
+                if (node.nodeName === 'GUI-COLLAPSIBLE') {
+                    let coll = node;
+                    coll.addEventListener("open", (ev) => {
+                        this.open(ev.target);
+                    });
+                    this.collapsibles.push(coll);
+                }
+            }
+        });
+    }
+    adoptedCallBack() {
+        console.log("adopted");
     }
     static get observedAttributes() {
         return [];
@@ -30,23 +50,135 @@ class GuiAccordion extends HTMLElement {
 }
 customElements.define("gui-accordion", GuiAccordion);
 
-// g2_collapsible.js
-"use strict";
-class GuiCollaspible extends HTMLElement {
+// g2_checkbox.js
+export class GuiCheckbox extends HTMLElement {
     constructor() {
         var _a;
         super();
+        this.label = "toggle";
+        this.value = true;
+        this.attachShadow({ mode: "open" });
+        const styles = String.raw `<style>
+            :host{
+                --padding-top : 0.3em;
+                --padding-bottom : 0.3em;
+                --padding-left : 0.15em;
+                --padding-right : 0.15em;
+            }
+            #wrapper{
+                display : flex;
+                align-items : center;
+                /* justify-content : center; */
+                margin-bottom : 0.5em;
+            }
+
+            label{
+                display : flex;
+                align-items : center;
+                justify-content : center;
+                color : white;
+                background-color : grey;
+                padding-left : var(--padding-left);
+                padding-top : var(--padding-top);
+                padding-bottom : var(--padding-bottom);
+
+                border-radius : 3px 0 0 3px;
+                line-height : 1em;
+                width : 50%;
+                cursor : pointer;
+            }
+            input[type=checkbox]
+            {
+                visibility : hidden;
+            }
+            .pretty{
+                position : relative;
+                height : 1em;
+                width : 50px;
+                background-color : black;
+                padding-top : var(--padding-top);
+                padding-bottom : var(--padding-bottom);
+
+                border-radius : 0px 3px 3px 0px;
+            }
+
+            
+            .pretty.checked::after{
+                content : "";
+                position : absolute;
+                left : 0;
+                top : 0;
+                width : 100%;
+                height : 100%;
+                background-color : orange;
+                border-radius : 0px 3px 3px 0px;
+            }
+        </style>`;
+        const template = String.raw `
+            ${styles}
+
+            <div id="wrapper">
+            <label for="checkbox">${this.label}</label>
+            <div class="pretty ${this.value ? 'checked' : ''}">
+            </div>
+            <input id="checkbox" type="checkbox" ${this.value ? 'checked' : ''} />
+            </div>
+        `;
+        this.template_fragment = document.createRange().createContextualFragment(template);
+        (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.appendChild(this.template_fragment.cloneNode(true));
+        this.label_el = this.shadowRoot.querySelector("label");
+        this.pretty_el = this.shadowRoot.querySelector(".pretty");
+        let checkbox = this.shadowRoot.querySelector("#checkbox");
+        checkbox.addEventListener("change", (event) => {
+            let checkbox = event.target;
+            // console.log(event);
+            this.value = checkbox.toggleAttribute("checked");
+            this.pretty_el.classList.toggle("checked");
+            let ev = new Event("change");
+            this.dispatchEvent(ev);
+        });
+    }
+    connectedCallback() {
+    }
+    static get observedAttributes() {
+        return ["label"];
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case 'value':
+                this.value = newValue;
+                break;
+            case 'label':
+                this.label = newValue;
+                this.label_el.innerText = newValue;
+                break;
+            default: break;
+        }
+    }
+}
+customElements.define("gui-checkbox", GuiCheckbox);
+
+// g2_collapsible.js
+export class GuiCollaspible extends HTMLElement {
+    constructor() {
+        var _a;
+        super();
+        this.closed = true;
         this._title = "collaspible";
         this.attachShadow({ mode: "open" });
         const styles = String.raw `
         <style>
 
             .header{
+                display : flex;
+                align-items : center;
                 cursor : pointer;
                 background-color : #222;
                 margin : 0;
+                height : 2em;
                 margin-top : 0.25em;
                 padding-left : 0.5em; 
+                font-weight : bolder;
             }
 
             .header:hover{
@@ -54,24 +186,30 @@ class GuiCollaspible extends HTMLElement {
             }
 
             .header.closed{
-                font-weight : bold;
+                font-weight : normal;
             }
             .content{
                 padding : 0.5em;
                 padding-left : 0.5em;
                 padding-right : 0.5em;
                 overflow-y : hidden;
-                height : auto;
-                transition : all 0.1s;
+                /* height : auto; */
+                opacity : 1;
+                transform-origin : center top;
+                transform : scale3d(1.0, 1.0, 1.0);
+                transition : all .2s;
             }
             .content.closed{
+                /* transform : scale3d(1.0, 0.0, 1.0); */
                 height : 0;
                 padding-top : 0;
                 padding-bottom : 0;
+                opacity : 0;
             }
             
         
         </style>`;
+        this.closed = true;
         const template = String.raw `
             
             ${styles}
@@ -89,13 +227,27 @@ class GuiCollaspible extends HTMLElement {
         this.content_el = this.shadowRoot.querySelector(".content");
     }
     connectedCallback() {
+        if (this.closed) {
+            this.header_el.setAttribute("closed", "true");
+            this.content_el.setAttribute("closed", "true");
+            this.header_el.classList.add("closed");
+            this.content_el.classList.add("closed");
+        }
         this.header_el.addEventListener("click", (event) => {
             this.header_el.classList.toggle("closed");
             this.content_el.classList.toggle("closed");
+            if (this.header_el.classList.contains("closed")) {
+                this.closed = true;
+            }
+            else {
+                this.closed = false;
+                let ev = new Event("open");
+                this.dispatchEvent(ev);
+            }
         });
     }
     static get observedAttributes() {
-        return ['title'];
+        return ['title', 'closed'];
     }
     set title(val) {
         this._title = val;
@@ -108,6 +260,22 @@ class GuiCollaspible extends HTMLElement {
                 let span = (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.querySelector(".header>span");
                 span.innerText = newValue;
                 break;
+            case 'closed':
+                if (newValue === "")
+                    this.closed = true;
+                else if (newValue === "true")
+                    this.closed = true;
+                else if (newValue === "false")
+                    this.closed = false;
+                if (this.closed) {
+                    this.header_el.classList.add("closed");
+                    this.content_el.classList.add("closed");
+                }
+                else {
+                    this.header_el.classList.remove("closed");
+                    this.content_el.classList.remove("closed");
+                }
+                break;
             default: break;
         }
     }
@@ -115,8 +283,7 @@ class GuiCollaspible extends HTMLElement {
 customElements.define("gui-collapsible", GuiCollaspible);
 
 // g2_input_float.js
-"use strict";
-class GuiInputFloat extends HTMLElement {
+export class GuiInputFloat extends HTMLElement {
     constructor() {
         var _a;
         super();
@@ -327,8 +494,7 @@ class GuiInputFloat extends HTMLElement {
 customElements.define("gui-input-float", GuiInputFloat);
 
 // g2_input_vector.js
-"use strict";
-class GuiInputVector extends HTMLElement {
+export class GuiInputVector extends HTMLElement {
     constructor() {
         super();
         this.default_scalar = 0;
@@ -417,8 +583,7 @@ class GuiInputVector extends HTMLElement {
 customElements.define("gui-input-vector", GuiInputVector);
 
 // g2_panel.js
-"use strict";
-class GuiPanel extends HTMLElement {
+export class GuiPanel extends HTMLElement {
     constructor() {
         var _a, _b, _c, _d;
         super();
@@ -586,8 +751,7 @@ class GuiPanel extends HTMLElement {
 customElements.define("gui-panel", GuiPanel);
 
 // g2_title.js
-"use strict";
-class GuiTitle extends HTMLElement {
+export class GuiTitle extends HTMLElement {
     constructor() {
         super();
         this.title = 'Hello, World!';

@@ -1,4 +1,5 @@
-class GuiInputVector extends HTMLElement{
+import { GuiInputFloat } from "./g2_input_float";
+export class GuiInputVector extends HTMLElement{
     template_fragment : DocumentFragment;
 
     label_el : HTMLDivElement;

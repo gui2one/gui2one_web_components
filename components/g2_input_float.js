@@ -1,5 +1,4 @@
-"use strict";
-class GuiInputFloat extends HTMLElement {
+export class GuiInputFloat extends HTMLElement {
     constructor() {
         var _a;
         super();
