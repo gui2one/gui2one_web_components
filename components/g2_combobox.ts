@@ -1,23 +1,63 @@
 class GuiCombobox extends HTMLElement{
     template_fragment : DocumentFragment;
+
+    _label : string = "Label";
+    label_el : HTMLLabelElement;
+    wrapper : HTMLDivElement;
     constructor(){
         super();
         this.attachShadow({mode : "open"});
-        const styles = String.raw`<style></style>`;
+        const styles = String.raw`<style>
+            .wrapper{
+                padding : 0.5em;
+                display : flex;
+                flex-direction : row;
+                align-items :center;
+            }
+
+            label{
+                position : relative;
+                display : block;
+                flex : 1.0;
+            }
+
+            select{
+                height : 2.2em;
+                flex : 1;
+                position : relative;
+                display : block;
+                color : #eee;
+                background-color : grey;
+                border-radius : 3px;
+            }
+        </style>`;
         const template = String.raw`
             ${styles}
 
-            
+            <div class="wrapper">
+            <label for="list">${this._label}</label>
             <slot></slot>
+
+            </div>
 
             
         `;
         this.template_fragment = document.createRange().createContextualFragment(template);
         this.shadowRoot!.appendChild(this.template_fragment.cloneNode(true));
-        
+        this.wrapper = this.shadowRoot!.querySelector(".wrapper") as HTMLDivElement;
+        this.label_el = this.shadowRoot!.querySelector("label") as HTMLLabelElement;
         // let slot = this.shadowRoot!.querySelector("slot");
         // console.log(slot);
         
+    }
+
+    set label(str : string)
+    {
+        if(this.label_el)
+        {
+            this._label = str;
+            this.label_el.innerText = str;
+        }
     }
 
 
@@ -42,33 +82,49 @@ class GuiCombobox extends HTMLElement{
                 
                 }        
             }
-            console.log(option_nodes);
             
-            let old_select = this.shadowRoot!.querySelector("select");
+            let old_select = this.shadowRoot!.querySelector(".wrapper>select");
+            console.log(old_select);
             if(old_select !== null)
             {
-                this.removeChild(old_select);
+                this.wrapper.removeChild(old_select);
             }
-            let data_list = document.createElement("select");
+            let select : HTMLSelectElement = document.createElement("select") as HTMLSelectElement;
+            select.id = "list";
+            select.addEventListener("change", (event : any)=>{
+                let sel = event.target as HTMLSelectElement;
+                // console.log(sel.selectedIndex);
+                
+                let ev= new CustomEvent("change", {});
+                //  = sel.selectedIndex;
+                this.dispatchEvent(ev);
+
+            })
             for(let option of option_nodes)
             {
                 let opt = document.createElement("option");
                 opt.innerText = option.value;
                 // opt.innerText = option.value;
-                data_list.appendChild(opt)
+                select.appendChild(opt)
             }
-            this.shadowRoot!.appendChild(data_list)
+            this.wrapper.appendChild(select)
         })        
     }
 
 
     static get observedAttributes(){
-        return [];
+        return ["label"];
     }
 
 
     attributeChangedCallback(name : string, oldValue : any, newValue : any) {
-    
+        switch(name){
+            case 'label':
+                if(this.label_el){
+                    this.label_el.innerText = newValue;
+                }
+            default : break;
+        }
     }
 }
 customElements.define("gui-combobox", GuiCombobox);

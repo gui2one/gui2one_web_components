@@ -60,10 +60,10 @@
             <gui-accordion>
                 <gui-collapsible title="Misc Options" closed="false">
                     
-                    <gui-combobox>
-                        <option>qqsd</option>
-                        <option>qsd</option>
-                        <option>qsd</option>
+                    <gui-combobox label="Head Type" id="combo1">
+                        <option>qqsd1</option>
+                        <option>qsd2</option>
+                        <option>qsd3</option>
                     </gui-combobox>
                     <gui-checkbox id="checkbox1" label="active stuff"></gui-checkbox>
                     <gui-checkbox id="checkbox2" label="Do thing" ></gui-checkbox>
@@ -111,6 +111,11 @@
         let checkbox1 = document.querySelector("#checkbox1");
         checkbox1.addEventListener("change", (event)=>{
             console.log(event.target.value);
+        });
+        let combo1 = document.querySelector("#combo1");
+        combo1.addEventListener("change", (event)=>{
+            let target = event.target 
+            console.log(target);
         });
     </script>
 </body>
