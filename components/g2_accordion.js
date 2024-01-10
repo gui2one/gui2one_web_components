@@ -32,6 +32,7 @@ export class GuiAccordion extends HTMLElement {
                     coll.addEventListener("open", (ev) => {
                         this.open(ev.target);
                     });
+                    // console.log(coll);
                     this.collapsibles.push(coll);
                 }
             }
