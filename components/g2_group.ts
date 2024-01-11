@@ -11,7 +11,7 @@ class GuiGroup extends HTMLElement{
             .wrapper{
                 position : relative;
                 border-radius : 3px;
-                outline : 1px solid gray;
+                outline : 2px solid #ffffff10;
                 padding : 0.2em;
                 padding-top : 0.5em;
                 margin-top : 1.0em;

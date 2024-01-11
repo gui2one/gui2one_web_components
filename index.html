@@ -14,6 +14,7 @@
     <script type="module" src="build/components/g2_panel.js"></script>
     <script type="module" src="build/components/g2_checkbox.js"></script>
     <script type="module" src="build/components/g2_group.js"></script>
+    <script type="module" src="build/components/g2_separator.js"></script>
     <!-- <script type="module" src="build/g2_bundle.min.js"></script> -->
 
     <style>
@@ -58,17 +59,18 @@
                     <gui-group label="dummy params">
                         
                         <gui-combobox label="Head Type" id="combo1">
-                            <option>qqsd1</option>
-                            <option>qsd2</option>
-                            <option>qsd3</option>
+                            <option>1111</option>
+                            <option>2222</option>
+                            <option>3333</option>
                         </gui-combobox>
+                        <gui-separator></gui-separator>
                         <gui-combobox label="Other stuff" id="combo1">
-                            <option>qqsd1</option>
-                            <option>qsd2</option>
-                            <option>qsd3</option>
+                            <option>aaa</option>
+                            <option>bbb</option>
+                            <option>ccc</option>
                         </gui-combobox>
                     </gui-group>
-                    
+
                     <gui-group label="Other">
                         <gui-checkbox id="checkbox1" label="active stuff"></gui-checkbox>
                         <gui-checkbox id="checkbox2" label="Do thing" ></gui-checkbox>
@@ -82,6 +84,7 @@
         
                 <gui-collapsible title="Transforms 1">
                     <gui-input-vector id="position1" default_scalar=0 label="position"></gui-input-vector>
+
                     <gui-input-vector id="rotation1" default_scalar=0 label="rotation"></gui-input-vector>
                     <gui-input-vector id="scale1" default_scalar=1 label="scale"></gui-input-vector>
                 </gui-collapsible>

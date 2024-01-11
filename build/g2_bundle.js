@@ -344,22 +344,32 @@ class GuiCombobox extends HTMLElement {
                 display : flex;
                 flex-direction : row;
                 align-items :center;
+                justify-content : center;
+                height : 30px;
             }
 
             label{
+                display : flex;
+                align-items : center;
+                justify-content : center;
                 position : relative;
-                display : block;
+                outline : 1px solid rgba(255,255,255,0.1);
+                height : 100%;
                 flex : 1.0;
+
+                border-radius : 3px 0 0 3px;
             }
 
             select{
-                height : 2.2em;
+                border : 0;
+                height : 31px;
+                line-height : 30px;
                 flex : 1;
                 position : relative;
                 display : block;
                 color : #222;
                 background-color : white;
-                border-radius : 3px;
+                border-radius : 0 3px 3px 0;
             }
         </style>`;
         const template = String.raw `
@@ -463,7 +473,7 @@ class GuiGroup extends HTMLElement {
             .wrapper{
                 position : relative;
                 border-radius : 3px;
-                outline : 1px solid gray;
+                outline : 2px solid #ffffff10;
                 padding : 0.2em;
                 padding-top : 0.5em;
                 margin-top : 1.0em;
@@ -1006,6 +1016,36 @@ export class GuiPanel extends HTMLElement {
     }
 }
 customElements.define("gui-panel", GuiPanel);
+
+// g2_separator.js
+"use strict";
+class GuiSeparator extends HTMLElement {
+    constructor() {
+        var _a;
+        super();
+        this.attachShadow({ mode: "open" });
+        const styles = String.raw `<style>
+
+            hr{
+                opacity : 0.1;
+            }
+        </style>`;
+        const template = String.raw `
+            ${styles}
+            <hr>
+        `;
+        this.template_fragment = document.createRange().createContextualFragment(template);
+        (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.appendChild(this.template_fragment.cloneNode(true));
+    }
+    connectedCallback() {
+    }
+    static get observedAttributes() {
+        return [];
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+    }
+}
+customElements.define("gui-separator", GuiSeparator);
 
 // g2_title.js
 export class GuiTitle extends HTMLElement {

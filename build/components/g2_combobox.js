@@ -12,22 +12,32 @@ class GuiCombobox extends HTMLElement {
                 display : flex;
                 flex-direction : row;
                 align-items :center;
+                justify-content : center;
+                height : 30px;
             }
 
             label{
+                display : flex;
+                align-items : center;
+                justify-content : center;
                 position : relative;
-                display : block;
+                outline : 1px solid rgba(255,255,255,0.1);
+                height : 100%;
                 flex : 1.0;
+
+                border-radius : 3px 0 0 3px;
             }
 
             select{
-                height : 2.2em;
+                border : 0;
+                height : 31px;
+                line-height : 30px;
                 flex : 1;
                 position : relative;
                 display : block;
                 color : #222;
                 background-color : white;
-                border-radius : 3px;
+                border-radius : 0 3px 3px 0;
             }
         </style>`;
         const template = String.raw `
