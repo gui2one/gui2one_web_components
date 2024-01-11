@@ -9,21 +9,26 @@ export class GuiCheckbox extends HTMLElement {
             :host{
                 --padding-top : 0.3em;
                 --padding-bottom : 0.3em;
-                --padding-left : 0.15em;
-                --padding-right : 0.15em;
+                --padding-left : 0.5em;
+                --padding-right : 0.5em;
             }
             #wrapper{
                 display : flex;
                 align-items : center;
                 justify-content : center;
+                margin-top : 0.5em;
                 margin-bottom : 0.5em;
-            }
+                padding-left : 0.5em;
+                padding-right : 0.5em;
 
+                /* padding-top : var(--padding-top); */
+                /* padding-bottom : 0.1em; */
+            }
             label{
                 display : flex;
                 flex : 1;
                 align-items : center;
-                justify-content : center;
+                /* justify-content : center; */
                 color : white;
                 background-color : grey;
                 padding-left : var(--padding-left);
@@ -35,7 +40,6 @@ export class GuiCheckbox extends HTMLElement {
                 width : 50%;
                 cursor : pointer;
             }
-
             label.checked{
                 background-color : green;
             }
@@ -55,8 +59,6 @@ export class GuiCheckbox extends HTMLElement {
 
                 border-radius : 0px 3px 3px 0px;
             }
-
-            
             .pretty.checked::after{
                 content : "";
                 position : absolute;
