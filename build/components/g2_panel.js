@@ -7,8 +7,10 @@ export class GuiPanel extends HTMLElement {
             <style>
                 .panel{
                     --scrollbar-width : 8px;
-                    --scrollbar-track-color : darkgray;
+                    --scrollbar-track-color : transparent;
                     --scrollbar-thumb-color : gray;
+
+                    
                 }
                 
                         /* For WebKit browsers (Chrome, Safari) */
@@ -71,8 +73,9 @@ export class GuiPanel extends HTMLElement {
                 .panel{
                     position : relative;
                     overflow-y : scroll;
-                    height : calc(100% - 50px);
+                    height : calc(100% - 50px - 2em);
                     width : 100%;
+                    padding-top : 2em;
                 }
                 .panel:after{
                     content : " ";
