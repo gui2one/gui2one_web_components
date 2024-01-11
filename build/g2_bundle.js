@@ -221,6 +221,26 @@ export class GuiCollaspible extends HTMLElement {
                 padding-bottom : 0;
                 opacity : 0;
             }
+
+            .arrow {
+                width: 0; 
+                height: 0; 
+                border-top: 10px solid transparent;
+                border-bottom: 10px solid transparent; 
+                
+                border-left:10px solid white; 
+                /* padding-right : 10px; */
+                transform-origin : 50% 50%;
+                margin-right : 20px;
+                transform : rotate(90deg);
+                transition : all 0.08s; 
+                opacity : 1.0;
+            }
+            
+            .arrow.closed{
+                transform : rotate(0deg);
+                opacity : 0.5;
+            }
             
         
         </style>`;
@@ -230,7 +250,7 @@ export class GuiCollaspible extends HTMLElement {
             ${styles}
 
             <div class="wrapper">
-                <div class="header"><span>${this.title}</span></div>
+                <div class="header"><div class="arrow" id="arrow"></div><span>${this.title}</span></div>
                 <div class="content">
                     <slot></slot>
                 </div>
@@ -239,16 +259,20 @@ export class GuiCollaspible extends HTMLElement {
         this.template_fragment = document.createRange().createContextualFragment(template);
         (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.appendChild(this.template_fragment.cloneNode(true));
         this.header_el = this.shadowRoot.querySelector(".header");
+        this.arrow_el = this.shadowRoot.querySelector(".header>.arrow");
+        // console.log(this.arrow_el);
         this.content_el = this.shadowRoot.querySelector(".content");
     }
     connectedCallback() {
         if (this.closed) {
             this.header_el.setAttribute("closed", "true");
             this.content_el.setAttribute("closed", "true");
+            this.arrow_el.classList.add("closed");
             this.header_el.classList.add("closed");
             this.content_el.classList.add("closed");
         }
         this.header_el.addEventListener("click", (event) => {
+            this.arrow_el.classList.toggle("closed");
             this.header_el.classList.toggle("closed");
             this.content_el.classList.toggle("closed");
             if (this.header_el.classList.contains("closed")) {
@@ -283,10 +307,12 @@ export class GuiCollaspible extends HTMLElement {
                 else if (newValue === "false")
                     this.closed = false;
                 if (this.closed) {
+                    this.arrow_el.classList.add("closed");
                     this.header_el.classList.add("closed");
                     this.content_el.classList.add("closed");
                 }
                 else {
+                    this.arrow_el.classList.remove("closed");
                     this.header_el.classList.remove("closed");
                     this.content_el.classList.remove("closed");
                 }
