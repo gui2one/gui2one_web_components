@@ -95,7 +95,7 @@ export class GuiPanel extends HTMLElement{
                 }
 
                 .close_btn:hover{
-                    opacity : 0.25;
+                    opacity : 1.0;
                 }
 
                 .close_btn::before{
@@ -141,7 +141,9 @@ export class GuiPanel extends HTMLElement{
                     margin-left : -25px;
                     visibility : hidden;
                 }
-
+                .open_btn:hover{
+                    opacity : 0.9;
+                }
                 #wrapper.hidden>.open_btn{
                     visibility : visible;
                 }
