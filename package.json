@@ -6,7 +6,7 @@
   "scripts": {
     "watch": "tsc-watch --project .",
     "build": "tsc --project .",
-    "gen" : "npm run build && node ./node/generate_bundle.mjs"
+    "gen" : "npm run build && node ./node/generate_bundle.mjs && esbuild ./build/g2_bundle.js --minify --outfile=./build/g2_bundle.min.js"
   },
   "keywords": [],
   "author": "",
