@@ -37,20 +37,20 @@ export class GuiInputVector extends HTMLElement {
         this.input_x = this.shadowRoot.querySelector("#input_x");
         this.input_y = this.shadowRoot.querySelector("#input_y");
         this.input_z = this.shadowRoot.querySelector("#input_z");
-        this.input_x.addEventListener("changed", (event) => {
+        this.input_x.addEventListener("change", (event) => {
             let val = event.target.value;
             this.value[0] = val;
-            this.dispatchEvent(new Event("changed"));
+            this.dispatchEvent(new Event("change"));
         });
-        this.input_y.addEventListener("changed", (event) => {
+        this.input_y.addEventListener("change", (event) => {
             let val = event.target.value;
             this.value[1] = val;
-            this.dispatchEvent(new Event("changed"));
+            this.dispatchEvent(new Event("change"));
         });
-        this.input_z.addEventListener("changed", (event) => {
+        this.input_z.addEventListener("change", (event) => {
             let val = event.target.value;
             this.value[2] = val;
-            this.dispatchEvent(new Event("changed"));
+            this.dispatchEvent(new Event("change"));
         });
     }
     connectedCallback() {

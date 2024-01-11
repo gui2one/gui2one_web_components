@@ -302,20 +302,69 @@ customElements.define("gui-collapsible", GuiCollaspible);
 class GuiCombobox extends HTMLElement {
     constructor() {
         super();
+        this._label = "Label";
+        this._value = "";
+        this._selectedIndex = -1;
         this.attachShadow({ mode: "open" });
-        const styles = String.raw `<style></style>`;
+        const styles = String.raw `<style>
+            .wrapper{
+                padding : 0.5em;
+                display : flex;
+                flex-direction : row;
+                align-items :center;
+            }
+
+            label{
+                position : relative;
+                display : block;
+                flex : 1.0;
+            }
+
+            select{
+                height : 2.2em;
+                flex : 1;
+                position : relative;
+                display : block;
+                color : #eee;
+                background-color : grey;
+                border-radius : 3px;
+            }
+        </style>`;
         const template = String.raw `
             ${styles}
 
-            
+            <div class="wrapper">
+            <label for="list">${this._label}</label>
             <slot></slot>
+
+            </div>
 
             
         `;
         this.template_fragment = document.createRange().createContextualFragment(template);
         this.shadowRoot.appendChild(this.template_fragment.cloneNode(true));
+        this.wrapper = this.shadowRoot.querySelector(".wrapper");
+        this.label_el = this.shadowRoot.querySelector("label");
         // let slot = this.shadowRoot!.querySelector("slot");
         // console.log(slot);
+    }
+    set label(str) {
+        if (this.label_el) {
+            this._label = str;
+            this.label_el.innerText = str;
+        }
+    }
+    set selectedIndex(index) {
+        this._selectedIndex = index;
+    }
+    get selectedIndex() {
+        return this._selectedIndex;
+    }
+    get value() {
+        return this._value;
+    }
+    set value(str) {
+        this._value = str;
     }
     connectedCallback() {
         var _a;
@@ -329,25 +378,42 @@ class GuiCombobox extends HTMLElement {
                     this.removeChild(coll);
                 }
             }
-            console.log(option_nodes);
-            let old_select = this.shadowRoot.querySelector("select");
+            let old_select = this.shadowRoot.querySelector(".wrapper>select");
+            console.log(old_select);
             if (old_select !== null) {
-                this.removeChild(old_select);
+                this.wrapper.removeChild(old_select);
             }
-            let data_list = document.createElement("select");
+            let select = document.createElement("select");
+            select.id = "list";
+            select.addEventListener("change", (event) => {
+                let sel = event.target;
+                // console.log(sel.selectedIndex);
+                this.value = sel.value;
+                this.selectedIndex = sel.selectedIndex;
+                let ev = new CustomEvent("change", {});
+                //  = sel.selectedIndex;
+                this.dispatchEvent(ev);
+            });
             for (let option of option_nodes) {
                 let opt = document.createElement("option");
                 opt.innerText = option.value;
                 // opt.innerText = option.value;
-                data_list.appendChild(opt);
+                select.appendChild(opt);
             }
-            this.shadowRoot.appendChild(data_list);
+            this.wrapper.appendChild(select);
         });
     }
     static get observedAttributes() {
-        return [];
+        return ["label"];
     }
     attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case 'label':
+                if (this.label_el) {
+                    this.label_el.innerText = newValue;
+                }
+            default: break;
+        }
     }
 }
 customElements.define("gui-combobox", GuiCombobox);
@@ -518,7 +584,7 @@ export class GuiInputFloat extends HTMLElement {
         return ['label', 'color', "default_value"];
     }
     triggerChange() {
-        let ev = new Event("changed", {
+        let ev = new Event("change", {
         // bubbles : true,
         // composed : false,
         });
@@ -607,20 +673,20 @@ export class GuiInputVector extends HTMLElement {
         this.input_x = this.shadowRoot.querySelector("#input_x");
         this.input_y = this.shadowRoot.querySelector("#input_y");
         this.input_z = this.shadowRoot.querySelector("#input_z");
-        this.input_x.addEventListener("changed", (event) => {
+        this.input_x.addEventListener("change", (event) => {
             let val = event.target.value;
             this.value[0] = val;
-            this.dispatchEvent(new Event("changed"));
+            this.dispatchEvent(new Event("change"));
         });
-        this.input_y.addEventListener("changed", (event) => {
+        this.input_y.addEventListener("change", (event) => {
             let val = event.target.value;
             this.value[1] = val;
-            this.dispatchEvent(new Event("changed"));
+            this.dispatchEvent(new Event("change"));
         });
-        this.input_z.addEventListener("changed", (event) => {
+        this.input_z.addEventListener("change", (event) => {
             let val = event.target.value;
             this.value[2] = val;
-            this.dispatchEvent(new Event("changed"));
+            this.dispatchEvent(new Event("change"));
         });
     }
     connectedCallback() {

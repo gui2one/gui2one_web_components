@@ -163,7 +163,7 @@ export class GuiInputFloat extends HTMLElement {
         return ['label', 'color', "default_value"];
     }
     triggerChange() {
-        let ev = new Event("changed", {
+        let ev = new Event("change", {
         // bubbles : true,
         // composed : false,
         });
