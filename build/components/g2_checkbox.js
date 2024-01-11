@@ -15,12 +15,13 @@ export class GuiCheckbox extends HTMLElement {
             #wrapper{
                 display : flex;
                 align-items : center;
-                /* justify-content : center; */
+                justify-content : center;
                 margin-bottom : 0.5em;
             }
 
             label{
                 display : flex;
+                flex : 1;
                 align-items : center;
                 justify-content : center;
                 color : white;
@@ -41,12 +42,14 @@ export class GuiCheckbox extends HTMLElement {
             input[type=checkbox]
             {
                 visibility : hidden;
+                display : none;
             }
             .pretty{
                 position : relative;
+                flex : 1;
                 height : 1em;
                 width : 50px;
-                background-color : black;
+                background-color : white;
                 padding-top : var(--padding-top);
                 padding-bottom : var(--padding-bottom);
 
@@ -57,16 +60,17 @@ export class GuiCheckbox extends HTMLElement {
             .pretty.checked::after{
                 content : "";
                 position : absolute;
-                left : 0;
+                left : calc(50% - 30px/2);
                 top : 0;
-                width : 100%;
+                width : 30px;
                 height : 10px;
                 /* background-color : red; */
                 border-radius : 0px 3px 3px 0px;
-                border : 6px solid white;
+                border : 10px solid #222;
                 border-top : none;
                 border-right : none;
-                transform : rotate(-45deg) scale(0.6);
+                transform-origin : 50% 50%;
+                transform : scale(0.6) rotate(-45deg) ;
             }
         </style>`;
         const template = String.raw `

@@ -29,8 +29,8 @@ class GuiCombobox extends HTMLElement{
                 flex : 1;
                 position : relative;
                 display : block;
-                color : #eee;
-                background-color : grey;
+                color : #222;
+                background-color : white;
                 border-radius : 3px;
             }
         </style>`;
@@ -108,7 +108,7 @@ class GuiCombobox extends HTMLElement{
             let old_select = this.shadowRoot!.querySelector(".wrapper>select");
             if(old_select !== null)
             {
-                console.log("removing old " , old_select);
+                // console.log("removing old " , old_select);
                 this.wrapper.removeChild(old_select);
             }
             let select : HTMLSelectElement = document.createElement("select") as HTMLSelectElement;
