@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Demo Page</title>
 
-    <script type="module" src="components/g2_title.js"></script>
-    <script type="module" src="components/g2_input_float.js"></script>
-    <script type="module" src="components/g2_combobox.js"></script>
-    <script type="module" src="components/g2_input_vector.js"></script>
-    <script type="module" src="components/g2_collapsible.js"></script>
-    <script type="module" src="components/g2_accordion.js"></script>
-    <script type="module" src="components/g2_panel.js"></script>
-    <script type="module" src="components/g2_checkbox.js"></script>
+    <script type="module" src="build/components/g2_title.js"></script>
+    <script type="module" src="build/components/g2_input_float.js"></script>
+    <script type="module" src="build/components/g2_combobox.js"></script>
+    <script type="module" src="build/components/g2_input_vector.js"></script>
+    <script type="module" src="build/components/g2_collapsible.js"></script>
+    <script type="module" src="build/components/g2_accordion.js"></script>
+    <script type="module" src="build/components/g2_panel.js"></script>
+    <script type="module" src="build/components/g2_checkbox.js"></script>
     <!-- <script type="module" src="components/bundle.js"></script> -->
 
     <style>
@@ -75,48 +75,27 @@
                 </gui-collapsible>
         
                 <gui-collapsible title="Transforms 1">
-                    <gui-input-vector id="position" default_scalar=0 label="position"></gui-input-vector>
-                    <gui-input-vector id="rotation" default_scalar=0 label="rotation"></gui-input-vector>
-                    <gui-input-vector id="scale" default_scalar=1 label="scale"></gui-input-vector>
+                    <gui-input-vector id="position1" default_scalar=0 label="position"></gui-input-vector>
+                    <gui-input-vector id="rotation1" default_scalar=0 label="rotation"></gui-input-vector>
+                    <gui-input-vector id="scale1" default_scalar=1 label="scale"></gui-input-vector>
                 </gui-collapsible>
                 
                 <gui-collapsible title="Transforms 2">
-                    <gui-input-vector id="position" default_scalar=0 label="position"></gui-input-vector>
-                    <gui-input-vector id="rotation" default_scalar=0 label="rotation"></gui-input-vector>
-                    <gui-input-vector id="scale" default_scalar=1 label="scale"></gui-input-vector>
+                    <gui-input-vector id="position2" default_scalar=0 label="position"></gui-input-vector>
+                    <gui-input-vector id="rotation2" default_scalar=0 label="rotation"></gui-input-vector>
+                    <gui-input-vector id="scale2" default_scalar=1 label="scale"></gui-input-vector>
                 </gui-collapsible>
                 
                 <gui-collapsible title="Transforms 3">
-                    <gui-input-vector id="position" default_scalar=0 label="position"></gui-input-vector>
-                    <gui-input-vector id="rotation" default_scalar=0 label="rotation"></gui-input-vector>
-                    <gui-input-vector id="scale" default_scalar=1 label="scale"></gui-input-vector>
+                    <gui-input-vector id="position3" default_scalar=0 label="position"></gui-input-vector>
+                    <gui-input-vector id="rotation3" default_scalar=0 label="rotation"></gui-input-vector>
+                    <gui-input-vector id="scale3" default_scalar=1 label="scale"></gui-input-vector>
                 </gui-collapsible>
             </gui-accordion>
     
     
         </gui-panel>
     </div>
-    <script>
-        let scale = document.querySelector("#scale");
-        // console.log(scale);
-
-        scale.addEventListener("change", (event)=>{
-            console.log(event.target.value);
-        })
-        let float_input = document.querySelector("#float_input");
-        float_input.addEventListener("change", (event)=>{
-            console.log(event.target.value)
-        })
-
-        let checkbox1 = document.querySelector("#checkbox1");
-        checkbox1.addEventListener("change", (event)=>{
-            console.log(event.target.value);
-        });
-        let combo1 = document.querySelector("#combo1");
-        combo1.addEventListener("change", (event)=>{
-            let target = event.target 
-            console.log(target.selectedIndex, target.value);
-        });
-    </script>
+    <script type="module" src="build/demo/demo.js"></script>
 </body>
 </html>

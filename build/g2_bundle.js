@@ -304,7 +304,7 @@ class GuiCombobox extends HTMLElement {
         super();
         this._label = "Label";
         this._value = "";
-        this._selectedIndex = -1;
+        this._selectedIndex = 0;
         this.attachShadow({ mode: "open" });
         const styles = String.raw `<style>
             .wrapper{
@@ -379,8 +379,8 @@ class GuiCombobox extends HTMLElement {
                 }
             }
             let old_select = this.shadowRoot.querySelector(".wrapper>select");
-            console.log(old_select);
             if (old_select !== null) {
+                console.log("removing old ", old_select);
                 this.wrapper.removeChild(old_select);
             }
             let select = document.createElement("select");
@@ -390,7 +390,7 @@ class GuiCombobox extends HTMLElement {
                 // console.log(sel.selectedIndex);
                 this.value = sel.value;
                 this.selectedIndex = sel.selectedIndex;
-                let ev = new CustomEvent("change", {});
+                let ev = new Event("change", {});
                 //  = sel.selectedIndex;
                 this.dispatchEvent(ev);
             });

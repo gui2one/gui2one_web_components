@@ -1,7 +1,8 @@
 import { log } from "console";
 import fs from "fs/promises";
 import path from "path";
-const SRC_DIR = "./components";
+const SRC_DIR = "./build/components";
+const BUNDLE_NAME = "g2_bundle.js"
 let all = await fs.readdir(SRC_DIR);
 // console.log(all);
 let buffers = [];
@@ -10,7 +11,7 @@ for(let cur_file of all)
     
     // console.log(path.extname(cur_file));
 
-    if( path.extname(cur_file) === ".js" && cur_file !== "bundle.js"){
+    if( path.extname(cur_file) === ".js" && cur_file !== BUNDLE_NAME){
         console.log("Collecting "+cur_file);
         let content = await fs.readFile(path.join(SRC_DIR, cur_file));
         
@@ -23,7 +24,7 @@ for(let cur_file of all)
     }
 }
 
-const output_path = path.join(SRC_DIR, "bundle.js");
+const output_path = path.join(SRC_DIR, "..", BUNDLE_NAME);
 
 
 fs.writeFile(output_path, ""); // clear file content

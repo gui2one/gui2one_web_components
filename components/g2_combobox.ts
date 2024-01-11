@@ -6,7 +6,7 @@ class GuiCombobox extends HTMLElement{
     wrapper : HTMLDivElement;
 
     _value : string = "";
-    _selectedIndex : number = -1;
+    _selectedIndex : number = 0;
     constructor(){
         super();
         this.attachShadow({mode : "open"});
@@ -106,9 +106,9 @@ class GuiCombobox extends HTMLElement{
             }
             
             let old_select = this.shadowRoot!.querySelector(".wrapper>select");
-            console.log(old_select);
             if(old_select !== null)
             {
+                console.log("removing old " , old_select);
                 this.wrapper.removeChild(old_select);
             }
             let select : HTMLSelectElement = document.createElement("select") as HTMLSelectElement;
@@ -119,7 +119,7 @@ class GuiCombobox extends HTMLElement{
                 
                 this.value = sel.value; 
                 this.selectedIndex = sel.selectedIndex;
-                let ev= new CustomEvent("change", {});
+                let ev= new Event("change", {});
                 //  = sel.selectedIndex;
                 this.dispatchEvent(ev);
 
