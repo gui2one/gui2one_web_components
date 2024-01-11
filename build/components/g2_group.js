@@ -13,7 +13,7 @@ class GuiGroup extends HTMLElement {
                 outline : 1px solid gray;
                 padding : 0.2em;
                 padding-top : 0.5em;
-                margin-top : 0.5em;
+                margin-top : 1.0em;
                 /* height : min-content; */
 
             }
