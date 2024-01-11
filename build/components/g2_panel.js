@@ -123,14 +123,26 @@ export class GuiPanel extends HTMLElement {
                 }
 
                 .open_btn{
+                    display : flex;
+                    align-items : center;
+                    justify-content : center;
+                    font-weight : bold;
+                    font-size : 2em;
                     position : absolute;
                     width : 25px;
                     height : 25px;
-                    background-color : red; 
+                    background-color : transparent; 
+                    opacity : 0.5;
+                    filter : drop-shadow(2px 2px 2px pink);
                     top : 0;
                     left : 0;  
                     z-index : 2;
                     margin-left : -25px;
+                    visibility : hidden;
+                }
+
+                #wrapper.hidden>.open_btn{
+                    visibility : visible;
                 }
             </style>
         `;
@@ -139,7 +151,7 @@ export class GuiPanel extends HTMLElement {
             ${styles}
             <!-- <div id="wrapper" oncontextmenu="return false;"> -->
             <div id="wrapper" >
-                <div class="open_btn"></div>
+                <div class="open_btn">&lt;</div>
                 <div class="close_btn"></div>
                 <div class="panel">
                     <slot></slot>
