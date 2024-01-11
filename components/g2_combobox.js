@@ -3,6 +3,8 @@ class GuiCombobox extends HTMLElement {
     constructor() {
         super();
         this._label = "Label";
+        this._value = "";
+        this._selectedIndex = -1;
         this.attachShadow({ mode: "open" });
         const styles = String.raw `<style>
             .wrapper{
@@ -52,6 +54,18 @@ class GuiCombobox extends HTMLElement {
             this.label_el.innerText = str;
         }
     }
+    set selectedIndex(index) {
+        this._selectedIndex = index;
+    }
+    get selectedIndex() {
+        return this._selectedIndex;
+    }
+    get value() {
+        return this._value;
+    }
+    set value(str) {
+        this._value = str;
+    }
     connectedCallback() {
         var _a;
         const slot = (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.querySelector('slot');
@@ -74,6 +88,8 @@ class GuiCombobox extends HTMLElement {
             select.addEventListener("change", (event) => {
                 let sel = event.target;
                 // console.log(sel.selectedIndex);
+                this.value = sel.value;
+                this.selectedIndex = sel.selectedIndex;
                 let ev = new CustomEvent("change", {});
                 //  = sel.selectedIndex;
                 this.dispatchEvent(ev);

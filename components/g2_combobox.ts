@@ -4,6 +4,9 @@ class GuiCombobox extends HTMLElement{
     _label : string = "Label";
     label_el : HTMLLabelElement;
     wrapper : HTMLDivElement;
+
+    _value : string = "";
+    _selectedIndex : number = -1;
     constructor(){
         super();
         this.attachShadow({mode : "open"});
@@ -60,6 +63,25 @@ class GuiCombobox extends HTMLElement{
         }
     }
 
+    set selectedIndex(index : number)
+    {
+        this._selectedIndex = index;
+    }
+
+    get selectedIndex() : number
+    {
+        return this._selectedIndex;
+    }
+
+    get value()
+    {
+        return this._value;
+    }
+
+    set value(str : string)
+    {
+        this._value = str;
+    }
 
     connectedCallback(){
         const slot = this.shadowRoot?.querySelector('slot') as HTMLSlotElement;
@@ -95,6 +117,8 @@ class GuiCombobox extends HTMLElement{
                 let sel = event.target as HTMLSelectElement;
                 // console.log(sel.selectedIndex);
                 
+                this.value = sel.value; 
+                this.selectedIndex = sel.selectedIndex;
                 let ev= new CustomEvent("change", {});
                 //  = sel.selectedIndex;
                 this.dispatchEvent(ev);
