@@ -6,6 +6,7 @@ export class GuiCollaspible extends HTMLElement{
     header_el : HTMLDivElement;
     arrow_el : HTMLDivElement;
     content_el : HTMLDivElement;
+    title_el : HTMLSpanElement;
     constructor(){
         super();
         this.attachShadow({mode : "open"});
@@ -79,7 +80,7 @@ export class GuiCollaspible extends HTMLElement{
             ${styles}
 
             <div class="wrapper">
-                <div class="header"><div class="arrow" id="arrow"></div><span>${this.title}</span></div>
+                <div class="header"><div class="arrow" id="arrow"></div><span id="title">${this.title}</span></div>
                 <div class="content">
                     <slot></slot>
                 </div>
@@ -90,7 +91,7 @@ export class GuiCollaspible extends HTMLElement{
 
         this.header_el = this.shadowRoot!.querySelector(".header") as HTMLDivElement;
         this.arrow_el = this.shadowRoot!.querySelector(".header>.arrow") as HTMLDivElement;
-        // console.log(this.arrow_el);
+        this.title_el = this.shadowRoot!.querySelector("#title") as HTMLSpanElement;
         
         this.content_el = this.shadowRoot!.querySelector(".content") as HTMLDivElement;
 
@@ -133,6 +134,10 @@ export class GuiCollaspible extends HTMLElement{
     set title(val : string)
     {
         this._title = val;
+        if(this.title_el)
+        {
+            this.title_el.innerText = val;
+        }
     }
     attributeChangedCallback(name : string, oldValue : any, newValue : any) {
         switch(name)

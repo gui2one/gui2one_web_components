@@ -256,7 +256,7 @@ export class GuiCollaspible extends HTMLElement {
             ${styles}
 
             <div class="wrapper">
-                <div class="header"><div class="arrow" id="arrow"></div><span>${this.title}</span></div>
+                <div class="header"><div class="arrow" id="arrow"></div><span id="title">${this.title}</span></div>
                 <div class="content">
                     <slot></slot>
                 </div>
@@ -266,7 +266,7 @@ export class GuiCollaspible extends HTMLElement {
         (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.appendChild(this.template_fragment.cloneNode(true));
         this.header_el = this.shadowRoot.querySelector(".header");
         this.arrow_el = this.shadowRoot.querySelector(".header>.arrow");
-        // console.log(this.arrow_el);
+        this.title_el = this.shadowRoot.querySelector("#title");
         this.content_el = this.shadowRoot.querySelector(".content");
     }
     connectedCallback() {
@@ -296,6 +296,9 @@ export class GuiCollaspible extends HTMLElement {
     }
     set title(val) {
         this._title = val;
+        if (this.title_el) {
+            this.title_el.innerText = val;
+        }
     }
     attributeChangedCallback(name, oldValue, newValue) {
         var _a;
