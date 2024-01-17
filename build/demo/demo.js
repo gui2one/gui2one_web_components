@@ -1,5 +1,6 @@
 let scale = document.querySelector("#scale1");
 // console.log(scale);
+scale.value = [1, 2, 3];
 scale.addEventListener("change", (event) => {
     console.log(event.target.value);
 });

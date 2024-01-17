@@ -533,7 +533,10 @@ export class GuiInputFloat extends HTMLElement {
         var _a;
         super();
         this.value_preview = 0;
+        this.value_offset = 0;
         this.default_value = 0;
+        this.old_value = 0;
+        this.new_value = 0;
         this._label = '';
         this._color = "";
         this.drag_start_pos = 0;
@@ -646,7 +649,14 @@ export class GuiInputFloat extends HTMLElement {
         });
         this.value_input.addEventListener("input", (event) => {
             this._value = parseFloat(this.value_input.value);
+            console.log("change");
+            this.triggerChange();
         });
+        // this.value_input.addEventListener("change", (event : Event)=>{
+        //     this._value = parseFloat(this.value_input.value);
+        //     // console.log("change");
+        //     this.triggerChange();
+        // })
         this.value_input.addEventListener("keypress", (event) => {
             if (event.key === "Enter") {
                 this.value_input.blur();
@@ -657,6 +667,7 @@ export class GuiInputFloat extends HTMLElement {
             this.triggerChange();
         });
         this.label_el.addEventListener("mousedown", (event) => {
+            this.value_offset = 0;
             if (event.button === 0) {
                 this.is_mouse_down = true;
                 this.drag_start_pos = event.clientX;
@@ -686,6 +697,11 @@ export class GuiInputFloat extends HTMLElement {
                 diff *= mult;
                 this.value_input.value = (this.value + diff).toString();
                 this.value_preview = (this.value + diff);
+                this.value_offset = diff;
+                this.value += diff;
+                this.triggerChange();
+                /** RESET */
+                this.drag_start_pos = event.pageX;
             }
         });
     }
@@ -826,6 +842,10 @@ export class GuiInputVector extends HTMLElement {
         return [this.input_x.value, this.input_y.value, this.input_z.value];
     }
     set value(val) {
+        console.log("setting values : ", val);
+        this.input_x.value = val[0];
+        this.input_y.value = val[1];
+        this.input_z.value = val[2];
         this._value = val;
     }
 }

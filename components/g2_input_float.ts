@@ -2,7 +2,11 @@ export class GuiInputFloat extends HTMLElement{
     
     private _value : number;
     value_preview : number = 0;
+    value_offset : number = 0;
     default_value : number = 0;
+
+    old_value : number = 0;
+    new_value : number = 0;
 
     _label : string = '';
     label_el : HTMLDivElement;
@@ -146,7 +150,16 @@ export class GuiInputFloat extends HTMLElement{
         })
         this.value_input.addEventListener("input", (event : Event)=>{
             this._value = parseFloat(this.value_input.value);
+            console.log("change");
+            
+            this.triggerChange();
         })
+        // this.value_input.addEventListener("change", (event : Event)=>{
+        //     this._value = parseFloat(this.value_input.value);
+        //     // console.log("change");
+            
+        //     this.triggerChange();
+        // })
         this.value_input.addEventListener("keypress", (event : KeyboardEvent)=>{
             if(event.key === "Enter"){
                 this.value_input.blur();
@@ -160,6 +173,7 @@ export class GuiInputFloat extends HTMLElement{
 
         this.label_el.addEventListener("mousedown", (event : MouseEvent)=>{
             
+            this.value_offset = 0;
             if( event.button === 0)
             {
                 this.is_mouse_down = true;
@@ -184,15 +198,24 @@ export class GuiInputFloat extends HTMLElement{
         })
 
         document.addEventListener("mousemove", (event : MouseEvent)=>{
+            
             if(this.is_mouse_down)
             {
                 let diff = (event.pageX - this.drag_start_pos);
                 let mult = 0.1;
                 if( this.ctrl_pressed ) mult *= 0.1;
                 else if (this.shift_pressed) mult *= 5.0;
+
                 diff *= mult;
                 this.value_input.value = (this.value + diff).toString();
                 this.value_preview = (this.value + diff);
+                this.value_offset = diff;
+
+                this.value += diff;
+                this.triggerChange();
+
+                /** RESET */
+                this.drag_start_pos = event.pageX;
             }
         })
     }

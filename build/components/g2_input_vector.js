@@ -81,6 +81,10 @@ export class GuiInputVector extends HTMLElement {
         return [this.input_x.value, this.input_y.value, this.input_z.value];
     }
     set value(val) {
+        console.log("setting values : ", val);
+        this.input_x.value = val[0];
+        this.input_y.value = val[1];
+        this.input_z.value = val[2];
         this._value = val;
     }
 }
