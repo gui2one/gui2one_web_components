@@ -1,5 +1,4 @@
-"use strict";
-class GuiSeparator extends HTMLElement {
+export class GuiSeparator extends HTMLElement {
     constructor() {
         var _a;
         super();

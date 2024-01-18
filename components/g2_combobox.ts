@@ -1,4 +1,4 @@
-class GuiCombobox extends HTMLElement{
+export class GuiCombobox extends HTMLElement{
     template_fragment : DocumentFragment;
 
     _label : string = "Label";

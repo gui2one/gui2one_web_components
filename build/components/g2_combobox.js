@@ -1,5 +1,4 @@
-"use strict";
-class GuiCombobox extends HTMLElement {
+export class GuiCombobox extends HTMLElement {
     constructor() {
         super();
         this._label = "Label";

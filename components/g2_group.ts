@@ -1,4 +1,4 @@
-class GuiGroup extends HTMLElement{
+export class GuiGroup extends HTMLElement{
     template_fragment : DocumentFragment;
 
     _label : string = "default label";

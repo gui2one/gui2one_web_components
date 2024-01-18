@@ -180,7 +180,7 @@ export class GuiCheckbox extends HTMLElement {
 customElements.define("gui-checkbox", GuiCheckbox);
 
 // g2_collapsible.js
-export class GuiCollaspible extends HTMLElement {
+export class GuiCollapsible extends HTMLElement {
     constructor() {
         var _a;
         super();
@@ -330,11 +330,10 @@ export class GuiCollaspible extends HTMLElement {
         }
     }
 }
-customElements.define("gui-collapsible", GuiCollaspible);
+customElements.define("gui-collapsible", GuiCollapsible);
 
 // g2_combobox.js
-"use strict";
-class GuiCombobox extends HTMLElement {
+export class GuiCombobox extends HTMLElement {
     constructor() {
         super();
         this._label = "Label";
@@ -464,8 +463,7 @@ class GuiCombobox extends HTMLElement {
 customElements.define("gui-combobox", GuiCombobox);
 
 // g2_group.js
-"use strict";
-class GuiGroup extends HTMLElement {
+export class GuiGroup extends HTMLElement {
     constructor() {
         var _a;
         super();
@@ -1041,8 +1039,7 @@ export class GuiPanel extends HTMLElement {
 customElements.define("gui-panel", GuiPanel);
 
 // g2_separator.js
-"use strict";
-class GuiSeparator extends HTMLElement {
+export class GuiSeparator extends HTMLElement {
     constructor() {
         var _a;
         super();

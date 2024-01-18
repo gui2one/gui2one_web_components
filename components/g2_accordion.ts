@@ -1,7 +1,7 @@
-import { GuiCollaspible } from "./g2_collapsible";
+import { GuiCollapsible } from "./g2_collapsible";
 export class GuiAccordion extends HTMLElement{
     template_fragment : DocumentFragment;
-    collapsibles : GuiCollaspible[] = [];
+    collapsibles : GuiCollapsible[] = [];
     constructor(){
         super();
         this.attachShadow({mode : "open"});
@@ -19,7 +19,7 @@ export class GuiAccordion extends HTMLElement{
 
         
     }
-    open(theone : GuiCollaspible) {
+    open(theone : GuiCollapsible) {
         this.collapsibles.forEach((item, index)=>{
             // console.log(item, index);
             if(item !== theone){
@@ -38,9 +38,9 @@ export class GuiAccordion extends HTMLElement{
             {
                 if(node.nodeName === 'GUI-COLLAPSIBLE'){
 
-                    let coll = node as GuiCollaspible;
+                    let coll = node as GuiCollapsible;
                     coll.addEventListener("open", (ev : Event)=>{
-                        this.open(ev.target as GuiCollaspible)
+                        this.open(ev.target as GuiCollapsible)
                     })
                     // console.log(coll);
                     

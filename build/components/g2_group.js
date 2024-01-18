@@ -1,5 +1,4 @@
-"use strict";
-class GuiGroup extends HTMLElement {
+export class GuiGroup extends HTMLElement {
     constructor() {
         var _a;
         super();

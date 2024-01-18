@@ -1,4 +1,4 @@
-export class GuiCollaspible extends HTMLElement {
+export class GuiCollapsible extends HTMLElement {
     constructor() {
         var _a;
         super();
@@ -148,4 +148,4 @@ export class GuiCollaspible extends HTMLElement {
         }
     }
 }
-customElements.define("gui-collapsible", GuiCollaspible);
+customElements.define("gui-collapsible", GuiCollapsible);

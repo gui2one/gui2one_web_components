@@ -1,4 +1,4 @@
-class GuiSeparator extends HTMLElement{
+export class GuiSeparator extends HTMLElement{
     template_fragment : DocumentFragment;
     constructor(){
         super();
