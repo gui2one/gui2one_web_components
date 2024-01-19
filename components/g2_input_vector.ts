@@ -7,7 +7,7 @@ export class GuiInputVector extends HTMLElement{
     input_y : GuiInputFloat;
     input_z : GuiInputFloat;
     default_scalar : number = 0;
-    label : string = "Vector";
+    _label : string = "Vector";
     
     private _value : number[] = [0,0,0];
     private _default_value : number[] = [0,0,0];
@@ -34,7 +34,7 @@ export class GuiInputVector extends HTMLElement{
 
             ${styles}
             <div class="wrapper">
-                <div class="label">${this.label}</div>
+                <div class="label">${this._label}</div>
                 <div class="floats" style="display : flex; gap:5px;">
                     <gui-input-float id="input_x" color="red"   label="x" default_value="${this.default_scalar}"> </gui-input-float>
                     <gui-input-float id="input_y" color="green" label="y" default_value="${this.default_scalar}"></gui-input-float>
@@ -112,6 +112,12 @@ export class GuiInputVector extends HTMLElement{
         this.input_y.value = val[1];
         this.input_z.value = val[2];
         this._value = val;
+    }
+
+    set label(str : string)
+    {
+        this._label = str;
+        this.label_el.innerText = str;
     }
 
 }
