@@ -539,7 +539,7 @@ export class GuiInputFloat extends HTMLElement {
         super();
         this.value_preview = 0;
         this.value_offset = 0;
-        this.default_value = 0;
+        this._default_value = 0;
         this.old_value = 0;
         this.new_value = 0;
         this._label = '';
@@ -678,8 +678,8 @@ export class GuiInputFloat extends HTMLElement {
                 this.drag_start_pos = event.clientX;
             }
             else if (event.button === 2) {
-                this.value_input.value = this.default_value.toString();
-                this.value = this.default_value;
+                this.value_input.value = this._default_value.toString();
+                this.value = this._default_value;
             }
         });
         document.addEventListener("mouseup", (event) => {
@@ -728,6 +728,9 @@ export class GuiInputFloat extends HTMLElement {
     get value() {
         return this._value;
     }
+    set default_value(val) {
+        this._default_value = val;
+    }
     set color(clr) {
         this._color = clr;
     }
@@ -749,8 +752,8 @@ export class GuiInputFloat extends HTMLElement {
                 // this.label_el.innerHTML = `<span>${newValue}</span>`;
                 break;
             case 'default_value':
-                this.default_value = parseFloat(newValue);
-                this.value = this.default_value;
+                this._default_value = parseFloat(newValue);
+                this.value = this._default_value;
                 break;
             default:
                 break;
@@ -820,9 +823,9 @@ export class GuiInputVector extends HTMLElement {
         });
     }
     connectedCallback() {
-        this.input_x.default_value = this.default_scalar;
-        this.input_y.default_value = this.default_scalar;
-        this.input_z.default_value = this.default_scalar;
+        this.input_x._default_value = this.default_scalar;
+        this.input_y._default_value = this.default_scalar;
+        this.input_z._default_value = this.default_scalar;
     }
     static get observedAttributes() {
         return ["default_scalar", "label"];
@@ -852,6 +855,12 @@ export class GuiInputVector extends HTMLElement {
         this.input_y.value = val[1];
         this.input_z.value = val[2];
         this._value = val;
+    }
+    set default_value(val) {
+        this._default_value = val;
+        this.input_x.default_value = val[0];
+        this.input_y.default_value = val[1];
+        this.input_z.default_value = val[2];
     }
     set label(str) {
         this._label = str;

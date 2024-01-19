@@ -54,9 +54,9 @@ export class GuiInputVector extends HTMLElement {
         });
     }
     connectedCallback() {
-        this.input_x.default_value = this.default_scalar;
-        this.input_y.default_value = this.default_scalar;
-        this.input_z.default_value = this.default_scalar;
+        this.input_x._default_value = this.default_scalar;
+        this.input_y._default_value = this.default_scalar;
+        this.input_z._default_value = this.default_scalar;
     }
     static get observedAttributes() {
         return ["default_scalar", "label"];
@@ -86,6 +86,12 @@ export class GuiInputVector extends HTMLElement {
         this.input_y.value = val[1];
         this.input_z.value = val[2];
         this._value = val;
+    }
+    set default_value(val) {
+        this._default_value = val;
+        this.input_x.default_value = val[0];
+        this.input_y.default_value = val[1];
+        this.input_z.default_value = val[2];
     }
     set label(str) {
         this._label = str;

@@ -3,7 +3,7 @@ export class GuiInputFloat extends HTMLElement{
     private _value : number;
     value_preview : number = 0;
     value_offset : number = 0;
-    default_value : number = 0;
+    _default_value : number = 0;
 
     old_value : number = 0;
     new_value : number = 0;
@@ -180,8 +180,8 @@ export class GuiInputFloat extends HTMLElement{
                 this.drag_start_pos = event.clientX;
             }else if( event.button === 2)
             {
-                this.value_input.value = this.default_value.toString();
-                this.value = this.default_value;
+                this.value_input.value = this._default_value.toString();
+                this.value = this._default_value;
             }    
         })
 
@@ -246,6 +246,11 @@ export class GuiInputFloat extends HTMLElement{
         return this._value;
     }
 
+    set default_value(val : number)
+    {
+        this._default_value = val;
+    }
+
     set color(clr : string)
     {
         this._color = clr;
@@ -277,8 +282,8 @@ export class GuiInputFloat extends HTMLElement{
         
                 break;                
             case 'default_value' :
-                this.default_value = parseFloat(newValue);
-                this.value = this.default_value;
+                this._default_value = parseFloat(newValue);
+                this.value = this._default_value;
                 
                 break;                
             default : 
