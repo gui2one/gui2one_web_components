@@ -196,6 +196,7 @@ export class GuiCollapsible extends HTMLElement {
                 cursor : pointer;
                 background-color : #222;
                 margin : 0;
+                
                 height : 2em;
                 margin-top : 0.25em;
                 padding-left : 0.5em; 
@@ -210,7 +211,10 @@ export class GuiCollapsible extends HTMLElement {
                 font-weight : normal;
             }
             .content{
-                padding : 0.5em;
+                display : flex;
+                flex-direction : column;
+                gap : 0.5em;
+                /* padding : 0.5em; */
                 padding-left : 0.5em;
                 padding-right : 0.5em;
                 overflow-y : hidden;
@@ -772,7 +776,7 @@ export class GuiInputVector extends HTMLElement {
             <style>
 
                 .wrapper{
-                    margin-top : 3px;
+                    /* margin-top : 3px; */
                     font-size : 0.9em;
                 }
 
@@ -786,7 +790,7 @@ export class GuiInputVector extends HTMLElement {
             ${styles}
             <div class="wrapper">
                 <div class="label">${this._label}</div>
-                <div class="floats" style="display : flex; gap:5px;">
+                <div class="floats" style="display : flex; gap:3px;">
                     <gui-input-float id="input_x" color="red"   label="x" default_value="${this.default_scalar}"> </gui-input-float>
                     <gui-input-float id="input_y" color="green" label="y" default_value="${this.default_scalar}"></gui-input-float>
                     <gui-input-float id="input_z" color="blue"  label="z" default_value="${this.default_scalar}"></gui-input-float>

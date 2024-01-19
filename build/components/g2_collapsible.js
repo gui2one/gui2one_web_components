@@ -14,6 +14,7 @@ export class GuiCollapsible extends HTMLElement {
                 cursor : pointer;
                 background-color : #222;
                 margin : 0;
+                
                 height : 2em;
                 margin-top : 0.25em;
                 padding-left : 0.5em; 
@@ -28,7 +29,10 @@ export class GuiCollapsible extends HTMLElement {
                 font-weight : normal;
             }
             .content{
-                padding : 0.5em;
+                display : flex;
+                flex-direction : column;
+                gap : 0.5em;
+                /* padding : 0.5em; */
                 padding-left : 0.5em;
                 padding-right : 0.5em;
                 overflow-y : hidden;
