@@ -9,6 +9,7 @@
     <script type="module" src="build/components/g2_input_float.js"></script>
     <script type="module" src="build/components/g2_combobox.js"></script>
     <script type="module" src="build/components/g2_input_vector.js"></script>
+    <script type="module" src="build/components/g2_input_color.js"></script>
     <script type="module" src="build/components/g2_collapsible.js"></script>
     <script type="module" src="build/components/g2_accordion.js"></script>
     <script type="module" src="build/components/g2_panel.js"></script>
@@ -56,6 +57,7 @@
             <gui-accordion>
                 <gui-collapsible title="Misc Options" closed="false">
                     
+                    <gui-input-color label="color A"></gui-input-color>
                     <gui-group label="dummy params">
                         
                         <gui-combobox label="Head Type" id="combo1">
@@ -80,6 +82,7 @@
 
                 <gui-collapsible title="World Scale">
                     <gui-input-float id="float_input" color="grey" label="Scale" default_value=3.14> </gui-input-float>
+
                 </gui-collapsible>
         
                 <gui-collapsible title="Transforms 1">
@@ -87,7 +90,7 @@
 
                     <gui-input-vector id="rotation1" default_scalar=0 label="rotation"></gui-input-vector>
                     <gui-input-vector id="scale1" default_scalar=1 label="scale"></gui-input-vector>
-                    <gui-input-float label="uniform_scale"></gui-input-float>
+                    <gui-input-float label="uniform_scale" default_value="1"></gui-input-float>
                 </gui-collapsible>
                 
                 <gui-collapsible title="Transforms 2">

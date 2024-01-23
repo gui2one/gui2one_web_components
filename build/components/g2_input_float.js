@@ -7,7 +7,7 @@ export class GuiInputFloat extends HTMLElement {
         this._default_value = 0;
         this.old_value = 0;
         this.new_value = 0;
-        this._label = '';
+        this._label = "";
         this._color = "";
         this.drag_start_pos = 0;
         this.ctrl_pressed = false;
@@ -27,6 +27,9 @@ export class GuiInputFloat extends HTMLElement {
                 --padding-bottom : 0.3em;
                 --padding-left : 0.15em;
                 --padding-right : 0.15em;
+
+                display : flex;
+                flex : 1.0;
             }
 
             .wrapper{
@@ -35,6 +38,7 @@ export class GuiInputFloat extends HTMLElement {
                 align-items: stretch;
                 width : max-content;
                 font-size : 0.9rem;
+                flex : 1.0;
             }
 
             .label{
@@ -57,6 +61,7 @@ export class GuiInputFloat extends HTMLElement {
             }
 
             .value_div{
+                flex : 1.0;
                 padding-left : 0.2em;
                 position : relative;
                 overflow : hidden;
@@ -110,23 +115,15 @@ export class GuiInputFloat extends HTMLElement {
         document.addEventListener("keyup", (event) => {
             if (event.key == "Control") {
                 this.ctrl_pressed = false;
-                // console.log("ctrl_pressed ", this.ctrl_pressed);
             }
             if (event.key == "Shift") {
                 this.shift_pressed = false;
-                // console.log("shift_pressed ", this.shift_pressed);
             }
         });
         this.value_input.addEventListener("input", (event) => {
             this._value = parseFloat(this.value_input.value);
-            console.log("change");
             this.triggerChange();
         });
-        // this.value_input.addEventListener("change", (event : Event)=>{
-        //     this._value = parseFloat(this.value_input.value);
-        //     // console.log("change");
-        //     this.triggerChange();
-        // })
         this.value_input.addEventListener("keypress", (event) => {
             if (event.key === "Enter") {
                 this.value_input.blur();
@@ -208,13 +205,10 @@ export class GuiInputFloat extends HTMLElement {
     attributeChangedCallback(name, oldValue, newValue) {
         switch (name) {
             case 'color':
-                // this.color = newValue; 
-                // console.log(this.label_el);
                 this.label_el.style.backgroundColor = newValue;
                 break;
             case 'label':
                 this.label = newValue;
-                // this.label_el.innerHTML = `<span>${newValue}</span>`;
                 break;
             case 'default_value':
                 this._default_value = parseFloat(newValue);
@@ -223,10 +217,6 @@ export class GuiInputFloat extends HTMLElement {
             default:
                 break;
         }
-        // your code...
-    }
-    handleEvent(event) {
-        console.log("Event on Custom Float Component");
     }
 }
 customElements.define("gui-input-float", GuiInputFloat);

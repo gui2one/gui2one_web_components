@@ -1,4 +1,4 @@
-export class GuiInputVector extends HTMLElement {
+export class GuiInputColor extends HTMLElement {
     constructor() {
         super();
         this.default_scalar = 0;
@@ -10,7 +10,8 @@ export class GuiInputVector extends HTMLElement {
             <style>
 
                 .wrapper{
-                    /* margin-top : 3px; */
+                    display : flex;
+                    flex-direction : column;
                     font-size : 0.9em;
                 }
 
@@ -18,13 +19,10 @@ export class GuiInputVector extends HTMLElement {
                     font-family : sans-serif;
                 }
 
-                .floats{
-                    display : flex; 
-                    gap:3px;
-                }
-
-                .floats ~ .wrapper{
-                    flex : 1.0;
+                #clr_sample{
+                    flex : 1;
+                    width : 30px;
+                    background-color : red;
                 }
             </style>
         `;
@@ -33,10 +31,11 @@ export class GuiInputVector extends HTMLElement {
             ${styles}
             <div class="wrapper">
                 <div class="label">${this._label}</div>
-                <div class="floats" style="">
-                    <gui-input-float id="input_x" color="red"   label="x" default_value="${this.default_scalar}"> </gui-input-float>
-                    <gui-input-float id="input_y" color="green" label="y" default_value="${this.default_scalar}"></gui-input-float>
-                    <gui-input-float id="input_z" color="blue"  label="z" default_value="${this.default_scalar}"></gui-input-float>
+                <div class="floats" style="display : flex; gap:3px;">
+                    <gui-input-float id="input_x" color="red"   label="R" default_value="${this.default_scalar}"> </gui-input-float>
+                    <gui-input-float id="input_y" color="green" label="G" default_value="${this.default_scalar}"></gui-input-float>
+                    <gui-input-float id="input_z" color="blue"  label="B" default_value="${this.default_scalar}"></gui-input-float>
+                    <div id="clr_sample" ></div>
                 </div>
             </div>
         `;
@@ -46,26 +45,49 @@ export class GuiInputVector extends HTMLElement {
         this.input_x = this.shadowRoot.querySelector("#input_x");
         this.input_y = this.shadowRoot.querySelector("#input_y");
         this.input_z = this.shadowRoot.querySelector("#input_z");
+        this.sample_el = this.shadowRoot.querySelector("#clr_sample");
         this.input_x.addEventListener("change", (event) => {
             let val = event.target.value;
             this.value[0] = val;
             this.dispatchEvent(new Event("change"));
+            this.updateSample();
         });
         this.input_y.addEventListener("change", (event) => {
             let val = event.target.value;
             this.value[1] = val;
             this.dispatchEvent(new Event("change"));
+            this.updateSample();
         });
         this.input_z.addEventListener("change", (event) => {
             let val = event.target.value;
             this.value[2] = val;
             this.dispatchEvent(new Event("change"));
+            this.updateSample();
         });
     }
     connectedCallback() {
         this.input_x._default_value = this.default_scalar;
         this.input_y._default_value = this.default_scalar;
         this.input_z._default_value = this.default_scalar;
+        this.updateSample();
+    }
+    updateSample() {
+        this.clampValues();
+        this.sample_el.style.backgroundColor = `rgb(${this.input_x.value * 255},${this.input_y.value * 255},${this.input_z.value * 255})`;
+    }
+    clampValues() {
+        if (this.input_x.value > 1.0)
+            this.input_x.value = 1.0;
+        else if (this.input_x.value < 0.0)
+            this.input_x.value = 0.0;
+        if (this.input_y.value > 1.0)
+            this.input_y.value = 1.0;
+        else if (this.input_y.value < 0.0)
+            this.input_y.value = 0.0;
+        if (this.input_z.value > 1.0)
+            this.input_z.value = 1.0;
+        else if (this.input_z.value < 0.0)
+            this.input_z.value = 0.0;
     }
     static get observedAttributes() {
         return ["default_scalar", "label"];
@@ -95,6 +117,7 @@ export class GuiInputVector extends HTMLElement {
         this.input_y.value = val[1];
         this.input_z.value = val[2];
         this._value = val;
+        this.updateSample();
     }
     set default_value(val) {
         this._default_value = val;
@@ -107,4 +130,4 @@ export class GuiInputVector extends HTMLElement {
         this.label_el.innerText = str;
     }
 }
-customElements.define("gui-input-vector", GuiInputVector);
+customElements.define("gui-input-color", GuiInputColor);

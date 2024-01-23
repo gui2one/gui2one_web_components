@@ -34,8 +34,8 @@ export class GuiCollapsible extends HTMLElement{
                 font-weight : normal;
             }
             .content{
-                display : flex;
-                flex-direction : column;
+                display : grid;
+                grid-template-rows : 1fr;
                 gap : 0.5em;
                 /* padding : 0.5em; */
                 padding-left : 0.5em;
@@ -44,15 +44,14 @@ export class GuiCollapsible extends HTMLElement{
                 /* height : auto; */
                 opacity : 1;
                 transform-origin : center top;
-                transform : scale3d(1.0, 1.0, 1.0);
-                transition : all .2s;
+                /* transform : scale3d(1.0, 1.0, 1.0); */
+
+                transition: grid-template-rows 0.2s ease-out;
             }
             .content.closed{
-                /* transform : scale3d(1.0, 0.0, 1.0); */
-                height : 0;
+                grid-template-rows : 0fr;
                 padding-top : 0;
                 padding-bottom : 0;
-                opacity : 0;
             }
 
             .arrow {
@@ -74,6 +73,11 @@ export class GuiCollapsible extends HTMLElement{
                 transform : rotate(0deg);
                 opacity : 0.5;
             }
+
+            .inner {
+                overflow: hidden;
+                /* width : 100%; */
+            }
             
         
         </style>`;
@@ -86,7 +90,9 @@ export class GuiCollapsible extends HTMLElement{
             <div class="wrapper">
                 <div class="header"><div class="arrow" id="arrow"></div><span id="title">${this.title}</span></div>
                 <div class="content">
+                    <div class="inner">
                     <slot></slot>
+                    </div>
                 </div>
             </div>
         `;
