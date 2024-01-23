@@ -18,12 +18,13 @@ export class GuiInputColor extends HTMLElement {
                 .label{
                     font-family : sans-serif;
                 }
-
-                #clr_sample{
+/* 
+                gui-color-picker{
                     flex : 1;
-                    width : 30px;
+
                     background-color : red;
-                }
+                    outline : 1px solid white;
+                } */
             </style>
         `;
         const template_str = String.raw `
@@ -35,7 +36,7 @@ export class GuiInputColor extends HTMLElement {
                     <gui-input-float id="input_x" color="red"   label="R" default_value="${this.default_scalar}"> </gui-input-float>
                     <gui-input-float id="input_y" color="green" label="G" default_value="${this.default_scalar}"></gui-input-float>
                     <gui-input-float id="input_z" color="blue"  label="B" default_value="${this.default_scalar}"></gui-input-float>
-                    <div id="clr_sample" ></div>
+                    <gui-color-picker></gui-color-picker>
                 </div>
             </div>
         `;
@@ -45,7 +46,7 @@ export class GuiInputColor extends HTMLElement {
         this.input_x = this.shadowRoot.querySelector("#input_x");
         this.input_y = this.shadowRoot.querySelector("#input_y");
         this.input_z = this.shadowRoot.querySelector("#input_z");
-        this.sample_el = this.shadowRoot.querySelector("#clr_sample");
+        this.picker_el = this.shadowRoot.querySelector("gui-color-picker");
         this.input_x.addEventListener("change", (event) => {
             let val = event.target.value;
             this.value[0] = val;
@@ -73,7 +74,7 @@ export class GuiInputColor extends HTMLElement {
     }
     updateSample() {
         this.clampValues();
-        this.sample_el.style.backgroundColor = `rgb(${this.input_x.value * 255},${this.input_y.value * 255},${this.input_z.value * 255})`;
+        this.picker_el.style.backgroundColor = `rgb(${this.input_x.value * 255},${this.input_y.value * 255},${this.input_z.value * 255})`;
     }
     clampValues() {
         if (this.input_x.value > 1.0)

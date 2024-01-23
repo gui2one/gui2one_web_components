@@ -35,7 +35,7 @@ export class GuiCollapsible extends HTMLElement {
                 /* padding : 0.5em; */
                 padding-left : 0.5em;
                 padding-right : 0.5em;
-                overflow-y : hidden;
+                /* overflow-y : hidden; */
                 /* height : auto; */
                 opacity : 1;
                 transform-origin : center top;

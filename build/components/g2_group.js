@@ -12,6 +12,7 @@ export class GuiGroup extends HTMLElement {
                 outline : 2px solid #ffffff10;
                 padding : 0.2em;
                 padding-top : 0.5em;
+                margin : 2px;
                 margin-top : 1.0em;
                 /* height : min-content; */
 

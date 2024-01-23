@@ -1,4 +1,5 @@
 import { GuiInputFloat } from "./g2_input_float";
+import { GuiColorPicker } from "./g2_color_picker";
 export class GuiInputColor extends HTMLElement{
     template_fragment : DocumentFragment;
 
@@ -12,7 +13,7 @@ export class GuiInputColor extends HTMLElement{
     private _value : number[] = [0,0,0];
     private _default_value : number[] = [0,0,0];
     
-    sample_el : HTMLDivElement;
+    picker_el : GuiColorPicker;
     constructor()
     {
         super();
@@ -30,12 +31,13 @@ export class GuiInputColor extends HTMLElement{
                 .label{
                     font-family : sans-serif;
                 }
-
-                #clr_sample{
+/* 
+                gui-color-picker{
                     flex : 1;
-                    width : 30px;
+
                     background-color : red;
-                }
+                    outline : 1px solid white;
+                } */
             </style>
         `;
 
@@ -48,7 +50,7 @@ export class GuiInputColor extends HTMLElement{
                     <gui-input-float id="input_x" color="red"   label="R" default_value="${this.default_scalar}"> </gui-input-float>
                     <gui-input-float id="input_y" color="green" label="G" default_value="${this.default_scalar}"></gui-input-float>
                     <gui-input-float id="input_z" color="blue"  label="B" default_value="${this.default_scalar}"></gui-input-float>
-                    <div id="clr_sample" ></div>
+                    <gui-color-picker></gui-color-picker>
                 </div>
             </div>
         `;
@@ -60,7 +62,7 @@ export class GuiInputColor extends HTMLElement{
         this.input_x = this.shadowRoot!.querySelector("#input_x") as GuiInputFloat;
         this.input_y = this.shadowRoot!.querySelector("#input_y") as GuiInputFloat;
         this.input_z = this.shadowRoot!.querySelector("#input_z") as GuiInputFloat;
-        this.sample_el = this.shadowRoot!.querySelector("#clr_sample") as HTMLDivElement;
+        this.picker_el = this.shadowRoot!.querySelector("gui-color-picker") as GuiColorPicker;
 
         this.input_x.addEventListener("change", (event : Event)=>{
             let val = (event.target! as GuiInputFloat).value;
@@ -96,7 +98,7 @@ export class GuiInputColor extends HTMLElement{
     updateSample()
     {
         this.clampValues();
-        this.sample_el.style.backgroundColor = `rgb(${this.input_x.value * 255},${this.input_y.value * 255},${this.input_z.value * 255})`;
+        this.picker_el.style.backgroundColor = `rgb(${this.input_x.value * 255},${this.input_y.value * 255},${this.input_z.value * 255})`;
     }
 
     clampValues()

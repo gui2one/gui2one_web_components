@@ -1,4 +1,5 @@
 import { GuiInputFloat } from "./g2_input_float";
+import { GuiColorPicker } from "./g2_color_picker";
 export declare class GuiInputColor extends HTMLElement {
     template_fragment: DocumentFragment;
     label_el: HTMLDivElement;
@@ -9,7 +10,7 @@ export declare class GuiInputColor extends HTMLElement {
     _label: string;
     private _value;
     private _default_value;
-    sample_el: HTMLDivElement;
+    picker_el: GuiColorPicker;
     constructor();
     connectedCallback(): void;
     updateSample(): void;
