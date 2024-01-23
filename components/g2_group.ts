@@ -1,7 +1,7 @@
 export class GuiGroup extends HTMLElement{
     template_fragment : DocumentFragment;
 
-    _label : string = "default label";
+    _label : string = "";
     label_el : HTMLDivElement;
     constructor(){
         super();
@@ -13,12 +13,11 @@ export class GuiGroup extends HTMLElement{
                 border-radius : 3px;
                 outline : 2px solid #ffffff10;
                 padding : 0.2em;
-                padding-top : 0.5em;
+                padding-top : 1.0em;
                 margin : 2px;
                 margin-top : 1.0em;
-                /* height : min-content; */
-
             }
+            
             .label{
                 font-size : 0.8em;
                 position : absolute;

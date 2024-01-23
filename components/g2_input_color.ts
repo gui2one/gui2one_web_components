@@ -31,13 +31,6 @@ export class GuiInputColor extends HTMLElement{
                 .label{
                     font-family : sans-serif;
                 }
-/* 
-                gui-color-picker{
-                    flex : 1;
-
-                    background-color : red;
-                    outline : 1px solid white;
-                } */
             </style>
         `;
 

@@ -2,7 +2,7 @@ export class GuiGroup extends HTMLElement {
     constructor() {
         var _a;
         super();
-        this._label = "default label";
+        this._label = "";
         this.attachShadow({ mode: "open" });
         const styles = String.raw `<style>
 
@@ -11,12 +11,11 @@ export class GuiGroup extends HTMLElement {
                 border-radius : 3px;
                 outline : 2px solid #ffffff10;
                 padding : 0.2em;
-                padding-top : 0.5em;
+                padding-top : 1.0em;
                 margin : 2px;
                 margin-top : 1.0em;
-                /* height : min-content; */
-
             }
+            
             .label{
                 font-size : 0.8em;
                 position : absolute;
