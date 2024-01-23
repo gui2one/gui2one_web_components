@@ -211,8 +211,8 @@ export class GuiCollapsible extends HTMLElement {
                 font-weight : normal;
             }
             .content{
-                display : flex;
-                flex-direction : column;
+                display : grid;
+                grid-template-rows : 1fr;
                 gap : 0.5em;
                 /* padding : 0.5em; */
                 padding-left : 0.5em;
@@ -221,15 +221,14 @@ export class GuiCollapsible extends HTMLElement {
                 /* height : auto; */
                 opacity : 1;
                 transform-origin : center top;
-                transform : scale3d(1.0, 1.0, 1.0);
-                transition : all .2s;
+                /* transform : scale3d(1.0, 1.0, 1.0); */
+
+                transition: grid-template-rows 0.2s ease-out;
             }
             .content.closed{
-                /* transform : scale3d(1.0, 0.0, 1.0); */
-                height : 0;
+                grid-template-rows : 0fr;
                 padding-top : 0;
                 padding-bottom : 0;
-                opacity : 0;
             }
 
             .arrow {
@@ -251,6 +250,11 @@ export class GuiCollapsible extends HTMLElement {
                 transform : rotate(0deg);
                 opacity : 0.5;
             }
+
+            .inner {
+                overflow: hidden;
+                /* width : 100%; */
+            }
             
         
         </style>`;
@@ -262,7 +266,9 @@ export class GuiCollapsible extends HTMLElement {
             <div class="wrapper">
                 <div class="header"><div class="arrow" id="arrow"></div><span id="title">${this.title}</span></div>
                 <div class="content">
+                    <div class="inner">
                     <slot></slot>
+                    </div>
                 </div>
             </div>
         `;
@@ -585,22 +591,44 @@ export class GuiInputColor extends HTMLElement {
             let val = event.target.value;
             this.value[0] = val;
             this.dispatchEvent(new Event("change"));
+            this.updateSample();
         });
         this.input_y.addEventListener("change", (event) => {
             let val = event.target.value;
             this.value[1] = val;
             this.dispatchEvent(new Event("change"));
+            this.updateSample();
         });
         this.input_z.addEventListener("change", (event) => {
             let val = event.target.value;
             this.value[2] = val;
             this.dispatchEvent(new Event("change"));
+            this.updateSample();
         });
     }
     connectedCallback() {
         this.input_x._default_value = this.default_scalar;
         this.input_y._default_value = this.default_scalar;
         this.input_z._default_value = this.default_scalar;
+        this.updateSample();
+    }
+    updateSample() {
+        this.clampValues();
+        this.sample_el.style.backgroundColor = `rgb(${this.input_x.value * 255},${this.input_y.value * 255},${this.input_z.value * 255})`;
+    }
+    clampValues() {
+        if (this.input_x.value > 1.0)
+            this.input_x.value = 1.0;
+        else if (this.input_x.value < 0.0)
+            this.input_x.value = 0.0;
+        if (this.input_y.value > 1.0)
+            this.input_y.value = 1.0;
+        else if (this.input_y.value < 0.0)
+            this.input_y.value = 0.0;
+        if (this.input_z.value > 1.0)
+            this.input_z.value = 1.0;
+        else if (this.input_z.value < 0.0)
+            this.input_z.value = 0.0;
     }
     static get observedAttributes() {
         return ["default_scalar", "label"];
@@ -630,6 +658,7 @@ export class GuiInputColor extends HTMLElement {
         this.input_y.value = val[1];
         this.input_z.value = val[2];
         this._value = val;
+        this.updateSample();
     }
     set default_value(val) {
         this._default_value = val;
@@ -654,7 +683,7 @@ export class GuiInputFloat extends HTMLElement {
         this._default_value = 0;
         this.old_value = 0;
         this.new_value = 0;
-        this._label = '';
+        this._label = "";
         this._color = "";
         this.drag_start_pos = 0;
         this.ctrl_pressed = false;
@@ -674,6 +703,9 @@ export class GuiInputFloat extends HTMLElement {
                 --padding-bottom : 0.3em;
                 --padding-left : 0.15em;
                 --padding-right : 0.15em;
+
+                display : flex;
+                flex : 1.0;
             }
 
             .wrapper{
@@ -682,6 +714,7 @@ export class GuiInputFloat extends HTMLElement {
                 align-items: stretch;
                 width : max-content;
                 font-size : 0.9rem;
+                flex : 1.0;
             }
 
             .label{
@@ -704,6 +737,7 @@ export class GuiInputFloat extends HTMLElement {
             }
 
             .value_div{
+                flex : 1.0;
                 padding-left : 0.2em;
                 position : relative;
                 overflow : hidden;
@@ -757,23 +791,15 @@ export class GuiInputFloat extends HTMLElement {
         document.addEventListener("keyup", (event) => {
             if (event.key == "Control") {
                 this.ctrl_pressed = false;
-                // console.log("ctrl_pressed ", this.ctrl_pressed);
             }
             if (event.key == "Shift") {
                 this.shift_pressed = false;
-                // console.log("shift_pressed ", this.shift_pressed);
             }
         });
         this.value_input.addEventListener("input", (event) => {
             this._value = parseFloat(this.value_input.value);
-            console.log("change");
             this.triggerChange();
         });
-        // this.value_input.addEventListener("change", (event : Event)=>{
-        //     this._value = parseFloat(this.value_input.value);
-        //     // console.log("change");
-        //     this.triggerChange();
-        // })
         this.value_input.addEventListener("keypress", (event) => {
             if (event.key === "Enter") {
                 this.value_input.blur();
@@ -855,13 +881,10 @@ export class GuiInputFloat extends HTMLElement {
     attributeChangedCallback(name, oldValue, newValue) {
         switch (name) {
             case 'color':
-                // this.color = newValue; 
-                // console.log(this.label_el);
                 this.label_el.style.backgroundColor = newValue;
                 break;
             case 'label':
                 this.label = newValue;
-                // this.label_el.innerHTML = `<span>${newValue}</span>`;
                 break;
             case 'default_value':
                 this._default_value = parseFloat(newValue);
@@ -870,10 +893,6 @@ export class GuiInputFloat extends HTMLElement {
             default:
                 break;
         }
-        // your code...
-    }
-    handleEvent(event) {
-        console.log("Event on Custom Float Component");
     }
 }
 customElements.define("gui-input-float", GuiInputFloat);
@@ -898,6 +917,15 @@ export class GuiInputVector extends HTMLElement {
                 .label{
                     font-family : sans-serif;
                 }
+
+                .floats{
+                    display : flex; 
+                    gap:3px;
+                }
+
+                .floats ~ .wrapper{
+                    flex : 1.0;
+                }
             </style>
         `;
         const template_str = String.raw `
@@ -905,7 +933,7 @@ export class GuiInputVector extends HTMLElement {
             ${styles}
             <div class="wrapper">
                 <div class="label">${this._label}</div>
-                <div class="floats" style="display : flex; gap:3px;">
+                <div class="floats" style="">
                     <gui-input-float id="input_x" color="red"   label="x" default_value="${this.default_scalar}"> </gui-input-float>
                     <gui-input-float id="input_y" color="green" label="y" default_value="${this.default_scalar}"></gui-input-float>
                     <gui-input-float id="input_z" color="blue"  label="z" default_value="${this.default_scalar}"></gui-input-float>
