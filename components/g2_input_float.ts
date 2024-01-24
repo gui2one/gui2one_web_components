@@ -49,8 +49,10 @@ export class GuiInputFloat extends HTMLElement {
 
             .wrapper{
                 position : relative;
-                display : flex;
+                display : grid;
+                grid-template-columns : var(--label-width) 1fr;
                 align-items: stretch;
+                justify-items: stretch;
                 width : max-content;
                 font-size : 0.9rem;
                 flex : 1.0;
@@ -69,10 +71,21 @@ export class GuiInputFloat extends HTMLElement {
                 user-select : none;
 
                 cursor : e-resize;   
+
+                display : flex;
+                align-items : center;
+                justify-content : center;
+
             }
 
             .label span{
-                opacity : 0.8;                
+                opacity : 0.8;     
+                display : block;
+                align-items : center;
+                justify-content : center;
+
+                overflow : hidden;
+                text-overflow : ellipsis;                           
             }
 
             .value_div{
@@ -85,6 +98,7 @@ export class GuiInputFloat extends HTMLElement {
                 padding-top : var(--padding-top);
                 padding-bottom : var(--padding-bottom);
                 padding-left : var(--padding-left);
+                /* width : 100%; */
                 
             }
 
@@ -92,7 +106,7 @@ export class GuiInputFloat extends HTMLElement {
                 color : #222;
                 font-weight : bold;
                 height : calc(100% - 2px );
-                width : 8ch;
+                width : 10ch;
                 border : none;
                 height: max-content;
                 background-color : transparent;
@@ -105,7 +119,7 @@ export class GuiInputFloat extends HTMLElement {
             ${this.styles}
 
             <div class="wrapper" oncontextmenu="return false;">
-                <div class="label"><span>${this._label}<span></div>
+                <div class="label"><span>${this._label}</span></div>
                 <div class="value_div">
                     <input type=number step="0.1" value=${this.value} />
                 </div>
@@ -116,7 +130,7 @@ export class GuiInputFloat extends HTMLElement {
         this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
 
         this.label_el = this.shadowRoot!.querySelector(".label") as HTMLDivElement;
-        let label_span = this.label_el.querySelector("span") as HTMLSpanElement;
+        // let label_span = this.label_el.querySelector("span") as HTMLSpanElement;
 
 
         // label_span.style.opacity = "0.8";   

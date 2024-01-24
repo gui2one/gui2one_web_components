@@ -12,7 +12,7 @@ export class GuiCombobox extends HTMLElement{
         this.attachShadow({mode : "open"});
         const styles = String.raw`<style>
             .wrapper{
-                padding : 0.5em;
+                /* padding : 0.5em; */
                 display : flex;
                 flex-direction : row;
                 align-items :center;

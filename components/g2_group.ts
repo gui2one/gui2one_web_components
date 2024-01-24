@@ -16,6 +16,9 @@ export class GuiGroup extends HTMLElement{
                 padding-top : 1.0em;
                 margin : 2px;
                 margin-top : 1.0em;
+                display : flex;
+                flex-direction : column;
+                gap : 0.5em;
             }
             
             .label{

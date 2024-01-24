@@ -19,7 +19,7 @@ export class GuiCollapsible extends HTMLElement{
                 cursor : pointer;
                 background-color : #222;
                 margin : 0;
-                
+                /* outline : 1px solid white; */
                 height : 2em;
                 margin-top : 0.25em;
                 padding-left : 0.5em; 

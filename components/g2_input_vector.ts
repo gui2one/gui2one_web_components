@@ -19,23 +19,31 @@ export class GuiInputVector extends HTMLElement{
         const styles = String.raw`
             <style>
 
+                :host{
+                    /* --label-width : 200px;  */
+                }
                 .wrapper{
                     /* margin-top : 3px; */
                     font-size : 0.9em;
+                    display : grid;
+                    grid-template-columns : var(--label-width) 1fr;
+                    align-items: center;
+
                 }
 
                 .label{
                     font-family : sans-serif;
                 }
 
+
                 .floats{
                     display : flex; 
                     gap:3px;
                 }
-
+/* 
                 .floats ~ .wrapper{
                     flex : 1.0;
-                }
+                } */
             </style>
         `;
 
@@ -45,9 +53,9 @@ export class GuiInputVector extends HTMLElement{
             <div class="wrapper">
                 <div class="label">${this._label}</div>
                 <div class="floats" style="">
-                    <gui-input-float id="input_x" color="red"   label="x" default_value="${this.default_scalar}"> </gui-input-float>
-                    <gui-input-float id="input_y" color="green" label="y" default_value="${this.default_scalar}"></gui-input-float>
-                    <gui-input-float id="input_z" color="blue"  label="z" default_value="${this.default_scalar}"></gui-input-float>
+                    <gui-input-float id="input_x" color="red"   label="x" default_value="${this.default_scalar}" style="--label-width : 20px;"> </gui-input-float>
+                    <gui-input-float id="input_y" color="green" label="y" default_value="${this.default_scalar}" style="--label-width : 20px;"></gui-input-float>
+                    <gui-input-float id="input_z" color="blue"  label="z" default_value="${this.default_scalar}" style="--label-width : 20px;"></gui-input-float>
                 </div>
             </div>
         `;
@@ -60,6 +68,17 @@ export class GuiInputVector extends HTMLElement{
         this.input_y = this.shadowRoot!.querySelector("#input_y") as GuiInputFloat;
         this.input_z = this.shadowRoot!.querySelector("#input_z") as GuiInputFloat;
             
+        Promise.all([ 
+            customElements.whenDefined("gui-input-float")
+        ]).then(()=>{
+            let label_x = this.input_x.shadowRoot!.querySelector(".wrapper .label span") as HTMLSpanElement;
+            let label_y = this.input_y.shadowRoot!.querySelector(".wrapper .label span") as HTMLSpanElement;
+            let label_z = this.input_z.shadowRoot!.querySelector(".wrapper .label span") as HTMLSpanElement;
+            label_x.style.overflow = "unset";
+            label_y.style.overflow = "unset";
+            label_z.style.overflow = "unset";
+        });
+        
         this.input_x.addEventListener("change", (event : Event)=>{
             let val = (event.target! as GuiInputFloat).value;
             this.value[0] = val;

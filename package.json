@@ -4,14 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "tsc-watch --project .",
+    
     "build": "tsc --project .",
-    "gen" : "npm run build && node ./node/generate_bundle.mjs && esbuild ./build/g2_bundle.js --minify --outfile=./build/g2_bundle.min.js"
+    "esbuild": "esbuild --bundle --outdir=./esbuild ./components/bundle.ts",
+    "watch": "esbuild --bundle --watch --outdir=./esbuild ./components/bundle.ts",
+    "gen": "npm run build && node ./node/generate_bundle.mjs && esbuild ./build/g2_bundle.js --minify --outfile=./build/g2_bundle.min.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "esbuild-plugin-tsc": "^0.4.0",
     "lit-html": "^3.1.0",
     "ts-node": "^10.9.2",
     "tsc-watch": "^6.0.4",

@@ -8,7 +8,7 @@ export class GuiInputColor extends HTMLElement{
     input_y : GuiInputFloat;
     input_z : GuiInputFloat;
     default_scalar : number = 0;
-    _label : string = "Vector";
+    _label : string = "Color";
     
     private _value : number[] = [0,0,0];
     private _default_value : number[] = [0,0,0];
@@ -23,8 +23,8 @@ export class GuiInputColor extends HTMLElement{
             <style>
 
                 .wrapper{
-                    display : flex;
-                    flex-direction : column;
+                    display : grid;
+                    grid-template-columns : var(--label-width) 1fr;
                     font-size : 0.9em;
                 }
 
@@ -40,9 +40,9 @@ export class GuiInputColor extends HTMLElement{
             <div class="wrapper">
                 <div class="label">${this._label}</div>
                 <div class="floats" style="display : flex; gap:3px;">
-                    <gui-input-float id="input_x" color="red"   label="R" default_value="${this.default_scalar}"> </gui-input-float>
-                    <gui-input-float id="input_y" color="green" label="G" default_value="${this.default_scalar}"></gui-input-float>
-                    <gui-input-float id="input_z" color="blue"  label="B" default_value="${this.default_scalar}"></gui-input-float>
+                    <gui-input-float id="input_x" color="red"   label="R" default_value="${this.default_scalar}" style="--label-width : 20px;"></gui-input-float>
+                    <gui-input-float id="input_y" color="green" label="G" default_value="${this.default_scalar}" style="--label-width : 20px;"></gui-input-float>
+                    <gui-input-float id="input_z" color="blue"  label="B" default_value="${this.default_scalar}" style="--label-width : 20px;"></gui-input-float>
                     <gui-color-picker></gui-color-picker>
                 </div>
             </div>
@@ -55,6 +55,19 @@ export class GuiInputColor extends HTMLElement{
         this.input_x = this.shadowRoot!.querySelector("#input_x") as GuiInputFloat;
         this.input_y = this.shadowRoot!.querySelector("#input_y") as GuiInputFloat;
         this.input_z = this.shadowRoot!.querySelector("#input_z") as GuiInputFloat;
+
+        Promise.all([
+            customElements.whenDefined("gui-input-float"),
+            customElements.whenDefined("gui-color-picker")
+        ]).then(()=>{
+            let label_x = this.input_x.shadowRoot!.querySelector(".wrapper .label span") as HTMLSpanElement;
+            let label_y = this.input_y.shadowRoot!.querySelector(".wrapper .label span") as HTMLSpanElement;
+            let label_z = this.input_z.shadowRoot!.querySelector(".wrapper .label span") as HTMLSpanElement;
+            label_x.style.overflow = "unset";
+            label_y.style.overflow = "unset";
+            label_z.style.overflow = "unset";        
+        });
+        
         this.picker_el = this.shadowRoot!.querySelector("gui-color-picker") as GuiColorPicker;
 
         this.input_x.addEventListener("change", (event : Event)=>{
@@ -85,6 +98,7 @@ export class GuiInputColor extends HTMLElement{
         this.input_z._default_value = this.default_scalar;
 
         this.updateSample();
+
         
     }
 

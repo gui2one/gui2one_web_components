@@ -19,10 +19,10 @@ export class GuiCheckbox extends HTMLElement{
                 display : flex;
                 align-items : center;
                 justify-content : center;
-                margin-top : 0.5em;
-                margin-bottom : 0.5em;
-                padding-left : 0.5em;
-                padding-right : 0.5em;
+                /* margin-top : 0.5em;
+                margin-bottom : 0.5em; */
+                /* padding-left : 0.5em;
+                padding-right : 0.5em; */
 
                 /* padding-top : var(--padding-top); */
                 /* padding-bottom : 0.1em; */
