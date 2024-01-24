@@ -38,8 +38,7 @@ export class GuiCollapsible extends HTMLElement{
                 grid-template-rows : 1fr;
                 gap : 0.5em;
                 /* padding : 0.5em; */
-                padding-left : 0.5em;
-                padding-right : 0.5em;
+                padding : 0.5em;
                 /* overflow-y : hidden; */
                 /* height : auto; */
                 opacity : 1;

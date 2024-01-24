@@ -210,8 +210,7 @@
                 grid-template-rows : 1fr;
                 gap : 0.5em;
                 /* padding : 0.5em; */
-                padding-left : 0.5em;
-                padding-right : 0.5em;
+                padding : 0.5em;
                 /* overflow-y : hidden; */
                 /* height : auto; */
                 opacity : 1;
@@ -790,7 +789,7 @@
 
             .value_div{
                 /* flex : 1.0; */
-                padding-left : 0.2em;
+                
                 position : relative;
                 /* overflow : hidden; */
                 border-radius : 0 2px 2px 0;
@@ -803,10 +802,11 @@
             }
 
             input{
+                display : block;
                 color : #222;
                 font-weight : bold;
                 height : calc(100% - 2px );
-                width : 6ch;
+                max-width : 9ch;
                 border : none;
                 height: max-content;
                 background-color : transparent;
