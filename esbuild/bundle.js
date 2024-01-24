@@ -729,7 +729,7 @@
       this.attachShadow({ mode: "open" });
       this._value = 0;
       this.label = "X";
-      this.color = "hotpink";
+      this.color = "grey";
       this.is_mouse_down = false;
       this.is_dragging = false;
       this._label = "wtf ?";
@@ -744,6 +744,7 @@
 
                 display : flex;
                 flex : 1.0;
+                box-sizing : border-box;
             }
 
             .wrapper{
@@ -788,16 +789,16 @@
             }
 
             .value_div{
-                flex : 1.0;
+                /* flex : 1.0; */
                 padding-left : 0.2em;
                 position : relative;
-                overflow : hidden;
+                /* overflow : hidden; */
                 border-radius : 0 2px 2px 0;
                 background-color : #eee;
                 padding-top : var(--padding-top);
                 padding-bottom : var(--padding-bottom);
-                padding-left : var(--padding-left);
-                /* width : 100%; */
+                /* padding-left : var(--padding-left); */
+                width : 100%;
                 
             }
 
@@ -805,7 +806,7 @@
                 color : #222;
                 font-weight : bold;
                 height : calc(100% - 2px );
-                width : 10ch;
+                width : 6ch;
                 border : none;
                 height: max-content;
                 background-color : transparent;
@@ -818,7 +819,7 @@
             ${this.styles}
 
             <div class="wrapper" oncontextmenu="return false;">
-                <div class="label"><span>${this._label}</span></div>
+                <div class="label" title="${this._label}"><span>${this._label}</span></div>
                 <div class="value_div">
                     <input type=number step="0.1" value=${this.value} />
                 </div>
@@ -924,6 +925,7 @@
       this._label = str;
       if (this.label_el) {
         this.label_el.innerHTML = `<span>${str}</span>`;
+        this.label_el.setAttribute("title", str);
       }
     }
     attributeChangedCallback(name, oldValue, newValue) {
