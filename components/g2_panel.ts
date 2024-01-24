@@ -191,5 +191,3 @@ export class GuiPanel extends HTMLElement{
 }
 
 customElements.define("gui-panel", GuiPanel);
-
-window.GuiPanel = GuiPanel;

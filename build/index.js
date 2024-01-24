@@ -1270,7 +1270,6 @@
     }
   };
   customElements.define("gui-panel", GuiPanel);
-  window.GuiPanel = GuiPanel;
 
   // components/g2_separator.ts
   var GuiSeparator = class extends HTMLElement {
@@ -1324,3 +1323,4 @@
   };
   customElements.define("gui-title", GuiTitle);
 })();
+//# sourceMappingURL=index.js.map
