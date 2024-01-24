@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "esbuild --bundle --sourcemap --tsconfig=tsconfig.json --outdir=./build ./components/index.ts",
-    "watch": "esbuild --bundle --sourcemap --tsconfig=tsconfig.json --watch --outdir=./build ./components/index.ts",
+    "build": "esbuild --bundle --format=esm --sourcemap --tsconfig=./tsconfig.json --outdir=./build ./components/index.ts",
+    "watch": "esbuild --bundle --format=esm --sourcemap --tsconfig=./tsconfig.json --watch --outdir=./build ./components/index.ts",
     "gen": "npm run build && node ./node/generate_bundle.mjs && esbuild ./build/g2_bundle.js --minify --outfile=./build/g2_bundle.min.js"
   },
   "keywords": [],

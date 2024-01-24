@@ -1,80 +1,82 @@
-"use strict";
-(() => {
-  var __getOwnPropNames = Object.getOwnPropertyNames;
-  var __esm = (fn, res) => function __init() {
-    return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
-  };
-  var __commonJS = (cb, mod) => function __require() {
-    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
-  };
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __esm = (fn, res) => function __init() {
+  return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
+};
+var __commonJS = (cb, mod) => function __require() {
+  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+};
 
-  // components/g2_accordion.ts
-  var GuiAccordion;
-  var init_g2_accordion = __esm({
-    "components/g2_accordion.ts"() {
-      "use strict";
-      GuiAccordion = class extends HTMLElement {
-        constructor() {
-          super();
-          this.collapsibles = [];
-          this.attachShadow({ mode: "open" });
-          const styles = String.raw`<style>
+// components/g2_accordion.ts
+var GuiAccordion;
+var init_g2_accordion = __esm({
+  "components/g2_accordion.ts"() {
+    "use strict";
+    GuiAccordion = class extends HTMLElement {
+      template_fragment;
+      collapsibles = [];
+      constructor() {
+        super();
+        this.attachShadow({ mode: "open" });
+        const styles = String.raw`<style>
 
         </style>`;
-          const template = String.raw`
+        const template = String.raw`
             ${styles}
             <slot></slot>
         `;
-          this.template_fragment = document.createRange().createContextualFragment(template);
-          this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
-        }
-        open(theone) {
-          this.collapsibles.forEach((item, index) => {
-            if (item !== theone) {
-              item.setAttribute("closed", "true");
+        this.template_fragment = document.createRange().createContextualFragment(template);
+        this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
+      }
+      open(theone) {
+        this.collapsibles.forEach((item, index) => {
+          if (item !== theone) {
+            item.setAttribute("closed", "true");
+          }
+        });
+      }
+      connectedCallback() {
+        const slot = this.shadowRoot.querySelector("slot");
+        this.collapsibles = [];
+        slot?.addEventListener("slotchange", () => {
+          for (let node of slot?.assignedNodes()) {
+            if (node.nodeName === "GUI-COLLAPSIBLE") {
+              let coll = node;
+              coll.addEventListener("open", (ev) => {
+                this.open(ev.target);
+              });
+              this.collapsibles.push(coll);
             }
-          });
-        }
-        connectedCallback() {
-          const slot = this.shadowRoot.querySelector("slot");
-          this.collapsibles = [];
-          slot?.addEventListener("slotchange", () => {
-            for (let node of slot?.assignedNodes()) {
-              if (node.nodeName === "GUI-COLLAPSIBLE") {
-                let coll = node;
-                coll.addEventListener("open", (ev) => {
-                  this.open(ev.target);
-                });
-                this.collapsibles.push(coll);
-              }
-            }
-          });
-        }
-        adoptedCallBack() {
-          console.log("adopted");
-        }
-        static get observedAttributes() {
-          return [];
-        }
-        attributeChangedCallback(name, oldValue, newValue) {
-        }
-      };
-      customElements.define("gui-accordion", GuiAccordion);
-    }
-  });
+          }
+        });
+      }
+      adoptedCallBack() {
+        console.log("adopted");
+      }
+      static get observedAttributes() {
+        return [];
+      }
+      attributeChangedCallback(name, oldValue, newValue) {
+      }
+    };
+    customElements.define("gui-accordion", GuiAccordion);
+  }
+});
 
-  // components/g2_checkbox.ts
-  var GuiCheckbox;
-  var init_g2_checkbox = __esm({
-    "components/g2_checkbox.ts"() {
-      "use strict";
-      GuiCheckbox = class extends HTMLElement {
-        constructor() {
-          super();
-          this._label = "toggle";
-          this.value = true;
-          this.attachShadow({ mode: "open" });
-          const styles = String.raw`<style>
+// components/g2_checkbox.ts
+var GuiCheckbox;
+var init_g2_checkbox = __esm({
+  "components/g2_checkbox.ts"() {
+    "use strict";
+    GuiCheckbox = class extends HTMLElement {
+      template_fragment;
+      _label = "toggle";
+      label_el;
+      pretty_el;
+      value = true;
+      constructor() {
+        super();
+        this.attachShadow({ mode: "open" });
+        const styles = String.raw`<style>
             :host{
                 --padding-top : 0.3em;
                 --padding-bottom : 0.3em;
@@ -144,7 +146,7 @@
                 transform : scale(0.6) rotate(-45deg) ;
             }
         </style>`;
-          const template = String.raw`
+        const template = String.raw`
             ${styles}
 
             <div id="wrapper">
@@ -154,59 +156,64 @@
             <input id="checkbox" type="checkbox" ${this.value ? "checked" : ""} />
             </div>
         `;
-          this.template_fragment = document.createRange().createContextualFragment(template);
-          this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
-          this.label_el = this.shadowRoot.querySelector("label");
-          this.pretty_el = this.shadowRoot.querySelector(".pretty");
-          let checkbox = this.shadowRoot.querySelector("#checkbox");
-          checkbox.addEventListener("change", (event) => {
-            let checkbox2 = event.target;
-            this.value = checkbox2.toggleAttribute("checked");
-            this.pretty_el.classList.toggle("checked");
-            this.label_el.classList.toggle("checked");
-            let ev = new Event("change");
-            this.dispatchEvent(ev);
-          });
+        this.template_fragment = document.createRange().createContextualFragment(template);
+        this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
+        this.label_el = this.shadowRoot.querySelector("label");
+        this.pretty_el = this.shadowRoot.querySelector(".pretty");
+        let checkbox = this.shadowRoot.querySelector("#checkbox");
+        checkbox.addEventListener("change", (event) => {
+          let checkbox2 = event.target;
+          this.value = checkbox2.toggleAttribute("checked");
+          this.pretty_el.classList.toggle("checked");
+          this.label_el.classList.toggle("checked");
+          let ev = new Event("change");
+          this.dispatchEvent(ev);
+        });
+      }
+      connectedCallback() {
+      }
+      static get observedAttributes() {
+        return ["label"];
+      }
+      set label(str) {
+        if (this.label_el) {
+          this.label_el.innerHTML = `<span>${str}</span>`;
         }
-        connectedCallback() {
+      }
+      attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+          case "value":
+            this.value = newValue;
+            break;
+          case "label":
+            this.label = newValue;
+            break;
+          default:
+            break;
         }
-        static get observedAttributes() {
-          return ["label"];
-        }
-        set label(str) {
-          if (this.label_el) {
-            this.label_el.innerHTML = `<span>${str}</span>`;
-          }
-        }
-        attributeChangedCallback(name, oldValue, newValue) {
-          switch (name) {
-            case "value":
-              this.value = newValue;
-              break;
-            case "label":
-              this.label = newValue;
-              break;
-            default:
-              break;
-          }
-        }
-      };
-      customElements.define("gui-checkbox", GuiCheckbox);
-    }
-  });
+      }
+    };
+    customElements.define("gui-checkbox", GuiCheckbox);
+  }
+});
 
-  // components/g2_collapsible.ts
-  var GuiCollapsible;
-  var init_g2_collapsible = __esm({
-    "components/g2_collapsible.ts"() {
-      "use strict";
-      GuiCollapsible = class extends HTMLElement {
-        constructor() {
-          super();
-          this.closed = true;
-          this._title = "collaspible";
-          this.attachShadow({ mode: "open" });
-          const styles = String.raw`
+// components/g2_collapsible.ts
+var GuiCollapsible;
+var init_g2_collapsible = __esm({
+  "components/g2_collapsible.ts"() {
+    "use strict";
+    GuiCollapsible = class extends HTMLElement {
+      template_fragment;
+      closed = true;
+      _title = "collaspible";
+      header_el;
+      arrow_el;
+      content_el;
+      title_el;
+      constructor() {
+        super();
+        this.attachShadow({ mode: "open" });
+        const styles = String.raw`
         <style>
 
             .header{
@@ -279,8 +286,8 @@
             
         
         </style>`;
-          this.closed = true;
-          const template = String.raw`
+        this.closed = true;
+        const template = String.raw`
             
             ${styles}
 
@@ -293,86 +300,87 @@
                 </div>
             </div>
         `;
-          this.template_fragment = document.createRange().createContextualFragment(template);
-          this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
-          this.header_el = this.shadowRoot.querySelector(".header");
-          this.arrow_el = this.shadowRoot.querySelector(".header>.arrow");
-          this.title_el = this.shadowRoot.querySelector("#title");
-          this.content_el = this.shadowRoot.querySelector(".content");
+        this.template_fragment = document.createRange().createContextualFragment(template);
+        this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
+        this.header_el = this.shadowRoot.querySelector(".header");
+        this.arrow_el = this.shadowRoot.querySelector(".header>.arrow");
+        this.title_el = this.shadowRoot.querySelector("#title");
+        this.content_el = this.shadowRoot.querySelector(".content");
+      }
+      connectedCallback() {
+        if (this.closed) {
+          this.header_el.setAttribute("closed", "true");
+          this.content_el.setAttribute("closed", "true");
+          this.arrow_el.classList.add("closed");
+          this.header_el.classList.add("closed");
+          this.content_el.classList.add("closed");
         }
-        connectedCallback() {
-          if (this.closed) {
-            this.header_el.setAttribute("closed", "true");
-            this.content_el.setAttribute("closed", "true");
-            this.arrow_el.classList.add("closed");
-            this.header_el.classList.add("closed");
-            this.content_el.classList.add("closed");
+        this.header_el.addEventListener("click", (event) => {
+          this.arrow_el.classList.toggle("closed");
+          this.header_el.classList.toggle("closed");
+          this.content_el.classList.toggle("closed");
+          if (this.header_el.classList.contains("closed")) {
+            this.closed = true;
+          } else {
+            this.closed = false;
+            let ev = new Event("open");
+            this.dispatchEvent(ev);
           }
-          this.header_el.addEventListener("click", (event) => {
-            this.arrow_el.classList.toggle("closed");
-            this.header_el.classList.toggle("closed");
-            this.content_el.classList.toggle("closed");
-            if (this.header_el.classList.contains("closed")) {
+        });
+      }
+      static get observedAttributes() {
+        return ["title", "closed"];
+      }
+      set title(val) {
+        this._title = val;
+        if (this.title_el) {
+          this.title_el.innerText = val;
+        }
+      }
+      attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+          case "title":
+            this.title = newValue;
+            let span = this.shadowRoot?.querySelector(".header>span");
+            span.innerText = newValue;
+            break;
+          case "closed":
+            if (newValue === "")
               this.closed = true;
-            } else {
+            else if (newValue === "true")
+              this.closed = true;
+            else if (newValue === "false")
               this.closed = false;
-              let ev = new Event("open");
-              this.dispatchEvent(ev);
+            if (this.closed) {
+              this.arrow_el.classList.add("closed");
+              this.header_el.classList.add("closed");
+              this.content_el.classList.add("closed");
+            } else {
+              this.arrow_el.classList.remove("closed");
+              this.header_el.classList.remove("closed");
+              this.content_el.classList.remove("closed");
             }
-          });
+            break;
+          default:
+            break;
         }
-        static get observedAttributes() {
-          return ["title", "closed"];
-        }
-        set title(val) {
-          this._title = val;
-          if (this.title_el) {
-            this.title_el.innerText = val;
-          }
-        }
-        attributeChangedCallback(name, oldValue, newValue) {
-          switch (name) {
-            case "title":
-              this.title = newValue;
-              let span = this.shadowRoot?.querySelector(".header>span");
-              span.innerText = newValue;
-              break;
-            case "closed":
-              if (newValue === "")
-                this.closed = true;
-              else if (newValue === "true")
-                this.closed = true;
-              else if (newValue === "false")
-                this.closed = false;
-              if (this.closed) {
-                this.arrow_el.classList.add("closed");
-                this.header_el.classList.add("closed");
-                this.content_el.classList.add("closed");
-              } else {
-                this.arrow_el.classList.remove("closed");
-                this.header_el.classList.remove("closed");
-                this.content_el.classList.remove("closed");
-              }
-              break;
-            default:
-              break;
-          }
-        }
-      };
-      customElements.define("gui-collapsible", GuiCollapsible);
-    }
-  });
+      }
+    };
+    customElements.define("gui-collapsible", GuiCollapsible);
+  }
+});
 
-  // components/g2_color_picker.ts
-  var GuiColorPicker;
-  var init_g2_color_picker = __esm({
-    "components/g2_color_picker.ts"() {
-      "use strict";
-      GuiColorPicker = class extends HTMLElement {
-        constructor() {
-          super();
-          this.attachShadow({ mode: "open" });
-          const styles = String.raw`<style>
+// components/g2_color_picker.ts
+var GuiColorPicker;
+var init_g2_color_picker = __esm({
+  "components/g2_color_picker.ts"() {
+    "use strict";
+    GuiColorPicker = class extends HTMLElement {
+      template_fragment;
+      constructor() {
+        super();
+        this.attachShadow({ mode: "open" });
+        const styles = String.raw`<style>
 
             .clr_sample{
                 width : 30px;
@@ -387,7 +395,7 @@
                 outline : 1px solid white !important;
             }
         </style>`;
-          const template = String.raw`
+        const template = String.raw`
 
             ${styles}
             
@@ -395,34 +403,37 @@
                 <div class="clr_sample"></div>
 
         `;
-          this.template_fragment = document.createRange().createContextualFragment(template);
-          this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
-        }
-        connectedCallback() {
-        }
-        static get observedAttributes() {
-          return [];
-        }
-        attributeChangedCallback(name, oldValue, newValue) {
-        }
-      };
-      customElements.define("gui-color-picker", GuiColorPicker);
-    }
-  });
+        this.template_fragment = document.createRange().createContextualFragment(template);
+        this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
+      }
+      connectedCallback() {
+      }
+      static get observedAttributes() {
+        return [];
+      }
+      attributeChangedCallback(name, oldValue, newValue) {
+      }
+    };
+    customElements.define("gui-color-picker", GuiColorPicker);
+  }
+});
 
-  // components/g2_combobox.ts
-  var GuiCombobox;
-  var init_g2_combobox = __esm({
-    "components/g2_combobox.ts"() {
-      "use strict";
-      GuiCombobox = class extends HTMLElement {
-        constructor() {
-          super();
-          this._label = "Label";
-          this._value = "";
-          this._selectedIndex = 0;
-          this.attachShadow({ mode: "open" });
-          const styles = String.raw`<style>
+// components/g2_combobox.ts
+var GuiCombobox;
+var init_g2_combobox = __esm({
+  "components/g2_combobox.ts"() {
+    "use strict";
+    GuiCombobox = class extends HTMLElement {
+      template_fragment;
+      _label = "Label";
+      label_el;
+      wrapper;
+      _value = "";
+      _selectedIndex = 0;
+      constructor() {
+        super();
+        this.attachShadow({ mode: "open" });
+        const styles = String.raw`<style>
             .wrapper{
                 /* padding : 0.5em; */
                 display : flex;
@@ -456,7 +467,7 @@
                 border-radius : 0 3px 3px 0;
             }
         </style>`;
-          const template = String.raw`
+        const template = String.raw`
             ${styles}
 
             <div class="wrapper">
@@ -467,90 +478,92 @@
 
             
         `;
-          this.template_fragment = document.createRange().createContextualFragment(template);
-          this.shadowRoot.appendChild(this.template_fragment.cloneNode(true));
-          this.wrapper = this.shadowRoot.querySelector(".wrapper");
-          this.label_el = this.shadowRoot.querySelector("label");
+        this.template_fragment = document.createRange().createContextualFragment(template);
+        this.shadowRoot.appendChild(this.template_fragment.cloneNode(true));
+        this.wrapper = this.shadowRoot.querySelector(".wrapper");
+        this.label_el = this.shadowRoot.querySelector("label");
+      }
+      set label(str) {
+        if (this.label_el) {
+          this._label = str;
+          this.label_el.innerText = str;
         }
-        set label(str) {
-          if (this.label_el) {
-            this._label = str;
-            this.label_el.innerText = str;
+      }
+      set selectedIndex(index) {
+        this._selectedIndex = index;
+      }
+      get selectedIndex() {
+        return this._selectedIndex;
+      }
+      get value() {
+        return this._value;
+      }
+      set value(str) {
+        this._value = str;
+      }
+      connectedCallback() {
+        const slot = this.shadowRoot?.querySelector("slot");
+        let option_nodes = [];
+        slot?.addEventListener("slotchange", () => {
+          for (let node of slot?.assignedNodes()) {
+            if (node.nodeName === "OPTION") {
+              let coll = node;
+              option_nodes.push(coll);
+              this.removeChild(coll);
+            }
           }
-        }
-        set selectedIndex(index) {
-          this._selectedIndex = index;
-        }
-        get selectedIndex() {
-          return this._selectedIndex;
-        }
-        get value() {
-          return this._value;
-        }
-        set value(str) {
-          this._value = str;
-        }
-        connectedCallback() {
-          const slot = this.shadowRoot?.querySelector("slot");
-          let option_nodes = [];
-          slot?.addEventListener("slotchange", () => {
-            for (let node of slot?.assignedNodes()) {
-              if (node.nodeName === "OPTION") {
-                let coll = node;
-                option_nodes.push(coll);
-                this.removeChild(coll);
-              }
-            }
-            let old_select = this.shadowRoot.querySelector(".wrapper>select");
-            if (old_select !== null) {
-              this.wrapper.removeChild(old_select);
-            }
-            let select = document.createElement("select");
-            select.id = "list";
-            select.addEventListener("change", (event) => {
-              let sel = event.target;
-              this.value = sel.value;
-              this.selectedIndex = sel.selectedIndex;
-              let ev = new Event("change", {});
-              this.dispatchEvent(ev);
-            });
-            for (let option of option_nodes) {
-              let opt = document.createElement("option");
-              opt.innerText = option.value;
-              select.appendChild(opt);
-            }
-            this.wrapper.appendChild(select);
+          let old_select = this.shadowRoot.querySelector(".wrapper>select");
+          if (old_select !== null) {
+            this.wrapper.removeChild(old_select);
+          }
+          let select = document.createElement("select");
+          select.id = "list";
+          select.addEventListener("change", (event) => {
+            let sel = event.target;
+            this.value = sel.value;
+            this.selectedIndex = sel.selectedIndex;
+            let ev = new Event("change", {});
+            this.dispatchEvent(ev);
           });
-        }
-        static get observedAttributes() {
-          return ["label"];
-        }
-        attributeChangedCallback(name, oldValue, newValue) {
-          switch (name) {
-            case "label":
-              if (this.label_el) {
-                this.label_el.innerText = newValue;
-              }
-            default:
-              break;
+          for (let option of option_nodes) {
+            let opt = document.createElement("option");
+            opt.innerText = option.value;
+            select.appendChild(opt);
           }
+          this.wrapper.appendChild(select);
+        });
+      }
+      static get observedAttributes() {
+        return ["label"];
+      }
+      attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+          case "label":
+            if (this.label_el) {
+              this.label_el.innerText = newValue;
+            }
+          default:
+            break;
         }
-      };
-      customElements.define("gui-combobox", GuiCombobox);
-    }
-  });
+      }
+    };
+    customElements.define("gui-combobox", GuiCombobox);
+  }
+});
 
-  // components/g2_group.ts
-  var GuiGroup;
-  var init_g2_group = __esm({
-    "components/g2_group.ts"() {
-      "use strict";
-      GuiGroup = class extends HTMLElement {
-        constructor() {
-          super();
-          this._label = "";
-          this.attachShadow({ mode: "open" });
-          const styles = String.raw`<style>
+// components/g2_group.ts
+var GuiGroup;
+var init_g2_group = __esm({
+  "components/g2_group.ts"() {
+    "use strict";
+    GuiGroup = class extends HTMLElement {
+      template_fragment;
+      _label = "";
+      label_el;
+      constructor() {
+        super();
+        this.attachShadow({ mode: "open" });
+        const styles = String.raw`<style>
 
             .wrapper{
                 position : relative;
@@ -575,7 +588,7 @@
                 margin-top : -0.5em;
             }
         </style>`;
-          const template = String.raw`
+        const template = String.raw`
             ${styles}
 
 
@@ -586,49 +599,55 @@
             </div>
 
         `;
-          this.template_fragment = document.createRange().createContextualFragment(template);
-          this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
-          this.label_el = this.shadowRoot.querySelector(".label");
+        this.template_fragment = document.createRange().createContextualFragment(template);
+        this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
+        this.label_el = this.shadowRoot.querySelector(".label");
+      }
+      connectedCallback() {
+      }
+      static get observedAttributes() {
+        return ["label"];
+      }
+      set label(str) {
+        if (this.label_el) {
+          this._label = str;
+          this.label_el.innerText = str;
         }
-        connectedCallback() {
+      }
+      attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+          case "label":
+            this.label = newValue;
+            break;
+          default:
+            break;
         }
-        static get observedAttributes() {
-          return ["label"];
-        }
-        set label(str) {
-          if (this.label_el) {
-            this._label = str;
-            this.label_el.innerText = str;
-          }
-        }
-        attributeChangedCallback(name, oldValue, newValue) {
-          switch (name) {
-            case "label":
-              this.label = newValue;
-              break;
-            default:
-              break;
-          }
-        }
-      };
-      customElements.define("gui-group", GuiGroup);
-    }
-  });
+      }
+    };
+    customElements.define("gui-group", GuiGroup);
+  }
+});
 
-  // components/g2_input_color.ts
-  var GuiInputColor;
-  var init_g2_input_color = __esm({
-    "components/g2_input_color.ts"() {
-      "use strict";
-      GuiInputColor = class extends HTMLElement {
-        constructor() {
-          super();
-          this.default_scalar = 0;
-          this._label = "Color";
-          this._value = [0, 0, 0];
-          this._default_value = [0, 0, 0];
-          this.attachShadow({ mode: "open" });
-          const styles = String.raw`
+// components/g2_input_color.ts
+var GuiInputColor;
+var init_g2_input_color = __esm({
+  "components/g2_input_color.ts"() {
+    "use strict";
+    GuiInputColor = class extends HTMLElement {
+      template_fragment;
+      label_el;
+      input_x;
+      input_y;
+      input_z;
+      default_scalar = 0;
+      _label = "Color";
+      _value = [0, 0, 0];
+      _default_value = [0, 0, 0];
+      picker_el;
+      constructor() {
+        super();
+        this.attachShadow({ mode: "open" });
+        const styles = String.raw`
             <style>
 
                 .wrapper{
@@ -642,7 +661,7 @@
                 }
             </style>
         `;
-          const template_str = String.raw`
+        const template_str = String.raw`
 
             ${styles}
             <div class="wrapper">
@@ -655,138 +674,146 @@
                 </div>
             </div>
         `;
-          this.template_fragment = document.createRange().createContextualFragment(template_str);
-          this.shadowRoot.appendChild(this.template_fragment.cloneNode(true));
-          this.label_el = this.shadowRoot.querySelector(".label");
-          this.input_x = this.shadowRoot.querySelector("#input_x");
-          this.input_y = this.shadowRoot.querySelector("#input_y");
-          this.input_z = this.shadowRoot.querySelector("#input_z");
-          Promise.all([
-            customElements.whenDefined("gui-input-float"),
-            customElements.whenDefined("gui-color-picker")
-          ]).then(() => {
-            let label_x = this.input_x.shadowRoot.querySelector(".wrapper .label span");
-            let label_y = this.input_y.shadowRoot.querySelector(".wrapper .label span");
-            let label_z = this.input_z.shadowRoot.querySelector(".wrapper .label span");
-            label_x.style.overflow = "unset";
-            label_y.style.overflow = "unset";
-            label_z.style.overflow = "unset";
-          });
-          this.picker_el = this.shadowRoot.querySelector("gui-color-picker");
-          this.input_x.addEventListener("change", (event) => {
-            let val = event.target.value;
-            this.value[0] = val;
-            this.dispatchEvent(new Event("change"));
-            this.updateSample();
-          });
-          this.input_y.addEventListener("change", (event) => {
-            let val = event.target.value;
-            this.value[1] = val;
-            this.dispatchEvent(new Event("change"));
-            this.updateSample();
-          });
-          this.input_z.addEventListener("change", (event) => {
-            let val = event.target.value;
-            this.value[2] = val;
-            this.dispatchEvent(new Event("change"));
-            this.updateSample();
-          });
-        }
-        connectedCallback() {
-          this.input_x._default_value = this.default_scalar;
-          this.input_y._default_value = this.default_scalar;
-          this.input_z._default_value = this.default_scalar;
+        this.template_fragment = document.createRange().createContextualFragment(template_str);
+        this.shadowRoot.appendChild(this.template_fragment.cloneNode(true));
+        this.label_el = this.shadowRoot.querySelector(".label");
+        this.input_x = this.shadowRoot.querySelector("#input_x");
+        this.input_y = this.shadowRoot.querySelector("#input_y");
+        this.input_z = this.shadowRoot.querySelector("#input_z");
+        Promise.all([
+          customElements.whenDefined("gui-input-float"),
+          customElements.whenDefined("gui-color-picker")
+        ]).then(() => {
+          let label_x = this.input_x.shadowRoot.querySelector(".wrapper .label span");
+          let label_y = this.input_y.shadowRoot.querySelector(".wrapper .label span");
+          let label_z = this.input_z.shadowRoot.querySelector(".wrapper .label span");
+          label_x.style.overflow = "unset";
+          label_y.style.overflow = "unset";
+          label_z.style.overflow = "unset";
+        });
+        this.picker_el = this.shadowRoot.querySelector("gui-color-picker");
+        this.input_x.addEventListener("change", (event) => {
+          let val = event.target.value;
+          this.value[0] = val;
+          this.dispatchEvent(new Event("change"));
           this.updateSample();
-        }
-        updateSample() {
-          this.clampValues();
-          this.picker_el.style.backgroundColor = `rgb(${this.input_x.value * 255},${this.input_y.value * 255},${this.input_z.value * 255})`;
-        }
-        clampValues() {
-          if (this.input_x.value > 1)
-            this.input_x.value = 1;
-          else if (this.input_x.value < 0)
-            this.input_x.value = 0;
-          if (this.input_y.value > 1)
-            this.input_y.value = 1;
-          else if (this.input_y.value < 0)
-            this.input_y.value = 0;
-          if (this.input_z.value > 1)
-            this.input_z.value = 1;
-          else if (this.input_z.value < 0)
-            this.input_z.value = 0;
-        }
-        static get observedAttributes() {
-          return ["default_scalar", "label"];
-        }
-        attributeChangedCallback(name, oldValue, newValue) {
-          switch (name) {
-            case "default_scalar":
-              this.default_scalar = parseFloat(newValue);
-              this.input_x.value = this.default_scalar;
-              this.input_y.value = this.default_scalar;
-              this.input_z.value = this.default_scalar;
-              break;
-            case "label":
-              this.label = newValue;
-              this.label_el.innerText = newValue;
-              break;
-            default:
-              break;
-          }
-        }
-        get value() {
-          return [this.input_x.value, this.input_y.value, this.input_z.value];
-        }
-        set value(val) {
-          console.log("setting values : ", val);
-          this.input_x.value = val[0];
-          this.input_y.value = val[1];
-          this.input_z.value = val[2];
-          this._value = val;
+        });
+        this.input_y.addEventListener("change", (event) => {
+          let val = event.target.value;
+          this.value[1] = val;
+          this.dispatchEvent(new Event("change"));
           this.updateSample();
+        });
+        this.input_z.addEventListener("change", (event) => {
+          let val = event.target.value;
+          this.value[2] = val;
+          this.dispatchEvent(new Event("change"));
+          this.updateSample();
+        });
+      }
+      connectedCallback() {
+        this.input_x._default_value = this.default_scalar;
+        this.input_y._default_value = this.default_scalar;
+        this.input_z._default_value = this.default_scalar;
+        this.updateSample();
+      }
+      updateSample() {
+        this.clampValues();
+        this.picker_el.style.backgroundColor = `rgb(${this.input_x.value * 255},${this.input_y.value * 255},${this.input_z.value * 255})`;
+      }
+      clampValues() {
+        if (this.input_x.value > 1)
+          this.input_x.value = 1;
+        else if (this.input_x.value < 0)
+          this.input_x.value = 0;
+        if (this.input_y.value > 1)
+          this.input_y.value = 1;
+        else if (this.input_y.value < 0)
+          this.input_y.value = 0;
+        if (this.input_z.value > 1)
+          this.input_z.value = 1;
+        else if (this.input_z.value < 0)
+          this.input_z.value = 0;
+      }
+      static get observedAttributes() {
+        return ["default_scalar", "label"];
+      }
+      attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+          case "default_scalar":
+            this.default_scalar = parseFloat(newValue);
+            this.input_x.value = this.default_scalar;
+            this.input_y.value = this.default_scalar;
+            this.input_z.value = this.default_scalar;
+            break;
+          case "label":
+            this.label = newValue;
+            this.label_el.innerText = newValue;
+            break;
+          default:
+            break;
         }
-        set default_value(val) {
-          this._default_value = val;
-          this.input_x.default_value = val[0];
-          this.input_y.default_value = val[1];
-          this.input_z.default_value = val[2];
-        }
-        set label(str) {
-          this._label = str;
-          this.label_el.innerText = str;
-        }
-      };
-      customElements.define("gui-input-color", GuiInputColor);
-    }
-  });
+      }
+      get value() {
+        return [this.input_x.value, this.input_y.value, this.input_z.value];
+      }
+      set value(val) {
+        console.log("setting values : ", val);
+        this.input_x.value = val[0];
+        this.input_y.value = val[1];
+        this.input_z.value = val[2];
+        this._value = val;
+        this.updateSample();
+      }
+      set default_value(val) {
+        this._default_value = val;
+        this.input_x.default_value = val[0];
+        this.input_y.default_value = val[1];
+        this.input_z.default_value = val[2];
+      }
+      set label(str) {
+        this._label = str;
+        this.label_el.innerText = str;
+      }
+    };
+    customElements.define("gui-input-color", GuiInputColor);
+  }
+});
 
-  // components/g2_input_float.ts
-  var GuiInputFloat;
-  var init_g2_input_float = __esm({
-    "components/g2_input_float.ts"() {
-      "use strict";
-      GuiInputFloat = class extends HTMLElement {
-        constructor() {
-          super();
-          this.value_preview = 0;
-          this.value_offset = 0;
-          this._default_value = 0;
-          this.old_value = 0;
-          this.new_value = 0;
-          this._label = "";
-          this._color = "";
-          this.drag_start_pos = 0;
-          this.ctrl_pressed = false;
-          this.shift_pressed = false;
-          this.attachShadow({ mode: "open" });
-          this._value = 0;
-          this.label = "X";
-          this.color = "grey";
-          this.is_mouse_down = false;
-          this.is_dragging = false;
-          this._label = "wtf ?";
-          this.styles = String.raw`
+// components/g2_input_float.ts
+var GuiInputFloat;
+var init_g2_input_float = __esm({
+  "components/g2_input_float.ts"() {
+    "use strict";
+    GuiInputFloat = class extends HTMLElement {
+      _value;
+      value_preview = 0;
+      value_offset = 0;
+      _default_value = 0;
+      old_value = 0;
+      new_value = 0;
+      _label = "";
+      label_el;
+      _color = "";
+      styles;
+      value_input;
+      number_input;
+      template_fragment;
+      is_mouse_down;
+      is_dragging;
+      drag_start_pos = 0;
+      ctrl_pressed = false;
+      shift_pressed = false;
+      constructor() {
+        super();
+        this.attachShadow({ mode: "open" });
+        this._value = 0;
+        this.label = "X";
+        this.color = "grey";
+        this.is_mouse_down = false;
+        this.is_dragging = false;
+        this._label = "wtf ?";
+        this.styles = String.raw`
             <style>
 
             :host{
@@ -872,7 +899,7 @@
 
             </style>        
         `;
-          const template = String.raw`
+        const template = String.raw`
 
             ${this.styles}
 
@@ -884,148 +911,153 @@
                 </div>
             <div>
         `;
-          this.template_fragment = document.createRange().createContextualFragment(template);
-          this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
-          this.label_el = this.shadowRoot.querySelector(".label");
-          this.value_input = this.shadowRoot.querySelector("input");
-          this.number_input = this.shadowRoot.querySelector(".number_div");
-          this.number_input?.addEventListener("input", (event) => {
-            console.log(event);
-          });
-        }
-        connectedCallback() {
-          document.addEventListener("keydown", (event) => {
-            if (event.ctrlKey) {
-              this.ctrl_pressed = true;
-            }
-            if (event.shiftKey) {
-              this.shift_pressed = true;
-            }
-          });
-          document.addEventListener("keyup", (event) => {
-            if (event.key == "Control") {
-              this.ctrl_pressed = false;
-            }
-            if (event.key == "Shift") {
-              this.shift_pressed = false;
-            }
-          });
-          this.value_input.addEventListener("input", (event) => {
-            this._value = parseFloat(this.value_input.value);
-            this.triggerChange();
-          });
-          this.value_input.addEventListener("keypress", (event) => {
-            if (event.key === "Enter") {
-              this.value_input.blur();
-              this.triggerChange();
-            }
-          });
-          this.value_input.addEventListener("blur", (event) => {
-            this.triggerChange();
-          });
-          this.label_el.addEventListener("mousedown", (event) => {
-            this.value_offset = 0;
-            if (event.button === 0) {
-              this.is_mouse_down = true;
-              this.drag_start_pos = event.clientX;
-            } else if (event.button === 2) {
-              this.value_input.value = this._default_value.toString();
-              this.value = this._default_value;
-            }
-          });
-          document.addEventListener("mouseup", (event) => {
-            this.is_mouse_down = false;
-            if (event.button === 0) {
-              if (this.value_preview !== 0) {
-                this.value = this.value_preview;
-                this.value_preview = 0;
-              }
-            }
-          });
-          document.addEventListener("mousemove", (event) => {
-            if (this.is_mouse_down) {
-              let diff = event.pageX - this.drag_start_pos;
-              let mult = 0.1;
-              if (this.ctrl_pressed)
-                mult *= 0.1;
-              else if (this.shift_pressed)
-                mult *= 5;
-              diff *= mult;
-              this.value_input.value = (this.value + diff).toString();
-              this.value_preview = this.value + diff;
-              this.value_offset = diff;
-              this.value += diff;
-              this.triggerChange();
-              this.drag_start_pos = event.pageX;
-            }
-          });
-        }
-        static get observedAttributes() {
-          return ["label", "color", "default_value"];
-        }
-        triggerChange() {
-          let ev = new Event("change", {
-            // bubbles : true,
-            // composed : false,
-          });
-          this.dispatchEvent(ev);
-        }
-        set value(val) {
-          this._value = val;
-          this.value_input.value = val.toString();
+        this.template_fragment = document.createRange().createContextualFragment(template);
+        this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
+        this.label_el = this.shadowRoot.querySelector(".label");
+        this.value_input = this.shadowRoot.querySelector("input");
+        this.number_input = this.shadowRoot.querySelector(".number_div");
+        this.number_input?.addEventListener("input", (event) => {
+          console.log(event);
+        });
+      }
+      connectedCallback() {
+        document.addEventListener("keydown", (event) => {
+          if (event.ctrlKey) {
+            this.ctrl_pressed = true;
+          }
+          if (event.shiftKey) {
+            this.shift_pressed = true;
+          }
+        });
+        document.addEventListener("keyup", (event) => {
+          if (event.key == "Control") {
+            this.ctrl_pressed = false;
+          }
+          if (event.key == "Shift") {
+            this.shift_pressed = false;
+          }
+        });
+        this.value_input.addEventListener("input", (event) => {
+          this._value = parseFloat(this.value_input.value);
           this.triggerChange();
-        }
-        get value() {
-          return this._value;
-        }
-        set default_value(val) {
-          this._default_value = val;
-        }
-        set color(clr) {
-          this._color = clr;
-        }
-        set label(str) {
-          this._label = str;
-          if (this.label_el) {
-            this.label_el.innerHTML = `<span>${str}</span>`;
-            this.label_el.setAttribute("title", str);
+        });
+        this.value_input.addEventListener("keypress", (event) => {
+          if (event.key === "Enter") {
+            this.value_input.blur();
+            this.triggerChange();
           }
-        }
-        attributeChangedCallback(name, oldValue, newValue) {
-          switch (name) {
-            case "color":
-              this.label_el.style.backgroundColor = newValue;
-              break;
-            case "label":
-              this.label = newValue;
-              break;
-            case "default_value":
-              this._default_value = parseFloat(newValue);
-              this.value = this._default_value;
-              break;
-            default:
-              break;
+        });
+        this.value_input.addEventListener("blur", (event) => {
+          this.triggerChange();
+        });
+        this.label_el.addEventListener("mousedown", (event) => {
+          this.value_offset = 0;
+          if (event.button === 0) {
+            this.is_mouse_down = true;
+            this.drag_start_pos = event.clientX;
+          } else if (event.button === 2) {
+            this.value_input.value = this._default_value.toString();
+            this.value = this._default_value;
           }
+        });
+        document.addEventListener("mouseup", (event) => {
+          this.is_mouse_down = false;
+          if (event.button === 0) {
+            if (this.value_preview !== 0) {
+              this.value = this.value_preview;
+              this.value_preview = 0;
+            }
+          }
+        });
+        document.addEventListener("mousemove", (event) => {
+          if (this.is_mouse_down) {
+            let diff = event.pageX - this.drag_start_pos;
+            let mult = 0.1;
+            if (this.ctrl_pressed)
+              mult *= 0.1;
+            else if (this.shift_pressed)
+              mult *= 5;
+            diff *= mult;
+            this.value_input.value = (this.value + diff).toString();
+            this.value_preview = this.value + diff;
+            this.value_offset = diff;
+            this.value += diff;
+            this.triggerChange();
+            this.drag_start_pos = event.pageX;
+          }
+        });
+      }
+      static get observedAttributes() {
+        return ["label", "color", "default_value"];
+      }
+      triggerChange() {
+        let ev = new Event("change", {
+          // bubbles : true,
+          // composed : false,
+        });
+        this.dispatchEvent(ev);
+      }
+      set value(val) {
+        this._value = val;
+        this.value_input.value = val.toString();
+        this.triggerChange();
+      }
+      get value() {
+        return this._value;
+      }
+      set default_value(val) {
+        this._default_value = val;
+      }
+      set color(clr) {
+        this._color = clr;
+      }
+      set label(str) {
+        this._label = str;
+        if (this.label_el) {
+          this.label_el.innerHTML = `<span>${str}</span>`;
+          this.label_el.setAttribute("title", str);
         }
-      };
-      customElements.define("gui-input-float", GuiInputFloat);
-    }
-  });
+      }
+      attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+          case "color":
+            this.label_el.style.backgroundColor = newValue;
+            break;
+          case "label":
+            this.label = newValue;
+            break;
+          case "default_value":
+            this._default_value = parseFloat(newValue);
+            this.value = this._default_value;
+            break;
+          default:
+            break;
+        }
+      }
+    };
+    customElements.define("gui-input-float", GuiInputFloat);
+  }
+});
 
-  // components/g2_input_vector.ts
-  var GuiInputVector;
-  var init_g2_input_vector = __esm({
-    "components/g2_input_vector.ts"() {
-      "use strict";
-      GuiInputVector = class extends HTMLElement {
-        constructor() {
-          super();
-          this.default_scalar = 0;
-          this._label = "Vector";
-          this._value = [0, 0, 0];
-          this._default_value = [0, 0, 0];
-          this.attachShadow({ mode: "open" });
-          const styles = String.raw`
+// components/g2_input_vector.ts
+var GuiInputVector;
+var init_g2_input_vector = __esm({
+  "components/g2_input_vector.ts"() {
+    "use strict";
+    GuiInputVector = class extends HTMLElement {
+      template_fragment;
+      label_el;
+      input_x;
+      input_y;
+      input_z;
+      default_scalar = 0;
+      _label = "Vector";
+      _value = [0, 0, 0];
+      _default_value = [0, 0, 0];
+      constructor() {
+        super();
+        this.attachShadow({ mode: "open" });
+        const styles = String.raw`
             <style>
 
                 :host{
@@ -1055,7 +1087,7 @@
                 } */
             </style>
         `;
-          const template_str = String.raw`
+        const template_str = String.raw`
 
             ${styles}
             <div class="wrapper">
@@ -1067,97 +1099,98 @@
                 </div>
             </div>
         `;
-          this.template_fragment = document.createRange().createContextualFragment(template_str);
-          this.shadowRoot.appendChild(this.template_fragment.cloneNode(true));
-          this.label_el = this.shadowRoot.querySelector(".label");
-          this.input_x = this.shadowRoot.querySelector("#input_x");
-          this.input_y = this.shadowRoot.querySelector("#input_y");
-          this.input_z = this.shadowRoot.querySelector("#input_z");
-          Promise.all([
-            customElements.whenDefined("gui-input-float")
-          ]).then(() => {
-            let label_x = this.input_x.shadowRoot.querySelector(".wrapper .label span");
-            let label_y = this.input_y.shadowRoot.querySelector(".wrapper .label span");
-            let label_z = this.input_z.shadowRoot.querySelector(".wrapper .label span");
-            label_x.style.overflow = "unset";
-            label_y.style.overflow = "unset";
-            label_z.style.overflow = "unset";
-          });
-          this.input_x.addEventListener("change", (event) => {
-            let val = event.target.value;
-            this.value[0] = val;
-            this.dispatchEvent(new Event("change"));
-          });
-          this.input_y.addEventListener("change", (event) => {
-            let val = event.target.value;
-            this.value[1] = val;
-            this.dispatchEvent(new Event("change"));
-          });
-          this.input_z.addEventListener("change", (event) => {
-            let val = event.target.value;
-            this.value[2] = val;
-            this.dispatchEvent(new Event("change"));
-          });
+        this.template_fragment = document.createRange().createContextualFragment(template_str);
+        this.shadowRoot.appendChild(this.template_fragment.cloneNode(true));
+        this.label_el = this.shadowRoot.querySelector(".label");
+        this.input_x = this.shadowRoot.querySelector("#input_x");
+        this.input_y = this.shadowRoot.querySelector("#input_y");
+        this.input_z = this.shadowRoot.querySelector("#input_z");
+        Promise.all([
+          customElements.whenDefined("gui-input-float")
+        ]).then(() => {
+          let label_x = this.input_x.shadowRoot.querySelector(".wrapper .label span");
+          let label_y = this.input_y.shadowRoot.querySelector(".wrapper .label span");
+          let label_z = this.input_z.shadowRoot.querySelector(".wrapper .label span");
+          label_x.style.overflow = "unset";
+          label_y.style.overflow = "unset";
+          label_z.style.overflow = "unset";
+        });
+        this.input_x.addEventListener("change", (event) => {
+          let val = event.target.value;
+          this.value[0] = val;
+          this.dispatchEvent(new Event("change"));
+        });
+        this.input_y.addEventListener("change", (event) => {
+          let val = event.target.value;
+          this.value[1] = val;
+          this.dispatchEvent(new Event("change"));
+        });
+        this.input_z.addEventListener("change", (event) => {
+          let val = event.target.value;
+          this.value[2] = val;
+          this.dispatchEvent(new Event("change"));
+        });
+      }
+      connectedCallback() {
+        this.input_x._default_value = this.default_scalar;
+        this.input_y._default_value = this.default_scalar;
+        this.input_z._default_value = this.default_scalar;
+      }
+      static get observedAttributes() {
+        return ["default_scalar", "label"];
+      }
+      attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+          case "default_scalar":
+            this.default_scalar = parseFloat(newValue);
+            this.input_x.value = this.default_scalar;
+            this.input_y.value = this.default_scalar;
+            this.input_z.value = this.default_scalar;
+            break;
+          case "label":
+            this.label = newValue;
+            this.label_el.innerText = newValue;
+            break;
+          default:
+            break;
         }
-        connectedCallback() {
-          this.input_x._default_value = this.default_scalar;
-          this.input_y._default_value = this.default_scalar;
-          this.input_z._default_value = this.default_scalar;
-        }
-        static get observedAttributes() {
-          return ["default_scalar", "label"];
-        }
-        attributeChangedCallback(name, oldValue, newValue) {
-          switch (name) {
-            case "default_scalar":
-              this.default_scalar = parseFloat(newValue);
-              this.input_x.value = this.default_scalar;
-              this.input_y.value = this.default_scalar;
-              this.input_z.value = this.default_scalar;
-              break;
-            case "label":
-              this.label = newValue;
-              this.label_el.innerText = newValue;
-              break;
-            default:
-              break;
-          }
-        }
-        get value() {
-          return [this.input_x.value, this.input_y.value, this.input_z.value];
-        }
-        set value(val) {
-          console.log("setting values : ", val);
-          this.input_x.value = val[0];
-          this.input_y.value = val[1];
-          this.input_z.value = val[2];
-          this._value = val;
-        }
-        set default_value(val) {
-          this._default_value = val;
-          this.input_x.default_value = val[0];
-          this.input_y.default_value = val[1];
-          this.input_z.default_value = val[2];
-        }
-        set label(str) {
-          this._label = str;
-          this.label_el.innerText = str;
-        }
-      };
-      customElements.define("gui-input-vector", GuiInputVector);
-    }
-  });
+      }
+      get value() {
+        return [this.input_x.value, this.input_y.value, this.input_z.value];
+      }
+      set value(val) {
+        console.log("setting values : ", val);
+        this.input_x.value = val[0];
+        this.input_y.value = val[1];
+        this.input_z.value = val[2];
+        this._value = val;
+      }
+      set default_value(val) {
+        this._default_value = val;
+        this.input_x.default_value = val[0];
+        this.input_y.default_value = val[1];
+        this.input_z.default_value = val[2];
+      }
+      set label(str) {
+        this._label = str;
+        this.label_el.innerText = str;
+      }
+    };
+    customElements.define("gui-input-vector", GuiInputVector);
+  }
+});
 
-  // components/g2_panel.ts
-  var GuiPanel;
-  var init_g2_panel = __esm({
-    "components/g2_panel.ts"() {
-      "use strict";
-      GuiPanel = class extends HTMLElement {
-        constructor() {
-          super();
-          this.attachShadow({ mode: "open" });
-          const styles = String.raw`
+// components/g2_panel.ts
+var GuiPanel;
+var init_g2_panel = __esm({
+  "components/g2_panel.ts"() {
+    "use strict";
+    GuiPanel = class extends HTMLElement {
+      template_fragment;
+      constructor() {
+        super();
+        this.attachShadow({ mode: "open" });
+        const styles = String.raw`
             <style>
                 .panel{
                     --scrollbar-width : 8px;
@@ -1305,7 +1338,7 @@
                 }
             </style>
         `;
-          const template = String.raw`
+        const template = String.raw`
             
             ${styles}
             <!-- <div id="wrapper" oncontextmenu="return false;"> -->
@@ -1317,78 +1350,79 @@
                 </div>
             </div>
         `;
-          this.template_fragment = document.createRange().createContextualFragment(template);
-          this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
-          let close_btn = this.shadowRoot?.querySelector(".close_btn");
-          let open_btn = this.shadowRoot?.querySelector(".open_btn");
-          let wrapper = this.shadowRoot?.querySelector("#wrapper");
-          close_btn?.addEventListener("click", (event) => {
-            wrapper.classList.add("hidden");
-          });
-          open_btn?.addEventListener("click", (event) => {
-            wrapper.classList.remove("hidden");
-          });
-          document.addEventListener("keypress", (event) => {
-            if (event.key === "h") {
-              wrapper.classList.toggle("hidden");
-            }
-          });
-        }
-      };
-      customElements.define("gui-panel", GuiPanel);
-    }
-  });
+        this.template_fragment = document.createRange().createContextualFragment(template);
+        this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
+        let close_btn = this.shadowRoot?.querySelector(".close_btn");
+        let open_btn = this.shadowRoot?.querySelector(".open_btn");
+        let wrapper = this.shadowRoot?.querySelector("#wrapper");
+        close_btn?.addEventListener("click", (event) => {
+          wrapper.classList.add("hidden");
+        });
+        open_btn?.addEventListener("click", (event) => {
+          wrapper.classList.remove("hidden");
+        });
+        document.addEventListener("keypress", (event) => {
+          if (event.key === "h") {
+            wrapper.classList.toggle("hidden");
+          }
+        });
+      }
+    };
+    customElements.define("gui-panel", GuiPanel);
+  }
+});
 
-  // components/g2_separator.ts
-  var GuiSeparator;
-  var init_g2_separator = __esm({
-    "components/g2_separator.ts"() {
-      "use strict";
-      GuiSeparator = class extends HTMLElement {
-        constructor() {
-          super();
-          this.attachShadow({ mode: "open" });
-          const styles = String.raw`<style>
+// components/g2_separator.ts
+var GuiSeparator;
+var init_g2_separator = __esm({
+  "components/g2_separator.ts"() {
+    "use strict";
+    GuiSeparator = class extends HTMLElement {
+      template_fragment;
+      constructor() {
+        super();
+        this.attachShadow({ mode: "open" });
+        const styles = String.raw`<style>
 
             hr{
                 opacity : 0.1;
             }
         </style>`;
-          const template = String.raw`
+        const template = String.raw`
             ${styles}
             <hr>
         `;
-          this.template_fragment = document.createRange().createContextualFragment(template);
-          this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
-        }
-        connectedCallback() {
-        }
-        static get observedAttributes() {
-          return [];
-        }
-        attributeChangedCallback(name, oldValue, newValue) {
-        }
-      };
-      customElements.define("gui-separator", GuiSeparator);
-    }
-  });
+        this.template_fragment = document.createRange().createContextualFragment(template);
+        this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
+      }
+      connectedCallback() {
+      }
+      static get observedAttributes() {
+        return [];
+      }
+      attributeChangedCallback(name, oldValue, newValue) {
+      }
+    };
+    customElements.define("gui-separator", GuiSeparator);
+  }
+});
 
-  // components/g2_title.ts
-  var GuiTitle;
-  var init_g2_title = __esm({
-    "components/g2_title.ts"() {
-      "use strict";
-      GuiTitle = class extends HTMLElement {
-        constructor() {
-          super();
-          this.title = "Hello, World!";
-          this.attachShadow({ mode: "open" });
-        }
-        connectedCallback() {
-          this.render();
-        }
-        render() {
-          this.shadowRoot.innerHTML = String.raw`
+// components/g2_title.ts
+var GuiTitle;
+var init_g2_title = __esm({
+  "components/g2_title.ts"() {
+    "use strict";
+    GuiTitle = class extends HTMLElement {
+      title = "Hello, World!";
+      constructor() {
+        super();
+        this.attachShadow({ mode: "open" });
+      }
+      connectedCallback() {
+        this.render();
+      }
+      render() {
+        this.shadowRoot.innerHTML = String.raw`
       <style>
         :host {
           display: block;
@@ -1397,30 +1431,29 @@
       </style>
       <h2><slot></slot></h2>
     `;
-        }
-      };
-      customElements.define("gui-title", GuiTitle);
-    }
-  });
+      }
+    };
+    customElements.define("gui-title", GuiTitle);
+  }
+});
 
-  // components/index.ts
-  var require_components = __commonJS({
-    "components/index.ts"(exports, module) {
-      init_g2_accordion();
-      init_g2_checkbox();
-      init_g2_collapsible();
-      init_g2_color_picker();
-      init_g2_combobox();
-      init_g2_group();
-      init_g2_input_color();
-      init_g2_input_float();
-      init_g2_input_vector();
-      init_g2_panel();
-      init_g2_separator();
-      init_g2_title();
-      module.exports = [GuiAccordion, GuiCheckbox, GuiCollapsible, GuiColorPicker, GuiCombobox, GuiGroup, GuiInputColor, GuiInputFloat, GuiInputVector, GuiPanel, GuiSeparator, GuiTitle];
-    }
-  });
-  require_components();
-})();
+// components/index.ts
+var require_components = __commonJS({
+  "components/index.ts"(exports, module) {
+    init_g2_accordion();
+    init_g2_checkbox();
+    init_g2_collapsible();
+    init_g2_color_picker();
+    init_g2_combobox();
+    init_g2_group();
+    init_g2_input_color();
+    init_g2_input_float();
+    init_g2_input_vector();
+    init_g2_panel();
+    init_g2_separator();
+    init_g2_title();
+    module.exports = [GuiAccordion, GuiCheckbox, GuiCollapsible, GuiColorPicker, GuiCombobox, GuiGroup, GuiInputColor, GuiInputFloat, GuiInputVector, GuiPanel, GuiSeparator, GuiTitle];
+  }
+});
+export default require_components();
 //# sourceMappingURL=index.js.map
