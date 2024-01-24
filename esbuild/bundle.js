@@ -788,7 +788,7 @@
             }
 
             .value_div{
-                /* flex : 1.0; */
+                flex : 1.0;
                 
                 position : relative;
                 /* overflow : hidden; */
@@ -812,6 +812,10 @@
                 background-color : transparent;
             }
 
+            .number_div{
+                min-width : 6ch;
+            }
+
             </style>        
         `;
       const template = String.raw`
@@ -822,6 +826,7 @@
                 <div class="label" title="${this._label}"><span>${this._label}</span></div>
                 <div class="value_div">
                     <input type=number step="0.1" value=${this.value} />
+                    <!-- <div class="number_div" contenteditable> -->
                 </div>
             <div>
         `;
@@ -829,6 +834,10 @@
       this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
       this.label_el = this.shadowRoot.querySelector(".label");
       this.value_input = this.shadowRoot.querySelector("input");
+      this.number_input = this.shadowRoot.querySelector(".number_div");
+      this.number_input?.addEventListener("input", (event) => {
+        console.log(event);
+      });
     }
     connectedCallback() {
       document.addEventListener("keydown", (event) => {

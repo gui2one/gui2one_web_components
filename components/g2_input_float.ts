@@ -13,6 +13,7 @@ export class GuiInputFloat extends HTMLElement {
     _color: string = "";
     styles: string;
     value_input: HTMLInputElement;
+    number_input: HTMLDivElement;
     template_fragment: DocumentFragment;
 
     is_mouse_down: boolean;
@@ -90,7 +91,7 @@ export class GuiInputFloat extends HTMLElement {
             }
 
             .value_div{
-                /* flex : 1.0; */
+                flex : 1.0;
                 
                 position : relative;
                 /* overflow : hidden; */
@@ -114,6 +115,10 @@ export class GuiInputFloat extends HTMLElement {
                 background-color : transparent;
             }
 
+            .number_div{
+                min-width : 6ch;
+            }
+
             </style>        
         `;
         const template = String.raw`
@@ -124,6 +129,7 @@ export class GuiInputFloat extends HTMLElement {
                 <div class="label" title="${this._label}"><span>${this._label}</span></div>
                 <div class="value_div">
                     <input type=number step="0.1" value=${this.value} />
+                    <!-- <div class="number_div" contenteditable> -->
                 </div>
             <div>
         `;
@@ -137,8 +143,13 @@ export class GuiInputFloat extends HTMLElement {
 
         // label_span.style.opacity = "0.8";   
         this.value_input = this.shadowRoot!.querySelector("input") as HTMLInputElement
+        this.number_input = this.shadowRoot!.querySelector(".number_div") as HTMLDivElement
 
-
+        
+        this.number_input?.addEventListener("input", (event : Event)=>{
+            console.log(event);
+            
+        })
 
     }
 
