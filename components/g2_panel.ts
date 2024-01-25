@@ -1,5 +1,6 @@
 export class GuiPanel extends HTMLElement{
     template_fragment : DocumentFragment;
+    wrapper_el : HTMLDivElement;
     constructor()
     {
         super();
@@ -67,8 +68,18 @@ export class GuiPanel extends HTMLElement{
                     user-select : none;
                 }
 
+                #wrapper.left{
+                    left : 0px;
+                    right : unset;
+                }
+
                 #wrapper.hidden{
                     transform : translate3d(100%,0,0 );
+                }
+                
+                #wrapper.left.hidden{
+                    
+                    transform : translate3d(-100%,0,0 );
                 }
 
                 .panel{
@@ -85,7 +96,7 @@ export class GuiPanel extends HTMLElement{
                     height : 30px;
                 }
 
-                .close_btn{
+                #wrapper .close_btn{
                     position : relative;
                     top : 0;
                     cursor : pointer;
@@ -97,11 +108,18 @@ export class GuiPanel extends HTMLElement{
                     width : 100%;
                 }
 
-                .close_btn:hover{
+                #wrapper.left .close_btn{
+                    right : 0px;
+                    width : 100%;
+                    margin-left : auto;
+                    margin-right : 1em;
+                }
+
+                #wrapper .close_btn:hover{
                     opacity : 1.0;
                 }
 
-                .close_btn::before{
+                #wrapper .close_btn::before{
                     content : '';
                     position : absolute;
                     top : 0; 
@@ -113,7 +131,7 @@ export class GuiPanel extends HTMLElement{
                     transform-origin : 50% 50%;
                     transform :  translateX(20px) rotate(45deg);
                 }
-                .close_btn::after{
+                #wrapper .close_btn::after{
                     content : '';
                     position : absolute;
                     top : 0; 
@@ -126,7 +144,7 @@ export class GuiPanel extends HTMLElement{
                     transform : translateX(20px) rotate(-45deg);
                 }
 
-                .open_btn{
+                #wrapper .open_btn{
                     display : flex;
                     align-items : center;
                     justify-content : center;
@@ -144,8 +162,13 @@ export class GuiPanel extends HTMLElement{
                     margin-left : -25px;
                     visibility : hidden;
                 }
-                .open_btn:hover{
+                #wrapper .open_btn:hover{
                     opacity : 0.9;
+                }
+
+                #wrapper.left .open_btn{
+                    left : unset;
+                    right : -25px;
                 }
                 #wrapper.hidden>.open_btn{
                     visibility : visible;
@@ -170,24 +193,38 @@ export class GuiPanel extends HTMLElement{
 
         let close_btn = this.shadowRoot?.querySelector(".close_btn");
         let open_btn = this.shadowRoot?.querySelector(".open_btn");
-        let wrapper = this.shadowRoot?.querySelector("#wrapper");
+        this.wrapper_el = this.shadowRoot?.querySelector("#wrapper") as HTMLDivElement;
         close_btn?.addEventListener("click", (event : Event)=>{
-            wrapper!.classList.add("hidden");
+            this.wrapper_el!.classList.add("hidden");
         });
         open_btn?.addEventListener("click", (event : Event)=>{
-            wrapper!.classList.remove("hidden");
+            this.wrapper_el!.classList.remove("hidden");
         });
 
         document.addEventListener("keypress", (event)=>{
             if(event.key === "h")
             {
-                wrapper!.classList.toggle("hidden");
+                this.wrapper_el!.classList.toggle("hidden");
             }
         });
    
     }
 
+    connectedCallback(){
+    }
 
+    static get observedAttributes(){
+        return ["side"];
+    }
+
+
+    attributeChangedCallback(name : string, oldValue : any, newValue : any) {
+        switch(name){
+            case 'side' :
+                this.wrapper_el.classList.add(newValue);
+                break;
+        }
+    }    
 }
 
 customElements.define("gui-panel", GuiPanel);
