@@ -45,7 +45,8 @@ export class GuiCollapsible extends HTMLElement{
                 transform-origin : center top;
                 /* transform : scale3d(1.0, 1.0, 1.0); */
 
-                transition: grid-template-rows 0.2s ease-out;
+                /* transition: grid-template-rows 0.2s ease-out; */
+                transition: all 0.2s ease-out;
             }
             .content.closed{
                 grid-template-rows : 0fr;
