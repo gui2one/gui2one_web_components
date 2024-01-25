@@ -11,4 +11,15 @@ import { GuiPanel } from "./g2_panel";
 import { GuiSeparator } from "./g2_separator";
 import { GuiTitle } from "./g2_title";
 
-module.exports = [ GuiAccordion, GuiCheckbox, GuiCollapsible, GuiColorPicker, GuiCombobox, GuiGroup, GuiInputColor, GuiInputFloat, GuiInputVector, GuiPanel, GuiSeparator, GuiTitle]
+window["GuiAccordion"] = GuiAccordion;
+window["GuiCheckbox"] = GuiCheckbox;
+window["GuiCollapsible"] = GuiCollapsible;
+window["GuiColorPicker"] = GuiColorPicker;
+window["GuiCombobox"] = GuiCombobox;
+window["GuiGroup"] = GuiGroup;
+window["GuiInputColor"] = GuiInputColor;
+window["GuiInputFloat"] = GuiInputFloat;
+window["GuiInputVector"] = GuiInputVector;
+window["GuiPanel"] = GuiPanel;
+window["GuiSeparator"] = GuiSeparator;
+window["GuiTitle"] = GuiTitle;

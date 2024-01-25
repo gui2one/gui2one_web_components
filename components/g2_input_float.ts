@@ -1,6 +1,6 @@
 export class GuiInputFloat extends HTMLElement {
 
-    private _value: number;
+    _value: number;
     value_preview: number = 0;
     value_offset: number = 0;
     _default_value: number = 0;

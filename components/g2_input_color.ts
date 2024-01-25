@@ -10,8 +10,8 @@ export class GuiInputColor extends HTMLElement{
     default_scalar : number = 0;
     _label : string = "Color";
     
-    private _value : number[] = [0,0,0];
-    private _default_value : number[] = [0,0,0];
+    _value : number[] = [0,0,0];
+    _default_value : number[] = [0,0,0];
     
     picker_el : GuiColorPicker;
     constructor()

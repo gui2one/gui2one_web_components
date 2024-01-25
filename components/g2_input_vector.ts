@@ -9,8 +9,8 @@ export class GuiInputVector extends HTMLElement{
     default_scalar : number = 0;
     _label : string = "Vector";
     
-    private _value : number[] = [0,0,0];
-    private _default_value : number[] = [0,0,0];
+    _value : number[] = [0,0,0];
+    _default_value : number[] = [0,0,0];
     constructor()
     {
         super();
