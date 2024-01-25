@@ -78,6 +78,8 @@ export class GuiInputFloat extends HTMLElement {
                 align-items : center;
                 justify-content : center;
 
+                
+
             }
 
             .label span{
@@ -87,7 +89,8 @@ export class GuiInputFloat extends HTMLElement {
                 justify-content : center;
 
                 overflow : hidden;
-                text-overflow : ellipsis;                           
+                text-overflow : ellipsis;    
+                white-space: nowrap;                       
             }
 
             .value_div{

@@ -802,6 +802,8 @@ var GuiInputFloat = class extends HTMLElement {
                 align-items : center;
                 justify-content : center;
 
+                
+
             }
 
             .label span{
@@ -811,7 +813,8 @@ var GuiInputFloat = class extends HTMLElement {
                 justify-content : center;
 
                 overflow : hidden;
-                text-overflow : ellipsis;                           
+                text-overflow : ellipsis;    
+                white-space: nowrap;                       
             }
 
             .value_div{
