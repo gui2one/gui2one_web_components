@@ -103,7 +103,7 @@ export class GuiInputFloat extends HTMLElement {
                 padding-top : var(--padding-top);
                 padding-bottom : var(--padding-bottom);
                 /* padding-left : var(--padding-left); */
-                width : 100%;
+                /* width : 100%; */
                 
             }
 
@@ -113,6 +113,7 @@ export class GuiInputFloat extends HTMLElement {
                 font-weight : bold;
                 height : calc(100% - 2px );
                 max-width : 9ch;
+                /* min-width : 5ch; */
                 border : none;
                 height: max-content;
                 background-color : transparent;
@@ -141,18 +142,8 @@ export class GuiInputFloat extends HTMLElement {
         this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
 
         this.label_el = this.shadowRoot!.querySelector(".label") as HTMLDivElement;
-        // let label_span = this.label_el.querySelector("span") as HTMLSpanElement;
 
-
-        // label_span.style.opacity = "0.8";   
-        this.value_input = this.shadowRoot!.querySelector("input") as HTMLInputElement
-        this.number_input = this.shadowRoot!.querySelector(".number_div") as HTMLDivElement
-
-        
-        this.number_input?.addEventListener("input", (event : Event)=>{
-            console.log(event);
-            
-        })
+        this.value_input = this.shadowRoot!.querySelector("input") as HTMLInputElement;
 
     }
 

@@ -348,6 +348,9 @@ customElements.define("gui-collapsible", GuiCollapsible);
 // components/g2_color_picker.ts
 var GuiColorPicker = class extends HTMLElement {
   template_fragment;
+  sample_el;
+  dialog_el;
+  _value = [];
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -365,17 +368,51 @@ var GuiColorPicker = class extends HTMLElement {
             .clr_sample:hover{
                 outline : 1px solid white !important;
             }
+
+            #clr_dialog{
+                z-index : 10;
+                position : absolute;
+            }
+
+            .bg{
+                position : absolute;
+                top : 0;
+                left : 0;
+                width : 100%;
+                height : 100%;
+                background-color : red;
+                z-index : 1;
+            }
         </style>`;
     const template = String.raw`
 
             ${styles}
             
 
-                <div class="clr_sample"></div>
+            <div class="clr_sample"></div>
+            <dialog id="clr_dialog">
+                <div class="bg" ></div>
+                <form method="dialog">
+                <button>OK</button>
+                </form>
+            </dialog>
 
         `;
     this.template_fragment = document.createRange().createContextualFragment(template);
     this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
+    this.sample_el = this.shadowRoot?.querySelector(".clr_sample");
+    this.dialog_el = this.shadowRoot?.querySelector("#clr_dialog");
+    this.sample_el.addEventListener("click", () => {
+      console.log(this.value);
+      this.dialog_el.showModal();
+    });
+    this.dialog_el.addEventListener("click", (event) => {
+      var rect = this.dialog_el.getBoundingClientRect();
+      var isInDialog = rect.top <= event.clientY && event.clientY <= rect.top + rect.height && rect.left <= event.clientX && event.clientX <= rect.left + rect.width;
+      if (!isInDialog) {
+        this.dialog_el.close();
+      }
+    });
   }
   connectedCallback() {
   }
@@ -383,6 +420,13 @@ var GuiColorPicker = class extends HTMLElement {
     return [];
   }
   attributeChangedCallback(name, oldValue, newValue) {
+  }
+  get value() {
+    return this._value;
+  }
+  set value(values) {
+    this._value = values;
+    this.style.backgroundColor = `rgb(${values[0] * 255},${values[1] * 255},${values[2] * 255})`;
   }
 };
 customElements.define("gui-color-picker", GuiColorPicker);
@@ -672,7 +716,7 @@ var GuiInputColor = class extends HTMLElement {
   }
   updateSample() {
     this.clampValues();
-    this.picker_el.style.backgroundColor = `rgb(${this.input_x.value * 255},${this.input_y.value * 255},${this.input_z.value * 255})`;
+    this.picker_el.value = [this.input_x.value, this.input_y.value, this.input_z.value];
   }
   clampValues() {
     if (this.input_x.value > 1)
@@ -828,7 +872,7 @@ var GuiInputFloat = class extends HTMLElement {
                 padding-top : var(--padding-top);
                 padding-bottom : var(--padding-bottom);
                 /* padding-left : var(--padding-left); */
-                width : 100%;
+                /* width : 100%; */
                 
             }
 
@@ -838,6 +882,7 @@ var GuiInputFloat = class extends HTMLElement {
                 font-weight : bold;
                 height : calc(100% - 2px );
                 max-width : 9ch;
+                /* min-width : 5ch; */
                 border : none;
                 height: max-content;
                 background-color : transparent;
@@ -865,10 +910,6 @@ var GuiInputFloat = class extends HTMLElement {
     this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
     this.label_el = this.shadowRoot.querySelector(".label");
     this.value_input = this.shadowRoot.querySelector("input");
-    this.number_input = this.shadowRoot.querySelector(".number_div");
-    this.number_input?.addEventListener("input", (event) => {
-      console.log(event);
-    });
   }
   connectedCallback() {
     document.addEventListener("keydown", (event) => {

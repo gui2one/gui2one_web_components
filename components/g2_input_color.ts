@@ -105,7 +105,8 @@ export class GuiInputColor extends HTMLElement{
     updateSample()
     {
         this.clampValues();
-        this.picker_el.style.backgroundColor = `rgb(${this.input_x.value * 255},${this.input_y.value * 255},${this.input_z.value * 255})`;
+        this.picker_el.value = [this.input_x.value, this.input_y.value, this.input_z.value];
+        
     }
 
     clampValues()
