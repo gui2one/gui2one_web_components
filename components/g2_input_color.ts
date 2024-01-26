@@ -69,7 +69,10 @@ export class GuiInputColor extends HTMLElement{
         });
         
         this.picker_el = this.shadowRoot!.querySelector("gui-color-picker") as GuiColorPicker;
-
+        this.picker_el.addEventListener("change", (event : Event)=>{
+            console.log(this.picker_el.value);
+            this.value = this.picker_el.value;
+        });
         this.input_x.addEventListener("change", (event : Event)=>{
             let val = (event.target! as GuiInputFloat).value;
             this.value[0] = val;
@@ -105,8 +108,7 @@ export class GuiInputColor extends HTMLElement{
     updateSample()
     {
         this.clampValues();
-        this.picker_el.value = [this.input_x.value, this.input_y.value, this.input_z.value];
-        
+        // this.picker_el.value = [this.input_x.value, this.input_y.value, this.input_z.value];
     }
 
     clampValues()

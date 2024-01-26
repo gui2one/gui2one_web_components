@@ -1,7 +1,4 @@
 function rgbToHsv(r, g, b) {
-    r /= 255;
-    g /= 255;
-    b /= 255;
 
     const max = Math.max(r, g, b);
     const min = Math.min(r, g, b);
@@ -47,7 +44,7 @@ function hsvToRgb(h, s, v) {
         case 5: r = v; g = p; b = q; break;
     }
 
-    return { r: Math.round(r * 255), g: Math.round(g * 255), b: Math.round(b * 255) };
+    return { r, g, b };
 }
 
 
@@ -57,6 +54,8 @@ export class GuiColorPicker extends HTMLElement{
     dialog_el : HTMLDialogElement;
 
     _value : number[] = []
+
+    _hsv_values : number[] = [0,0,0];
     constructor(){
         super();
         this.attachShadow({mode : "open"});
@@ -80,14 +79,9 @@ export class GuiColorPicker extends HTMLElement{
                 position : absolute;
             }
 
-            .bg{
-                position : absolute;
-                top : 0;
-                left : 0;
-                width : 100%;
-                height : 100%;
-                background-color : red;
-                z-index : 1;
+            input[type="range"]
+            {
+                display : block;
             }
         </style>`;
         
@@ -98,8 +92,13 @@ export class GuiColorPicker extends HTMLElement{
 
             <div class="clr_sample"></div>
             <dialog id="clr_dialog">
-                <div class="bg" ></div>
+                <!-- <div class="bg" ></div> -->
                 <form method="dialog">
+                    <div id="hsv_ranges">
+                        <label for="hue_range" >Hue<input type="range" id="hue_range" step="0.001" max="360"/></label>
+                        <label for="sat_range" >Sat<input type="range" id="sat_range"  step="0.001"  max ="100"/></label>
+                        <label for="val_range" >Value<input type="range" id="val_range"  step="0.001" max="100"/></label>
+                    </div>
                 <button>OK</button>
                 </form>
             </dialog>
@@ -108,10 +107,34 @@ export class GuiColorPicker extends HTMLElement{
         this.template_fragment = document.createRange().createContextualFragment(template);
         this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
 
+
+        let hue_range = this.shadowRoot?.querySelector("#hue_range") as HTMLInputElement;
+        let sat_range = this.shadowRoot?.querySelector("#sat_range") as HTMLInputElement;
+        let val_range = this.shadowRoot?.querySelector("#val_range") as HTMLInputElement;
+
+        hue_range.addEventListener("input", (event : Event)=>{
+            let rgb = hsvToRgb(parseFloat(hue_range.value), parseFloat(sat_range.value), parseFloat(val_range.value))
+            this.value = [rgb.r, rgb.g, rgb.b];
+        });
+        sat_range.addEventListener("input", (event : Event)=>{
+            let rgb = hsvToRgb(parseFloat(hue_range.value), parseFloat(sat_range.value), parseFloat(val_range.value))
+            this.value = [rgb.r, rgb.g, rgb.b];
+        });
+        val_range.addEventListener("input", (event : Event)=>{
+            let rgb = hsvToRgb(parseFloat(hue_range.value), parseFloat(sat_range.value), parseFloat(val_range.value))
+            this.value = [rgb.r, rgb.g, rgb.b];
+        });
+
         this.sample_el = this.shadowRoot?.querySelector(".clr_sample") as HTMLDivElement;
         this.dialog_el = this.shadowRoot?.querySelector("#clr_dialog") as HTMLDialogElement;
         this.sample_el.addEventListener("click", ()=>{
             console.log(this.value);
+            let hsv = rgbToHsv(this.value[0],this.value[1], this.value[2]);
+            // console.log(hsv);
+            hue_range.value = hsv.h.toString();
+            sat_range.value = hsv.s.toString();
+            val_range.value = hsv.v.toString();
+
             
             this.dialog_el.showModal();
         });
@@ -124,6 +147,8 @@ export class GuiColorPicker extends HTMLElement{
                 this.dialog_el.close();
             }
         });
+
+        
     }
 
 
@@ -150,6 +175,7 @@ export class GuiColorPicker extends HTMLElement{
     {
         this._value = values;
         this.style.backgroundColor = `rgb(${values[0] * 255},${values[1] * 255},${values[2] * 255})`;
+        this.dispatchEvent(new Event("change"));
     }
 }
 customElements.define("gui-color-picker", GuiColorPicker);
