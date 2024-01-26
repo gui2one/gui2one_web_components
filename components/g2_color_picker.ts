@@ -62,7 +62,8 @@ export class GuiColorPicker extends HTMLElement{
         const styles = String.raw`<style>
 
             .clr_sample{
-                width : 30px;
+                position : relative;
+                width : calc(100% - 2px);
                 height : 100%;
                 cursor : pointer;
 
@@ -174,8 +175,8 @@ export class GuiColorPicker extends HTMLElement{
     set value(values : number[])
     {
         this._value = values;
-        this.style.backgroundColor = `rgb(${values[0] * 255},${values[1] * 255},${values[2] * 255})`;
-        this.dispatchEvent(new Event("change"));
+        this.sample_el.style.backgroundColor = `rgb(${values[0] * 255},${values[1] * 255},${values[2] * 255})`;
+        // this.dispatchEvent(new Event("change"));
     }
 }
 customElements.define("gui-color-picker", GuiColorPicker);

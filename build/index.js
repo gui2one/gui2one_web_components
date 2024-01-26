@@ -420,7 +420,8 @@ var GuiColorPicker = class extends HTMLElement {
     const styles = String.raw`<style>
 
             .clr_sample{
-                width : 30px;
+                position : relative;
+                width : calc(100% - 2px);
                 height : 100%;
                 cursor : pointer;
 
@@ -508,8 +509,7 @@ var GuiColorPicker = class extends HTMLElement {
   }
   set value(values) {
     this._value = values;
-    this.style.backgroundColor = `rgb(${values[0] * 255},${values[1] * 255},${values[2] * 255})`;
-    this.dispatchEvent(new Event("change"));
+    this.sample_el.style.backgroundColor = `rgb(${values[0] * 255},${values[1] * 255},${values[2] * 255})`;
   }
 };
 customElements.define("gui-color-picker", GuiColorPicker);
@@ -739,6 +739,11 @@ var GuiInputColor = class extends HTMLElement {
                 .label{
                     font-family : sans-serif;
                 }
+
+                .floats{
+                    /* position : relative; */
+                    /* width : auto; */
+                }
             </style>
         `;
     const template_str = String.raw`
@@ -746,10 +751,10 @@ var GuiInputColor = class extends HTMLElement {
             ${styles}
             <div class="wrapper">
                 <div class="label">${this._label}</div>
-                <div class="floats" style="display : flex; gap:3px;">
-                    <gui-input-float id="input_x" color="red"   label="R" default_value="${this.default_scalar}" style="--label-width : 20px;"></gui-input-float>
+                <div class="floats" >
+                    <!-- <gui-input-float id="input_x" color="red"   label="R" default_value="${this.default_scalar}" style="--label-width : 20px;"></gui-input-float>
                     <gui-input-float id="input_y" color="green" label="G" default_value="${this.default_scalar}" style="--label-width : 20px;"></gui-input-float>
-                    <gui-input-float id="input_z" color="blue"  label="B" default_value="${this.default_scalar}" style="--label-width : 20px;"></gui-input-float>
+                    <gui-input-float id="input_z" color="blue"  label="B" default_value="${this.default_scalar}" style="--label-width : 20px;"></gui-input-float> -->
                     <gui-color-picker></gui-color-picker>
                 </div>
             </div>
@@ -760,63 +765,42 @@ var GuiInputColor = class extends HTMLElement {
     this.input_x = this.shadowRoot.querySelector("#input_x");
     this.input_y = this.shadowRoot.querySelector("#input_y");
     this.input_z = this.shadowRoot.querySelector("#input_z");
-    Promise.all([
-      customElements.whenDefined("gui-input-float"),
-      customElements.whenDefined("gui-color-picker")
-    ]).then(() => {
-      let label_x = this.input_x.shadowRoot.querySelector(".wrapper .label span");
-      let label_y = this.input_y.shadowRoot.querySelector(".wrapper .label span");
-      let label_z = this.input_z.shadowRoot.querySelector(".wrapper .label span");
-      label_x.style.overflow = "unset";
-      label_y.style.overflow = "unset";
-      label_z.style.overflow = "unset";
-    });
     this.picker_el = this.shadowRoot.querySelector("gui-color-picker");
     this.picker_el.addEventListener("change", (event) => {
-      console.log(this.picker_el.value);
       this.value = this.picker_el.value;
     });
-    this.input_x.addEventListener("change", (event) => {
+    this.input_x?.addEventListener("change", (event) => {
       let val = event.target.value;
       this.value[0] = val;
       this.dispatchEvent(new Event("change"));
       this.updateSample();
     });
-    this.input_y.addEventListener("change", (event) => {
+    this.input_y?.addEventListener("change", (event) => {
       let val = event.target.value;
       this.value[1] = val;
       this.dispatchEvent(new Event("change"));
       this.updateSample();
     });
-    this.input_z.addEventListener("change", (event) => {
+    this.input_z?.addEventListener("change", (event) => {
       let val = event.target.value;
       this.value[2] = val;
       this.dispatchEvent(new Event("change"));
       this.updateSample();
     });
+    Promise.all([
+      customElements.whenDefined("gui-input-float"),
+      customElements.whenDefined("gui-color-picker")
+    ]).then(() => {
+      this.picker_el.value = this.value;
+    });
   }
   connectedCallback() {
-    this.input_x._default_value = this.default_scalar;
-    this.input_y._default_value = this.default_scalar;
-    this.input_z._default_value = this.default_scalar;
     this.updateSample();
   }
   updateSample() {
     this.clampValues();
   }
   clampValues() {
-    if (this.input_x.value > 1)
-      this.input_x.value = 1;
-    else if (this.input_x.value < 0)
-      this.input_x.value = 0;
-    if (this.input_y.value > 1)
-      this.input_y.value = 1;
-    else if (this.input_y.value < 0)
-      this.input_y.value = 0;
-    if (this.input_z.value > 1)
-      this.input_z.value = 1;
-    else if (this.input_z.value < 0)
-      this.input_z.value = 0;
   }
   static get observedAttributes() {
     return ["default_scalar", "label"];
@@ -838,10 +822,9 @@ var GuiInputColor = class extends HTMLElement {
     }
   }
   get value() {
-    return [this.input_x.value, this.input_y.value, this.input_z.value];
+    return this._value;
   }
   set value(val) {
-    console.log("setting values : ", val);
     this.input_x.value = val[0];
     this.input_y.value = val[1];
     this.input_z.value = val[2];
