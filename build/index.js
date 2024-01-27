@@ -861,9 +861,6 @@ customElements.define("gui-group", GuiGroup);
 var GuiInputColor = class extends HTMLElement {
   template_fragment;
   label_el;
-  input_x;
-  input_y;
-  input_z;
   default_scalar = 0;
   _label = "Color";
   _value = [0, 0, 0];
@@ -904,9 +901,6 @@ var GuiInputColor = class extends HTMLElement {
     this.template_fragment = document.createRange().createContextualFragment(template_str);
     this.shadowRoot.appendChild(this.template_fragment.cloneNode(true));
     this.label_el = this.shadowRoot.querySelector(".label");
-    this.input_x = this.shadowRoot.querySelector("#input_x");
-    this.input_y = this.shadowRoot.querySelector("#input_y");
-    this.input_z = this.shadowRoot.querySelector("#input_z");
     this.picker_el = this.shadowRoot.querySelector("gui-color-picker");
     this.picker_el.addEventListener("change", (event) => {
       this.value = this.picker_el.value;
@@ -926,9 +920,7 @@ var GuiInputColor = class extends HTMLElement {
     switch (name) {
       case "default_scalar":
         this.default_scalar = parseFloat(newValue);
-        this.input_x.value = this.default_scalar;
-        this.input_y.value = this.default_scalar;
-        this.input_z.value = this.default_scalar;
+        this.value = [this.default_scalar, this.default_scalar, this.default_scalar];
         break;
       case "label":
         this.label = newValue;
@@ -942,16 +934,10 @@ var GuiInputColor = class extends HTMLElement {
     return this._value;
   }
   set value(val) {
-    this.input_x.value = val[0];
-    this.input_y.value = val[1];
-    this.input_z.value = val[2];
     this._value = val;
   }
   set default_value(val) {
     this._default_value = val;
-    this.input_x.default_value = val[0];
-    this.input_y.default_value = val[1];
-    this.input_z.default_value = val[2];
   }
   set label(str) {
     this._label = str;
