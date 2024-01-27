@@ -45,9 +45,6 @@ export class GuiInputColor extends HTMLElement{
             <div class="wrapper">
                 <div class="label">${this._label}</div>
                 <div class="floats" >
-                    <!-- <gui-input-float id="input_x" color="red"   label="R" default_value="${this.default_scalar}" style="--label-width : 20px;"></gui-input-float>
-                    <gui-input-float id="input_y" color="green" label="G" default_value="${this.default_scalar}" style="--label-width : 20px;"></gui-input-float>
-                    <gui-input-float id="input_z" color="blue"  label="B" default_value="${this.default_scalar}" style="--label-width : 20px;"></gui-input-float> -->
                     <gui-color-picker></gui-color-picker>
                 </div>
             </div>
@@ -67,36 +64,9 @@ export class GuiInputColor extends HTMLElement{
             // console.log(this.picker_el.value);
             this.value = this.picker_el.value;
         });
-        this.input_x?.addEventListener("change", (event : Event)=>{
-            let val = (event.target! as GuiInputFloat).value;
-            this.value[0] = val;
-            this.dispatchEvent(new Event("change"));
-            
-            this.updateSample();
-        })
-        this.input_y?.addEventListener("change", (event : Event)=>{
-            let val = (event.target! as GuiInputFloat).value;
-            this.value[1] = val;
-            this.dispatchEvent(new Event("change"));
-            this.updateSample();
-        })
-        this.input_z?.addEventListener("change", (event : Event)=>{
-            let val = (event.target! as GuiInputFloat).value;
-            this.value[2] = val;
-            this.dispatchEvent(new Event("change"));
-            this.updateSample();
-        })
         Promise.all([
-            customElements.whenDefined("gui-input-float"),
             customElements.whenDefined("gui-color-picker")
         ]).then(()=>{
-            // let label_x = this.input_x.shadowRoot!.querySelector(".wrapper .label span") as HTMLSpanElement;
-            // let label_y = this.input_y.shadowRoot!.querySelector(".wrapper .label span") as HTMLSpanElement;
-            // let label_z = this.input_z.shadowRoot!.querySelector(".wrapper .label span") as HTMLSpanElement;
-            // label_x.style.overflow = "unset";
-            // label_y.style.overflow = "unset";
-            // label_z.style.overflow = "unset";    
-            
             this.picker_el.value = this.value;
         });
         
@@ -104,33 +74,8 @@ export class GuiInputColor extends HTMLElement{
 
     connectedCallback()
     {
-        // this.input_x!._default_value = this.default_scalar;
-        // this.input_y!._default_value = this.default_scalar;
-        // this.input_z!._default_value = this.default_scalar;
-
-        this.updateSample();
-
-        
     }
 
-    updateSample()
-    {
-        this.clampValues();
-
-        // this.picker_el.value = [this.input_x.value, this.input_y.value, this.input_z.value];
-    }
-
-    clampValues()
-    {
-        // if(this.input_x.value > 1.0) this.input_x.value = 1.0;
-        // else if(this.input_x.value < 0.0) this.input_x.value = 0.0;
-        
-        // if(this.input_y.value > 1.0) this.input_y.value = 1.0;
-        // else if(this.input_y.value < 0.0) this.input_y.value = 0.0;
-        
-        // if(this.input_z.value > 1.0) this.input_z.value = 1.0;
-        // else if(this.input_z.value < 0.0) this.input_z.value = 0.0;
-    }
     static get observedAttributes()
     {
         return ["default_scalar", "label"];
@@ -165,8 +110,6 @@ export class GuiInputColor extends HTMLElement{
         this.input_y.value = val[1];
         this.input_z.value = val[2];
         this._value = val;
-
-        this.updateSample();
     }
 
     set default_value(val : number[])
