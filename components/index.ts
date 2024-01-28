@@ -23,6 +23,7 @@ export { GuiSeparator } from "./g2_separator";
 import { GuiTitle } from "./g2_title";
 export { GuiTitle } from "./g2_title";
 
+export default {};
 window["GuiAccordion"] = GuiAccordion;
 window["GuiCheckbox"] = GuiCheckbox;
 window["GuiCollapsible"] = GuiCollapsible;
@@ -35,6 +36,7 @@ window["GuiInputVector"] = GuiInputVector;
 window["GuiPanel"] = GuiPanel;
 window["GuiSeparator"] = GuiSeparator;
 window["GuiTitle"] = GuiTitle;
+
 
 // module.exports = [GuiAccordion, GuiCheckbox, GuiCollapsible, GuiColorPicker, GuiCombobox, GuiGroup, GuiInputColor, GuiInputFloat, GuiInputVector, GuiPanel, GuiSeparator, GuiTitle];
 

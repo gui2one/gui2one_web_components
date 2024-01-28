@@ -1,6 +1,6 @@
 const esbuild = require("esbuild");
 const config = {
-  format : 'cjs',
+  format : 'esm',
   logLevel: "info",
   entryPoints: ["components/index.ts"],
   bundle: true,

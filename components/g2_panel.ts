@@ -214,7 +214,7 @@ export class GuiPanel extends HTMLElement{
     }
 
     static get observedAttributes(){
-        return ["side"];
+        return ["side", "closed"];
     }
 
 
@@ -222,6 +222,13 @@ export class GuiPanel extends HTMLElement{
         switch(name){
             case 'side' :
                 this.wrapper_el.classList.add(newValue);
+                break;
+            case 'closed' :
+                if(newValue === "true" || newValue === "")
+                {
+
+                    this.wrapper_el.classList.add("hidden");
+                }
                 break;
         }
     }    
