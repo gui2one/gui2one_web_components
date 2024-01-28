@@ -24,3 +24,5 @@ window["GuiPanel"] = GuiPanel;
 window["GuiSeparator"] = GuiSeparator;
 window["GuiTitle"] = GuiTitle;
 
+module.exports = [GuiAccordion, GuiCheckbox, GuiCollapsible, GuiColorPicker, GuiCombobox, GuiGroup, GuiInputColor, GuiInputFloat, GuiInputVector, GuiPanel, GuiSeparator, GuiTitle];
+
