@@ -13,4 +13,9 @@ panel.append(vector);
 let combo = new GuiCombobox();
 combo.label = "combo test"
 combo.addOption("hello");
+combo.addOption("GoodBye");
 panel.append(combo)
+combo.addEventListener("change", ()=>{
+    console.log(combo.value);
+    console.log(combo.selectedIndex);
+})

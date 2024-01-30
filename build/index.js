@@ -667,6 +667,7 @@ var GuiCombobox = class extends HTMLElement {
   wrapper;
   _value = "";
   _selectedIndex = 0;
+  options = [];
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -740,35 +741,44 @@ var GuiCombobox = class extends HTMLElement {
   }
   connectedCallback() {
     const slot = this.shadowRoot?.querySelector("slot");
-    let option_nodes = [];
+    this.options = [];
     slot?.addEventListener("slotchange", () => {
       for (let node of slot?.assignedNodes()) {
         if (node.nodeName === "OPTION") {
-          let coll = node;
-          option_nodes.push(coll);
-          this.removeChild(coll);
+          let opt = node;
+          this.options.push(opt);
+          this.removeChild(opt);
         }
       }
-      let old_select = this.shadowRoot.querySelector(".wrapper>select");
-      if (old_select !== null) {
-        this.wrapper.removeChild(old_select);
-      }
-      let select = document.createElement("select");
-      select.id = "list";
-      select.addEventListener("change", (event) => {
-        let sel = event.target;
-        this.value = sel.value;
-        this.selectedIndex = sel.selectedIndex;
-        let ev = new Event("change", {});
-        this.dispatchEvent(ev);
-      });
-      for (let option of option_nodes) {
-        let opt = document.createElement("option");
-        opt.innerText = option.value;
-        select.appendChild(opt);
-      }
-      this.wrapper.appendChild(select);
+      this.updateOptions();
     });
+  }
+  updateOptions() {
+    let old_select = this.shadowRoot.querySelector(".wrapper>select");
+    if (old_select !== null) {
+      this.wrapper.removeChild(old_select);
+    }
+    let select = document.createElement("select");
+    select.id = "list";
+    select.addEventListener("change", (event) => {
+      let sel = event.target;
+      this.value = sel.value;
+      this.selectedIndex = sel.selectedIndex;
+      let ev = new Event("change", {});
+      this.dispatchEvent(ev);
+    });
+    for (let option of this.options) {
+      let opt = document.createElement("option");
+      opt.innerText = option.value;
+      select.appendChild(opt);
+    }
+    this.wrapper.appendChild(select);
+  }
+  addOption(name) {
+    let opt = document.createElement("option");
+    opt.innerText = name;
+    this.options.push(opt);
+    this.updateOptions();
   }
   static get observedAttributes() {
     return ["label"];

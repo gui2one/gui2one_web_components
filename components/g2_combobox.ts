@@ -7,6 +7,8 @@ export class GuiCombobox extends HTMLElement{
 
     _value : string = "";
     _selectedIndex : number = 0;
+
+    options : Array<HTMLOptionElement> = [];
     constructor(){
         super();
         this.attachShadow({mode : "open"});
@@ -97,7 +99,7 @@ export class GuiCombobox extends HTMLElement{
         const slot = this.shadowRoot?.querySelector('slot') as HTMLSlotElement;
         
         
-        let option_nodes : Array<HTMLOptionElement> = [];        
+        this.options = [];        
         slot?.addEventListener("slotchange", ()=>{
             for(let node of slot?.assignedNodes())
             {
@@ -105,47 +107,60 @@ export class GuiCombobox extends HTMLElement{
                 if(node.nodeName === 'OPTION'){
                     
 
-                    let coll = node as HTMLOptionElement;
+                    let opt = node as HTMLOptionElement;
 
-                    option_nodes.push(coll);
+                    this.options.push(opt);
 
-                    this.removeChild(coll);
+                    this.removeChild(opt);
 
                 
                 }        
             }
             
-            let old_select = this.shadowRoot!.querySelector(".wrapper>select");
-            if(old_select !== null)
-            {
-                // console.log("removing old " , old_select);
-                this.wrapper.removeChild(old_select);
-            }
-            let select : HTMLSelectElement = document.createElement("select") as HTMLSelectElement;
-            select.id = "list";
-            select.addEventListener("change", (event : any)=>{
-                let sel = event.target as HTMLSelectElement;
-                // console.log(sel.selectedIndex);
-                
-                this.value = sel.value; 
-                this.selectedIndex = sel.selectedIndex;
-                let ev= new Event("change", {});
-                //  = sel.selectedIndex;
-                this.dispatchEvent(ev);
-
-            })
-            for(let option of option_nodes)
-            {
-                let opt = document.createElement("option");
-                opt.innerText = option.value;
-                // opt.innerText = option.value;
-                select.appendChild(opt)
-            }
-            this.wrapper.appendChild(select)
+            this.updateOptions();
         })        
     }
 
+    updateOptions()
+    {
+    
+        let old_select = this.shadowRoot!.querySelector(".wrapper>select");
+        if(old_select !== null)
+        {
+            // console.log("removing old " , old_select);
+            this.wrapper.removeChild(old_select);
+        }
+        let select : HTMLSelectElement = document.createElement("select") as HTMLSelectElement;
+        select.id = "list";
+        select.addEventListener("change", (event : any)=>{
+            let sel = event.target as HTMLSelectElement;
+            // console.log(sel.selectedIndex);
+            
+            this.value = sel.value; 
+            this.selectedIndex = sel.selectedIndex;
+            let ev= new Event("change", {});
+            //  = sel.selectedIndex;
+            this.dispatchEvent(ev);
 
+        })
+        for(let option of this.options)
+        {
+            let opt = document.createElement("option");
+            opt.innerText = option.value;
+            // opt.innerText = option.value;
+            select.appendChild(opt)
+        }
+        this.wrapper.appendChild(select)
+    }
+
+    addOption(name : string)
+    {
+        let opt = document.createElement("option");
+        opt.innerText = name;
+        this.options.push(opt);
+
+        this.updateOptions();
+    }
     static get observedAttributes(){
         return ["label"];
     }
