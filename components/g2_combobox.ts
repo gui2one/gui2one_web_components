@@ -81,7 +81,8 @@ export class GuiCombobox extends HTMLElement{
         if(index <= this.options.length && index >= 0 )
         {
 
-            this.value = this.options[index].innerText;
+            this.value = "aaa";
+            // this.value = this.options[index].innerText;
         }
         // this.dispatchEvent(new Event("change"));
     }
