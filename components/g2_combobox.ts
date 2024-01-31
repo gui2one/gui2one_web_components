@@ -79,7 +79,7 @@ export class GuiCombobox extends HTMLElement{
     {
         this._selectedIndex = index;
         this.value = this.options[index].innerText;
-        this.dispatchEvent(new Event("change"));
+        // this.dispatchEvent(new Event("change"));
     }
 
     get selectedIndex() : number
