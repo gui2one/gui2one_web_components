@@ -30,6 +30,11 @@ export class GuiGroup extends HTMLElement{
                 background-color : #222222;
                 margin-top : -0.5em;
             }
+
+            .hidden{
+                visibility : hidden;
+                display : none;
+            }
         </style>`;
         const template = String.raw`
             ${styles}
