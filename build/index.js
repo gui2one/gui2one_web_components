@@ -728,10 +728,13 @@ var GuiCombobox = class extends HTMLElement {
     }
   }
   set selectedIndex(index) {
+    console.log(index);
     this._selectedIndex = index;
-    if (index <= this.options.length && index >= 0) {
+    console.log(this.options);
+    if (index < this.options.length && index >= 0) {
       if (this.options.length) {
         this.value = this.options[index].innerText;
+        console.log(this.value);
       }
     }
   }
@@ -746,7 +749,6 @@ var GuiCombobox = class extends HTMLElement {
   }
   connectedCallback() {
     const slot = this.shadowRoot?.querySelector("slot");
-    this.options = [];
     slot?.addEventListener("slotchange", () => {
       for (let node of slot?.assignedNodes()) {
         if (node.nodeName === "OPTION") {
@@ -774,7 +776,7 @@ var GuiCombobox = class extends HTMLElement {
     });
     for (let option of this.options) {
       let opt = document.createElement("option");
-      opt.innerText = option.value;
+      opt.innerText = option.innerText;
       select.appendChild(opt);
     }
     this.wrapper.appendChild(select);

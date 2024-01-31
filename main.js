@@ -19,3 +19,5 @@ combo.addEventListener("change", ()=>{
     console.log(combo.value);
     console.log(combo.selectedIndex);
 })
+
+combo.selectedIndex = 1;

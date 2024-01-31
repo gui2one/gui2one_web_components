@@ -77,14 +77,20 @@ export class GuiCombobox extends HTMLElement{
 
     set selectedIndex(index : number)
     {
+        console.log(index);
+        
         this._selectedIndex = index;
-        if(index <= this.options.length && index >= 0 )
+        console.log(this.options);
+        if(index < this.options.length && index >= 0 )
         {
+            
             if(this.options.length)
             {
 
                 //this.value = "aaa";
                 this.value = this.options[index].innerText;
+                console.log(this.value);
+                
             }
         }
         // this.dispatchEvent(new Event("change"));
@@ -109,7 +115,7 @@ export class GuiCombobox extends HTMLElement{
         const slot = this.shadowRoot?.querySelector('slot') as HTMLSlotElement;
         
         
-        this.options = [];        
+        // this.options = [];        
         slot?.addEventListener("slotchange", ()=>{
             for(let node of slot?.assignedNodes())
             {
@@ -133,7 +139,8 @@ export class GuiCombobox extends HTMLElement{
 
     updateOptions()
     {
-    
+        // console.log(this.options);
+        
         let old_select = this.shadowRoot!.querySelector(".wrapper>select");
         if(old_select !== null)
         {
@@ -156,11 +163,14 @@ export class GuiCombobox extends HTMLElement{
         for(let option of this.options)
         {
             let opt = document.createElement("option");
-            opt.innerText = option.value;
+            opt.innerText = option.innerText;
             // opt.innerText = option.value;
             select.appendChild(opt)
         }
-        this.wrapper.appendChild(select)
+        this.wrapper.appendChild(select);
+
+        // console.log(this.options);
+        
     }
 
     addOption(name : string)
