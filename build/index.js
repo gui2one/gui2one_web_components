@@ -858,6 +858,9 @@ var GuiGroup = class extends HTMLElement {
   static get observedAttributes() {
     return ["label"];
   }
+  get label() {
+    return this._label;
+  }
   set label(str) {
     if (this.label_el) {
       this._label = str;

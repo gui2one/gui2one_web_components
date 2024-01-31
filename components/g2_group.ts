@@ -62,6 +62,10 @@ export class GuiGroup extends HTMLElement{
         return ['label'];
     }
 
+    get label()
+    {
+        return this._label;
+    }
     set label(str : string)
     {
         if(this.label_el)
