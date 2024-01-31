@@ -780,7 +780,7 @@ var GuiCombobox = class extends HTMLElement {
       select.appendChild(opt);
     }
     this.wrapper.appendChild(select);
-    this.dispatchEvent(new Event("change"));
+    select.dispatchEvent(new Event("change"));
   }
   addOption(name) {
     let opt = document.createElement("option");

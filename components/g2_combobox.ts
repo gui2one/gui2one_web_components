@@ -170,7 +170,7 @@ export class GuiCombobox extends HTMLElement{
         this.wrapper.appendChild(select);
 
         // console.log(this.options);
-        this.dispatchEvent(new Event("change"));
+        select.dispatchEvent(new Event("change"));
     }
 
     addOption(name : string)
