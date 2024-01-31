@@ -161,6 +161,12 @@ export class GuiCombobox extends HTMLElement{
 
         this.updateOptions();
     }
+
+    resetOptions()
+    {
+        this.options = [];
+        this.updateOptions();
+    }
     static get observedAttributes(){
         return ["label"];
     }

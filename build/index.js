@@ -780,6 +780,10 @@ var GuiCombobox = class extends HTMLElement {
     this.options.push(opt);
     this.updateOptions();
   }
+  resetOptions() {
+    this.options = [];
+    this.updateOptions();
+  }
   static get observedAttributes() {
     return ["label"];
   }
