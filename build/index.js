@@ -729,7 +729,9 @@ var GuiCombobox = class extends HTMLElement {
   }
   set selectedIndex(index) {
     this._selectedIndex = index;
-    this.value = this.options[index].innerText;
+    if (index <= this.options.length && index >= 0) {
+      this.value = this.options[index].innerText;
+    }
   }
   get selectedIndex() {
     return this._selectedIndex;
