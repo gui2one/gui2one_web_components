@@ -688,7 +688,7 @@ var GuiCombobox = class extends HTMLElement {
                 position : relative;
                 outline : 1px solid rgba(255,255,255,0.1);
                 height : 100%;
-                flex : 1.0;
+                flex : 0.0;
 
                 border-radius : 3px 0 0 3px;
             }
