@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Demo Page</title>
 
     <!-- <script type="module" src="build/components/g2_title.js"></script>
@@ -20,104 +20,143 @@
     <script type="module" src="build/index.js"></script>
 
     <style>
+      *,
+      *::before,
+      *::after {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
 
-        *, *::before, *::after{
-            padding : 0;
-            margin : 0;
-            box-sizing : border-box;
-        }
+      :root {
+        --label-width: 110px;
+        --border-radius: 2px;
+      }
 
-        :root{
-            --label-width : 110px;
-            --border-radius : 2px;
-        }
+      html {
+        font-family: "Courier New", Courier, monospace;
+        font-family: sans-serif;
+        /* max-height : 100vh; */
 
-        html{
-            font-family: 'Courier New', Courier, monospace;
-            font-family : sans-serif;
-            /* max-height : 100vh; */
-            
-            /* cursor: none; */
-            padding : 0;
-            margin : 0;
-        }
-        body{
-            height : 100vh;
-        }
+        /* cursor: none; */
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        height: 100vh;
+      }
 
-        #full_wrapper{
-            height : 100vh;
-            max-height : 100vh;
-            overflow-y: hidden;
-        }
-
+      #full_wrapper {
+        height: 100vh;
+        max-height: 100vh;
+        overflow-y: hidden;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="full_wrapper">
+      <h1>Components</h1>
+      <gui-title>Hey !!!</gui-title>
 
-        <h1>Components</h1>
-        <gui-title>Hey !!!</gui-title>
+      <gui-panel closed>
+        <gui-accordion>
+          <gui-collapsible title="Misc Options" closed="false">
+            <gui-input-vector label="Vector A"></gui-input-vector>
+            <gui-input-color label="color A"></gui-input-color>
+            <gui-group label="Dummy Params">
+              <gui-input-color label="color B"></gui-input-color>
 
-        <gui-panel closed>
+              <gui-combobox label="Head Type" id="combo1">
+                <option>1111</option>
+                <option>2222</option>
+                <option>3333</option>
+              </gui-combobox>
 
-            <gui-accordion>
-                <gui-collapsible title="Misc Options" closed="false">
-                    
-                    <gui-input-vector label="Vector A"></gui-input-vector>
-                    <gui-input-color label="color A"></gui-input-color>
-                    <gui-group label="Dummy Params">
-                        <gui-input-color label="color B"></gui-input-color>
-                        
-                        <gui-combobox label="Head Type" id="combo1">
-                            <option>1111</option>
-                            <option>2222</option>
-                            <option>3333</option>
-                        </gui-combobox>
-                        <!-- <gui-separator></gui-separator> -->
-                        <gui-combobox label="Other stuff" id="combo1">
-                            <option>aaa</option>
-                            <option>bbb</option>
-                            <option>ccc</option>
-                        </gui-combobox>
-                    </gui-group>
+              <gui-combobox label="Other stuff" id="combo1">
+                <option>aaa</option>
+                <option>bbb</option>
+                <option>ccc</option>
+              </gui-combobox>
+            </gui-group>
 
-                    <gui-group label="Other">
-                        <gui-checkbox id="checkbox1" label="active stuff"></gui-checkbox>
-                        <gui-checkbox id="checkbox2" label="Do thing" ></gui-checkbox>
-                        <gui-checkbox id="checkbox3" label="ok"></gui-checkbox>
-                    </gui-group>
-                </gui-collapsible>
+            <gui-group label="Other">
+              <gui-checkbox id="checkbox1" label="active stuff"></gui-checkbox>
+              <gui-checkbox id="checkbox2" label="Do thing"></gui-checkbox>
+              <gui-checkbox id="checkbox3" label="ok"></gui-checkbox>
+            </gui-group>
+          </gui-collapsible>
 
-                <gui-collapsible title="World Scale">
-                    <gui-input-float id="float_input" color="grey" label="Scale" default_value=3.14> </gui-input-float>
+          <gui-collapsible title="World Scale">
+            <gui-input-float
+              id="float_input"
+              color="grey"
+              label="Scale"
+              default_value="3.14"
+            >
+            </gui-input-float>
+          </gui-collapsible>
 
-                </gui-collapsible>
-        
-                <gui-collapsible title="Transforms 1">
-                    <gui-input-vector id="position1" default_scalar=0 label="position"></gui-input-vector>
+          <gui-collapsible title="Transforms 1">
+            <gui-input-vector
+              id="position1"
+              default_scalar="0"
+              label="position"
+            ></gui-input-vector>
 
-                    <gui-input-vector id="rotation1" default_scalar=0 label="rotation"></gui-input-vector>
-                    <gui-input-vector id="scale1" default_scalar=1 label="scale"></gui-input-vector>
-                    <gui-input-float label="uniform_scale_too_long" default_value="1"></gui-input-float>
-                </gui-collapsible>
-                
-                <gui-collapsible title="Transforms 2">
-                    <gui-input-vector id="position2" default_scalar=0 label="position"></gui-input-vector>
-                    <gui-input-vector id="rotation2" default_scalar=0 label="rotation"></gui-input-vector>
-                    <gui-input-vector id="scale2" default_scalar=1 label="scale"></gui-input-vector>
-                </gui-collapsible>
-                
-                <gui-collapsible title="Transforms 3">
-                    <gui-input-vector id="position3" default_scalar=0 label="position"></gui-input-vector>
-                    <gui-input-vector id="rotation3" default_scalar=0 label="rotation"></gui-input-vector>
-                    <gui-input-vector id="scale3" default_scalar=1 label="scale"></gui-input-vector>
-                </gui-collapsible>
-            </gui-accordion>
-    
-    
-        </gui-panel>
+            <gui-input-vector
+              id="rotation1"
+              default_scalar="0"
+              label="rotation"
+            ></gui-input-vector>
+            <gui-input-vector
+              id="scale1"
+              default_scalar="1"
+              label="scale"
+            ></gui-input-vector>
+            <gui-input-float
+              label="uniform_scale_too_long"
+              default_value="1"
+            ></gui-input-float>
+          </gui-collapsible>
+
+          <gui-collapsible title="Transforms 2">
+            <gui-input-vector
+              id="position2"
+              default_scalar="0"
+              label="position"
+            ></gui-input-vector>
+            <gui-input-vector
+              id="rotation2"
+              default_scalar="0"
+              label="rotation"
+            ></gui-input-vector>
+            <gui-input-vector
+              id="scale2"
+              default_scalar="1"
+              label="scale"
+            ></gui-input-vector>
+          </gui-collapsible>
+
+          <gui-collapsible title="Transforms 3">
+            <gui-input-vector
+              id="position3"
+              default_scalar="0"
+              label="position"
+            ></gui-input-vector>
+            <gui-input-vector
+              id="rotation3"
+              default_scalar="0"
+              label="rotation"
+            ></gui-input-vector>
+            <gui-input-vector
+              id="scale3"
+              default_scalar="1"
+              label="scale"
+            ></gui-input-vector>
+          </gui-collapsible>
+        </gui-accordion>
+      </gui-panel>
     </div>
     <script type="module" src="main.js"></script>
-</body>
+  </body>
 </html>

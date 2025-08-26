@@ -781,9 +781,14 @@ var GuiCombobox = class extends HTMLElement {
     this.wrapper.appendChild(select);
     select.dispatchEvent(new Event("change"));
   }
-  addOption(name) {
+  addOption(label, value) {
     let opt = document.createElement("option");
-    opt.innerText = name;
+    opt.innerText = label;
+    if (value !== void 0) {
+      opt.value = value;
+    } else {
+      opt.value = label;
+    }
     this.options.push(opt);
     this.updateOptions();
   }

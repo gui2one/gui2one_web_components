@@ -144,9 +144,14 @@ export class GuiCombobox extends HTMLElement {
     select.dispatchEvent(new Event("change"));
   }
 
-  addOption(name: string) {
+  addOption(label: string, value: string) {
     let opt = document.createElement("option");
-    opt.innerText = name;
+    opt.innerText = label;
+    if (value !== undefined) {
+      opt.value = value;
+    } else {
+      opt.value = label;
+    }
     this.options.push(opt);
 
     this.updateOptions();
