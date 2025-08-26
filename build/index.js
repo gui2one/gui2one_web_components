@@ -728,13 +728,10 @@ var GuiCombobox = class extends HTMLElement {
     }
   }
   set selectedIndex(index) {
-    console.log(index);
     this._selectedIndex = index;
-    console.log(this.options);
     if (index < this.options.length && index >= 0) {
       if (this.options.length) {
         this.value = this.options[index].innerText;
-        console.log(this.value);
       }
     }
   }
@@ -765,7 +762,9 @@ var GuiCombobox = class extends HTMLElement {
     if (old_select !== null) {
       this.wrapper.removeChild(old_select);
     }
-    let select = document.createElement("select");
+    let select = document.createElement(
+      "select"
+    );
     select.id = "list";
     select.addEventListener("change", (event) => {
       let sel = event.target;
