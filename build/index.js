@@ -1461,9 +1461,9 @@ var GuiPanel = class extends HTMLElement {
                     position : relative;
                     top : 0;
                     cursor : pointer;
-                    height : calc(50px);
-                    margin-top : 2px;
-                    margin-left : 0px;
+                    height : calc(30px);
+                    margin-top : 5px;
+               
                     opacity : 0.5;
                     /* outline : 1px solid white; */
                     width : 100%;
@@ -1490,7 +1490,7 @@ var GuiPanel = class extends HTMLElement {
                     border-radius : 5px;
                     background-color : #eee;
                     transform-origin : 50% 50%;
-                    transform :  translateX(20px) rotate(45deg);
+                    transform :  translateX(10px) rotate(45deg);
                 }
                 #wrapper .close_btn::after{
                     content : '';
@@ -1502,7 +1502,7 @@ var GuiPanel = class extends HTMLElement {
                     border-radius : 5px;
                     background-color : #eee;
                     transform-origin : 50% 50%;
-                    transform : translateX(20px) rotate(-45deg);
+                    transform : translateX(10px) rotate(-45deg);
                 }
 
                 #wrapper .open_btn{
@@ -1522,9 +1522,11 @@ var GuiPanel = class extends HTMLElement {
                     z-index : 2;
                     margin-left : -25px;
                     visibility : hidden;
+                    cursor : pointer;
                 }
                 #wrapper .open_btn:hover{
                     opacity : 0.9;
+                    color : red;
                 }
 
                 #wrapper.left .open_btn{
