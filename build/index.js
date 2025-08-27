@@ -1287,6 +1287,72 @@ var GuiInputFloat = class extends HTMLElement {
 };
 customElements.define("gui-input-float", GuiInputFloat);
 
+// components/g2_input_range.ts
+var GuiInputRange = class extends HTMLElement {
+  template_fragment;
+  _label = "hey";
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    const styles = String.raw`<style>
+
+            :host{
+                width : 100%;
+            }
+            .wrapper{
+                position : relative;
+                display : grid;
+                grid-template-columns : var(--label-width) 1fr;
+                align-items: center;
+                justify-items: stretch;
+                width : 100%;
+                font-size : 0.9rem;
+                flex : 1.0;
+            }       
+            
+            input[type=range]{
+                width : 100%;
+                margin : 0.8em 0;
+                padding : 0;
+            }
+        </style>`;
+    const template = String.raw`
+            ${styles}
+            <div class="wrapper">
+<div class="label" title="${this.label}"><span>${this.label}</span></div>
+                <div class="value_div">
+                    <input type=range min="0" max="1" step="0.01" value="0.5" />
+                    <!-- <div class="number_div" contenteditable> -->
+                </div>
+            </div>
+        `;
+    this.template_fragment = document.createRange().createContextualFragment(template);
+    this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
+  }
+  connectedCallback() {
+  }
+  static get observedAttributes() {
+    return ["label"];
+  }
+  attributeChangedCallback(name, oldValue, newValue) {
+    switch (name) {
+      case "label":
+        this.label = newValue;
+        break;
+      default:
+        break;
+    }
+  }
+  get label() {
+    return this._label;
+  }
+  set label(str) {
+    this._label = str;
+    (this.shadowRoot?.querySelector(".label span")).textContent = str;
+  }
+};
+customElements.define("gui-input-range", GuiInputRange);
+
 // components/g2_input_vector.ts
 var GuiInputVector = class extends HTMLElement {
   template_fragment;
@@ -1662,6 +1728,7 @@ var GuiRow = class extends HTMLElement {
             display : flex;
             flex-direction : row;
             flex-wrap : nowrap;
+            align-items : center;
             gap : 0.5em;
             width : 100%;
         }
@@ -1794,6 +1861,7 @@ window["GuiCombobox"] = GuiCombobox;
 window["GuiGroup"] = GuiGroup;
 window["GuiInputColor"] = GuiInputColor;
 window["GuiInputFloat"] = GuiInputFloat;
+window["GuiInputRange"] = GuiInputRange;
 window["GuiInputVector"] = GuiInputVector;
 window["GuiPanel"] = GuiPanel;
 window["GuiRow"] = GuiRow;
@@ -1810,6 +1878,7 @@ export {
   GuiGroup,
   GuiInputColor,
   GuiInputFloat,
+  GuiInputRange,
   GuiInputVector,
   GuiPanel,
   GuiRow,

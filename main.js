@@ -6,6 +6,7 @@ import {
   GuiGroup,
   GuiButton,
   GuiRow,
+  GuiInputRange,
 } from "./build/index.js";
 
 // const { GuiInputVector } = require("./components/g2_input_vector");
@@ -18,8 +19,11 @@ let vector = new GuiInputVector();
 vector.label = "Position";
 panel.append(vector);
 
+let range = new GuiInputRange();
+range.label = "Range";
+panel.append(range);
 let spacer = new GuiSpacer();
-spacer.height = 30;
+spacer.height = 100;
 panel.append(spacer);
 
 let row = new GuiRow();
