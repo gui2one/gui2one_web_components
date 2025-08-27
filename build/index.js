@@ -59,6 +59,9 @@ var GuiButton = class extends HTMLElement {
     this.attachShadow({ mode: "open" });
     const styles = String.raw`<style>
 
+        :host{
+            width : 100%;
+        }
             button{
                 padding : 0.5em 1em;
                 background-color : darkgreen;
@@ -1646,6 +1649,43 @@ var GuiPanel = class extends HTMLElement {
 };
 customElements.define("gui-panel", GuiPanel);
 
+// components/g2_row.ts
+var GuiRow = class extends HTMLElement {
+  template_fragment;
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    const styles = String.raw`<style>
+
+        .wrapper{
+            outline : 1px solid rgba(255,255,255,0.1);
+            display : flex;
+            flex-direction : row;
+            flex-wrap : nowrap;
+            gap : 0.5em;
+            width : 100%;
+        }
+
+        </style>`;
+    const template = String.raw`
+            ${styles}
+            <div class="wrapper">
+                <slot></slot>
+            </div>
+        `;
+    this.template_fragment = document.createRange().createContextualFragment(template);
+    this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
+  }
+  connectedCallback() {
+  }
+  static get observedAttributes() {
+    return [];
+  }
+  attributeChangedCallback(name, oldValue, newValue) {
+  }
+};
+customElements.define("gui-row", GuiRow);
+
 // components/g2_separator.ts
 var GuiSeparator = class extends HTMLElement {
   template_fragment;
@@ -1756,6 +1796,7 @@ window["GuiInputColor"] = GuiInputColor;
 window["GuiInputFloat"] = GuiInputFloat;
 window["GuiInputVector"] = GuiInputVector;
 window["GuiPanel"] = GuiPanel;
+window["GuiRow"] = GuiRow;
 window["GuiSeparator"] = GuiSeparator;
 window["GuiSpacer"] = GuiSpacer;
 window["GuiTitle"] = GuiTitle;
@@ -1771,6 +1812,7 @@ export {
   GuiInputFloat,
   GuiInputVector,
   GuiPanel,
+  GuiRow,
   GuiSeparator,
   GuiSpacer,
   GuiTitle,

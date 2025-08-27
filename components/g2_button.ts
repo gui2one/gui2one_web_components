@@ -7,6 +7,9 @@ export class GuiButton extends HTMLElement {
     this.attachShadow({ mode: "open" });
     const styles = String.raw`<style>
 
+        :host{
+            width : 100%;
+        }
             button{
                 padding : 0.5em 1em;
                 background-color : darkgreen;
