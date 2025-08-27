@@ -11,6 +11,7 @@ export class GuiRow extends HTMLElement {
             flex-direction : row;
             flex-wrap : nowrap;
             align-items : center;
+            justify-content : center;
             gap : 0.5em;
             width : 100%;
         }
