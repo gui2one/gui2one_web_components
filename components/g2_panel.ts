@@ -1,18 +1,15 @@
-export class GuiPanel extends HTMLElement{
-    template_fragment : DocumentFragment;
-    wrapper_el : HTMLDivElement;
-    constructor()
-    {
-        super();
-        this.attachShadow({mode : "open"});
-        const styles = String.raw`
+export class GuiPanel extends HTMLElement {
+  template_fragment: DocumentFragment;
+  wrapper_el: HTMLDivElement;
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    const styles = String.raw`
             <style>
                 .panel{
                     --scrollbar-width : 8px;
                     --scrollbar-track-color : transparent;
                     --scrollbar-thumb-color : gray;
-
-                    
                 }
                 
                         /* For WebKit browsers (Chrome, Safari) */
@@ -84,7 +81,7 @@ export class GuiPanel extends HTMLElement{
 
                 .panel{
                     position : relative;
-                    overflow-y : scroll;
+                    overflow-y : auto;
                     height : calc(100% - 50px - 2em);
                     width : 100%;
                     padding-top : 2em;
@@ -175,8 +172,8 @@ export class GuiPanel extends HTMLElement{
                 }
             </style>
         `;
-        
-        const template = String.raw`
+
+    const template = String.raw`
             
             ${styles}
             <!-- <div id="wrapper" oncontextmenu="return false;"> -->
@@ -188,51 +185,48 @@ export class GuiPanel extends HTMLElement{
                 </div>
             </div>
         `;
-        this.template_fragment = document.createRange().createContextualFragment(template);
-        this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
+    this.template_fragment = document
+      .createRange()
+      .createContextualFragment(template);
+    this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
 
-        let close_btn = this.shadowRoot?.querySelector(".close_btn");
-        let open_btn = this.shadowRoot?.querySelector(".open_btn");
-        this.wrapper_el = this.shadowRoot?.querySelector("#wrapper") as HTMLDivElement;
-        close_btn?.addEventListener("click", (event : Event)=>{
-            this.wrapper_el!.classList.add("hidden");
-        });
-        open_btn?.addEventListener("click", (event : Event)=>{
-            this.wrapper_el!.classList.remove("hidden");
-        });
+    let close_btn = this.shadowRoot?.querySelector(".close_btn");
+    let open_btn = this.shadowRoot?.querySelector(".open_btn");
+    this.wrapper_el = this.shadowRoot?.querySelector(
+      "#wrapper"
+    ) as HTMLDivElement;
+    close_btn?.addEventListener("click", (event: Event) => {
+      this.wrapper_el!.classList.add("hidden");
+    });
+    open_btn?.addEventListener("click", (event: Event) => {
+      this.wrapper_el!.classList.remove("hidden");
+    });
 
-        document.addEventListener("keypress", (event)=>{
-            if(event.key === "h")
-            {
-                this.wrapper_el!.classList.toggle("hidden");
-            }
-        });
-   
-    }
+    document.addEventListener("keypress", (event) => {
+      if (event.key === "h") {
+        this.wrapper_el!.classList.toggle("hidden");
+      }
+    });
+  }
 
-    connectedCallback(){
-    }
+  connectedCallback() {}
 
-    static get observedAttributes(){
-        return ["side", "closed"];
-    }
+  static get observedAttributes() {
+    return ["side", "closed"];
+  }
 
-
-    attributeChangedCallback(name : string, oldValue : any, newValue : any) {
-        switch(name){
-            case 'side' :
-                this.wrapper_el.classList.add(newValue);
-                break;
-            case 'closed' :
-                if(newValue === "true" || newValue === "")
-                {
-
-                    this.wrapper_el.classList.add("hidden");
-                }
-                break;
+  attributeChangedCallback(name: string, oldValue: any, newValue: any) {
+    switch (name) {
+      case "side":
+        this.wrapper_el.classList.add(newValue);
+        break;
+      case "closed":
+        if (newValue === "true" || newValue === "") {
+          this.wrapper_el.classList.add("hidden");
         }
-    }    
+        break;
+    }
+  }
 }
 
 customElements.define("gui-panel", GuiPanel);
-

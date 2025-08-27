@@ -20,6 +20,8 @@ import { GuiPanel } from "./g2_panel";
 export { GuiPanel } from "./g2_panel";
 import { GuiSeparator } from "./g2_separator";
 export { GuiSeparator } from "./g2_separator";
+import { GuiSpacer } from "./g2_spacer";
+export { GuiSpacer } from "./g2_spacer";
 import { GuiTitle } from "./g2_title";
 export { GuiTitle } from "./g2_title";
 
@@ -37,6 +39,4 @@ window["GuiPanel"] = GuiPanel;
 window["GuiSeparator"] = GuiSeparator;
 window["GuiTitle"] = GuiTitle;
 
-
 // module.exports = [GuiAccordion, GuiCheckbox, GuiCollapsible, GuiColorPicker, GuiCombobox, GuiGroup, GuiInputColor, GuiInputFloat, GuiInputVector, GuiPanel, GuiSeparator, GuiTitle];
-

@@ -14,48 +14,41 @@ export class GuiCombobox extends HTMLElement {
     this.attachShadow({ mode: "open" });
     const styles = String.raw`<style>
             .wrapper{
-                /* padding : 0.5em; */
-                display : flex;
-                flex-direction : row;
-                align-items :center;
-                justify-content : center;
-                height : 30px;
+              display : grid;
+              grid-template-columns : var(--label-width) 1fr;
+              height : 30px;
             }
 
             label{
-                display : flex;
-                align-items : center;
-                justify-content : center;
-                position : relative;
-                outline : 1px solid rgba(255,255,255,0.1);
-                height : 100%;
-                flex : 0.0;
+              display : flex;
+              align-items : center;
+              
+              position : relative;
+              outline : 1px solid rgba(255,255,255,0.1);
+              height : 100%;
+              flex : 0.5;
 
-                border-radius : 3px 0 0 3px;
+              border-radius : 3px 0 0 3px;
             }
 
             select{
-                border : 0;
-                height : 31px;
-                line-height : 30px;
-                flex : 1;
-                position : relative;
-                display : block;
-                color : #222;
-                background-color : white;
-                border-radius : 0 3px 3px 0;
+              border : 0;
+              height : 31px;
+              line-height : 30px;
+              flex : 1;
+              position : relative;
+              display : block;
+              color : #222;
+              background-color : white;
+              border-radius : 0 3px 3px 0;
             }
         </style>`;
     const template = String.raw`
             ${styles}
-
             <div class="wrapper">
-            <label for="list">${this._label}</label>
-            <slot></slot>
-
+              <label for="list">${this._label}</label>
+              <slot></slot>
             </div>
-
-            
         `;
     this.template_fragment = document
       .createRange()

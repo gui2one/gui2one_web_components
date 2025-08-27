@@ -673,48 +673,41 @@ var GuiCombobox = class extends HTMLElement {
     this.attachShadow({ mode: "open" });
     const styles = String.raw`<style>
             .wrapper{
-                /* padding : 0.5em; */
-                display : flex;
-                flex-direction : row;
-                align-items :center;
-                justify-content : center;
-                height : 30px;
+              display : grid;
+              grid-template-columns : var(--label-width) 1fr;
+              height : 30px;
             }
 
             label{
-                display : flex;
-                align-items : center;
-                justify-content : center;
-                position : relative;
-                outline : 1px solid rgba(255,255,255,0.1);
-                height : 100%;
-                flex : 0.0;
+              display : flex;
+              align-items : center;
+              
+              position : relative;
+              outline : 1px solid rgba(255,255,255,0.1);
+              height : 100%;
+              flex : 0.5;
 
-                border-radius : 3px 0 0 3px;
+              border-radius : 3px 0 0 3px;
             }
 
             select{
-                border : 0;
-                height : 31px;
-                line-height : 30px;
-                flex : 1;
-                position : relative;
-                display : block;
-                color : #222;
-                background-color : white;
-                border-radius : 0 3px 3px 0;
+              border : 0;
+              height : 31px;
+              line-height : 30px;
+              flex : 1;
+              position : relative;
+              display : block;
+              color : #222;
+              background-color : white;
+              border-radius : 0 3px 3px 0;
             }
         </style>`;
     const template = String.raw`
             ${styles}
-
             <div class="wrapper">
-            <label for="list">${this._label}</label>
-            <slot></slot>
-
+              <label for="list">${this._label}</label>
+              <slot></slot>
             </div>
-
-            
         `;
     this.template_fragment = document.createRange().createContextualFragment(template);
     this.shadowRoot.appendChild(this.template_fragment.cloneNode(true));
@@ -1381,8 +1374,6 @@ var GuiPanel = class extends HTMLElement {
                     --scrollbar-width : 8px;
                     --scrollbar-track-color : transparent;
                     --scrollbar-thumb-color : gray;
-
-                    
                 }
                 
                         /* For WebKit browsers (Chrome, Safari) */
@@ -1454,7 +1445,7 @@ var GuiPanel = class extends HTMLElement {
 
                 .panel{
                     position : relative;
-                    overflow-y : scroll;
+                    overflow-y : auto;
                     height : calc(100% - 50px - 2em);
                     width : 100%;
                     padding-top : 2em;
@@ -1561,7 +1552,9 @@ var GuiPanel = class extends HTMLElement {
     this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
     let close_btn = this.shadowRoot?.querySelector(".close_btn");
     let open_btn = this.shadowRoot?.querySelector(".open_btn");
-    this.wrapper_el = this.shadowRoot?.querySelector("#wrapper");
+    this.wrapper_el = this.shadowRoot?.querySelector(
+      "#wrapper"
+    );
     close_btn?.addEventListener("click", (event) => {
       this.wrapper_el.classList.add("hidden");
     });
@@ -1623,6 +1616,39 @@ var GuiSeparator = class extends HTMLElement {
 };
 customElements.define("gui-separator", GuiSeparator);
 
+// components/g2_spacer.ts
+var GuiSpacer = class extends HTMLElement {
+  template_fragment;
+  height = 0;
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    const styles = String.raw`<style></style>`;
+    const template = String.raw`
+            ${styles}
+            <div></div>
+        `;
+    this.template_fragment = document.createRange().createContextualFragment(template);
+    this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
+  }
+  connectedCallback() {
+  }
+  static get observedAttributes() {
+    return ["height"];
+  }
+  attributeChangedCallback(name, oldValue, newValue) {
+    switch (name) {
+      case "height":
+        this.height = parseInt(newValue);
+        (this.shadowRoot?.querySelector("div")).style.height = this.height + "px";
+        break;
+      default:
+        break;
+    }
+  }
+};
+customElements.define("gui-spacer", GuiSpacer);
+
 // components/g2_title.ts
 var GuiTitle = class extends HTMLElement {
   title = "Hello, World!";
@@ -1673,6 +1699,7 @@ export {
   GuiInputVector,
   GuiPanel,
   GuiSeparator,
+  GuiSpacer,
   GuiTitle,
   components_default as default
 };
