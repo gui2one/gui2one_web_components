@@ -55,6 +55,7 @@ export class GuiPanel extends HTMLElement {
                     border-radius : 0 0 0 3px;
                     height : 100%;
                     max-height : 100%;
+                    min-width : 300px;
                     color : white;
                     background-color : #111;
 

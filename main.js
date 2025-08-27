@@ -13,7 +13,7 @@ panel.setAttribute("side", "left");
 // console.log(panel);
 let vector = new GuiInputVector();
 vector.label = "Position";
-panel.append(vector);
+// panel.append(vector);
 
 let spacer = new GuiSpacer();
 spacer.height = 42;
