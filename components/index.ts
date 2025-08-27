@@ -1,5 +1,7 @@
 import { GuiAccordion } from "./g2_accordion";
 export { GuiAccordion } from "./g2_accordion";
+import { GuiButton } from "./g2_button";
+export { GuiButton } from "./g2_button";
 import { GuiCheckbox } from "./g2_checkbox";
 export { GuiCheckbox } from "./g2_checkbox";
 import { GuiCollapsible } from "./g2_collapsible";
@@ -27,6 +29,7 @@ export { GuiTitle } from "./g2_title";
 
 export default {};
 window["GuiAccordion"] = GuiAccordion;
+window["GuiButton"] = GuiButton;
 window["GuiCheckbox"] = GuiCheckbox;
 window["GuiCollapsible"] = GuiCollapsible;
 window["GuiColorPicker"] = GuiColorPicker;
@@ -37,6 +40,7 @@ window["GuiInputFloat"] = GuiInputFloat;
 window["GuiInputVector"] = GuiInputVector;
 window["GuiPanel"] = GuiPanel;
 window["GuiSeparator"] = GuiSeparator;
+window["GuiSpacer"] = GuiSpacer;
 window["GuiTitle"] = GuiTitle;
 
 // module.exports = [GuiAccordion, GuiCheckbox, GuiCollapsible, GuiColorPicker, GuiCombobox, GuiGroup, GuiInputColor, GuiInputFloat, GuiInputVector, GuiPanel, GuiSeparator, GuiTitle];

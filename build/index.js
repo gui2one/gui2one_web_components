@@ -48,6 +48,64 @@ var GuiAccordion = class extends HTMLElement {
 };
 customElements.define("gui-accordion", GuiAccordion);
 
+// components/g2_button.ts
+var GuiButton = class extends HTMLElement {
+  template_fragment;
+  _label = "Button Label";
+  callback = () => {
+  };
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    const styles = String.raw`<style>
+
+            button{
+                padding : 0.5em 1em;
+                background-color : darkgreen;
+                color : white;
+                border : none;
+                width : 100%;
+                
+            }
+
+            button:hover{
+                background-color : green;
+            }
+            button:active{
+                background-color : darkgreen;
+            }
+        </style>`;
+    const template = String.raw`
+            ${styles}
+            <button>${this._label}</button>
+        `;
+    this.template_fragment = document.createRange().createContextualFragment(template);
+    this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
+    this.shadowRoot?.querySelector("button")?.addEventListener("click", () => this.callback());
+  }
+  connectedCallback() {
+  }
+  get label() {
+    return this._label;
+  }
+  set label(str) {
+    (this.shadowRoot?.querySelector("button")).innerText = str;
+  }
+  static get observedAttributes() {
+    return ["label"];
+  }
+  attributeChangedCallback(name, oldValue, newValue) {
+    switch (name) {
+      case "label":
+        this.label = newValue;
+        break;
+      default:
+        break;
+    }
+  }
+};
+customElements.define("gui-button", GuiButton);
+
 // components/g2_checkbox.ts
 var GuiCheckbox = class extends HTMLElement {
   template_fragment;
@@ -1688,6 +1746,7 @@ customElements.define("gui-title", GuiTitle);
 // components/index.ts
 var components_default = {};
 window["GuiAccordion"] = GuiAccordion;
+window["GuiButton"] = GuiButton;
 window["GuiCheckbox"] = GuiCheckbox;
 window["GuiCollapsible"] = GuiCollapsible;
 window["GuiColorPicker"] = GuiColorPicker;
@@ -1698,9 +1757,11 @@ window["GuiInputFloat"] = GuiInputFloat;
 window["GuiInputVector"] = GuiInputVector;
 window["GuiPanel"] = GuiPanel;
 window["GuiSeparator"] = GuiSeparator;
+window["GuiSpacer"] = GuiSpacer;
 window["GuiTitle"] = GuiTitle;
 export {
   GuiAccordion,
+  GuiButton,
   GuiCheckbox,
   GuiCollapsible,
   GuiColorPicker,
