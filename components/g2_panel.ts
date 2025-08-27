@@ -100,19 +100,15 @@ export class GuiPanel extends HTMLElement {
                     cursor : pointer;
                     height : calc(30px);
                     margin-top : 5px;
-               
                     opacity : 0.5;
-                    /* outline : 1px solid white; */
-                    width : 100%;
                 }
 
                 #wrapper.left .close_btn{
                     right : 0px;
-                    width : 100%;
+                    width : 25px;
                     margin-left : auto;
-                    margin-right : 1em;
                 }
-
+    
                 #wrapper .close_btn:hover{
                     opacity : 1.0;
                 }
@@ -141,6 +137,8 @@ export class GuiPanel extends HTMLElement {
                     transform-origin : 50% 50%;
                     transform : translateX(10px) rotate(-45deg);
                 }
+
+
 
                 #wrapper .open_btn{
                     display : flex;
