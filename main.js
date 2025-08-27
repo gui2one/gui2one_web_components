@@ -22,6 +22,15 @@ panel.append(vector);
 let range = new GuiInputRange();
 range.label = "Range";
 panel.append(range);
+range.min = 0.0;
+range.max = 10.0;
+range.step = 0.01;
+range.value = 5.0;
+
+range.on_click = (event) => {
+  console.log(event);
+  console.log(event.target.value);
+};
 let spacer = new GuiSpacer();
 spacer.height = 100;
 panel.append(spacer);

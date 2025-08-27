@@ -1291,6 +1291,15 @@ customElements.define("gui-input-float", GuiInputFloat);
 var GuiInputRange = class extends HTMLElement {
   template_fragment;
   _label = "hey";
+  input_el;
+  on_change = () => {
+  };
+  on_click = () => {
+  };
+  _value = 42;
+  _min = 0;
+  _max = 1;
+  _step = 0.01;
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -1321,30 +1330,85 @@ var GuiInputRange = class extends HTMLElement {
             <div class="wrapper">
 <div class="label" title="${this.label}"><span>${this.label}</span></div>
                 <div class="value_div">
-                    <input type=range min="0" max="1" step="0.01" value="0.5" />
-                    <!-- <div class="number_div" contenteditable> -->
+                    <input type=range min="${this._min}" max="${this._max}" step="${this._step}" value="10" />
                 </div>
             </div>
         `;
     this.template_fragment = document.createRange().createContextualFragment(template);
-    this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
+    this.shadowRoot.appendChild(this.template_fragment.cloneNode(true));
+    this.input_el = this.shadowRoot.querySelector("input");
   }
   connectedCallback() {
+    this.input_el.onclick = (event) => {
+      this.on_click(event);
+    };
   }
   static get observedAttributes() {
-    return ["label"];
+    return ["label", "min", "max", "step", "value"];
   }
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
       case "label":
-        this.label = newValue;
+        this._label = newValue;
+        break;
+      case "min":
+        this._min = parseFloat(newValue);
+        this.input_el.setAttribute("min", "" + newValue);
+        break;
+      case "max":
+        this._max = parseFloat(newValue);
+        this.input_el.setAttribute("max", "" + newValue);
+        break;
+      case "step":
+        this._step = parseFloat(newValue);
+        this.input_el.setAttribute("step", "" + newValue);
+        break;
+      case "value":
+        this._value = parseFloat(newValue);
+        this.input_el.value = newValue;
         break;
       default:
         break;
     }
   }
+  get min() {
+    return this._min;
+  }
+  get max() {
+    return this._max;
+  }
+  get step() {
+    return this._step;
+  }
+  get value() {
+    return this._value;
+  }
   get label() {
     return this._label;
+  }
+  triggerChange() {
+    let ev = new Event("change", {
+      // bubbles : true,
+      // composed : false,
+    });
+    this.dispatchEvent(ev);
+  }
+  set min(val) {
+    this._min = val;
+    this.input_el.min = "" + val;
+  }
+  set max(val) {
+    this._max = val;
+    this.input_el.max = "" + val;
+  }
+  set step(val) {
+    this._step = val;
+    this.input_el.step = "" + val;
+  }
+  set value(val) {
+    this._value = val;
+    this.input_el.setAttribute("value", "" + val);
+    this.triggerChange();
   }
   set label(str) {
     this._label = str;
