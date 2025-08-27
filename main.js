@@ -1,4 +1,9 @@
-import { GuiPanel, GuiInputVector, GuiCombobox } from "./build/index.js";
+import {
+  GuiPanel,
+  GuiInputVector,
+  GuiCombobox,
+  GuiSpacer,
+} from "./build/index.js";
 
 // const { GuiInputVector } = require("./components/g2_input_vector");
 
@@ -9,6 +14,10 @@ panel.setAttribute("side", "left");
 let vector = new GuiInputVector();
 vector.label = "Position";
 panel.append(vector);
+
+let spacer = new GuiSpacer();
+spacer.height = 42;
+panel.append(spacer);
 
 let combo = new GuiCombobox();
 combo.label = "combo test";

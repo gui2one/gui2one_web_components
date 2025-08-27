@@ -1,10 +1,15 @@
 export class GuiSpacer extends HTMLElement {
   template_fragment: DocumentFragment;
-  height: number = 0;
+  _height: number = 0;
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
-    const styles = String.raw`<style></style>`;
+    const styles = String.raw`<style>
+
+        div{
+            background-color : transparent;
+        }
+    </style>`;
     const template = String.raw`
             ${styles}
             <div></div>
@@ -21,12 +26,20 @@ export class GuiSpacer extends HTMLElement {
     return ["height"];
   }
 
+  get height() {
+    let css_height = this.getAttribute("height");
+    return parseInt(css_height || "0");
+  }
+  set height(val: number) {
+    // console.log(val);
+    // this.height = val;
+    (this.shadowRoot?.querySelector("div") as HTMLDivElement).style.height =
+      "" + val + "px";
+  }
   attributeChangedCallback(name: string, oldValue: any, newValue: any) {
     switch (name) {
       case "height":
-        this.height = parseInt(newValue);
-        (this.shadowRoot?.querySelector("div") as HTMLDivElement).style.height =
-          this.height + "px";
+        this.height = newValue;
         break;
       default:
         break;

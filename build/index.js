@@ -1621,11 +1621,16 @@ customElements.define("gui-separator", GuiSeparator);
 // components/g2_spacer.ts
 var GuiSpacer = class extends HTMLElement {
   template_fragment;
-  height = 0;
+  _height = 0;
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
-    const styles = String.raw`<style></style>`;
+    const styles = String.raw`<style>
+
+        div{
+            background-color : transparent;
+        }
+    </style>`;
     const template = String.raw`
             ${styles}
             <div></div>
@@ -1638,11 +1643,17 @@ var GuiSpacer = class extends HTMLElement {
   static get observedAttributes() {
     return ["height"];
   }
+  get height() {
+    let css_height = this.getAttribute("height");
+    return parseInt(css_height || "0");
+  }
+  set height(val) {
+    (this.shadowRoot?.querySelector("div")).style.height = "" + val + "px";
+  }
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
       case "height":
-        this.height = parseInt(newValue);
-        (this.shadowRoot?.querySelector("div")).style.height = this.height + "px";
+        this.height = newValue;
         break;
       default:
         break;
