@@ -1853,22 +1853,6 @@ customElements.define("gui-title", GuiTitle);
 
 // components/index.ts
 var components_default = {};
-window["GuiAccordion"] = GuiAccordion;
-window["GuiButton"] = GuiButton;
-window["GuiCheckbox"] = GuiCheckbox;
-window["GuiCollapsible"] = GuiCollapsible;
-window["GuiColorPicker"] = GuiColorPicker;
-window["GuiCombobox"] = GuiCombobox;
-window["GuiGroup"] = GuiGroup;
-window["GuiInputColor"] = GuiInputColor;
-window["GuiInputFloat"] = GuiInputFloat;
-window["GuiInputRange"] = GuiInputRange;
-window["GuiInputVector"] = GuiInputVector;
-window["GuiPanel"] = GuiPanel;
-window["GuiRow"] = GuiRow;
-window["GuiSeparator"] = GuiSeparator;
-window["GuiSpacer"] = GuiSpacer;
-window["GuiTitle"] = GuiTitle;
 export {
   GuiAccordion,
   GuiButton,
