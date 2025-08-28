@@ -2,6 +2,7 @@ export class GuiInputRange extends HTMLElement {
   template_fragment: DocumentFragment;
   _label: string = "hey";
   input_el: HTMLInputElement;
+  txt_div: HTMLDivElement;
   on_change: Function = () => {};
   on_click: Function = () => {};
 
@@ -33,13 +34,26 @@ export class GuiInputRange extends HTMLElement {
                 margin : 0.8em 0;
                 padding : 0;
             }
+
+            .value_div{
+                display : flex;
+                align-items: center;
+                justify-content: center;
+
+                
+            }
+
+            .text_value{
+              width : 50px;
+              text-align : center;
+            }
         </style>`;
     const template = String.raw`
             ${styles}
             <div class="wrapper">
 <div class="label" title="${this.label}"><span>${this.label}</span></div>
                 <div class="value_div">
-                    <input type=range min="${this._min}" max="${this._max}" step="${this._step}" value="10" />
+                    <input type=range min="${this._min}" max="${this._max}" step="${this._step}" value="${this._value}" /><div class="text_value">${this._value}</div>
                 </div>
             </div>
         `;
@@ -48,11 +62,18 @@ export class GuiInputRange extends HTMLElement {
       .createContextualFragment(template);
     this.shadowRoot!.appendChild(this.template_fragment.cloneNode(true));
     this.input_el = this.shadowRoot!.querySelector("input") as HTMLInputElement;
+    this.txt_div = this.shadowRoot!.querySelector(
+      ".text_value"
+    ) as HTMLDivElement;
   }
 
   connectedCallback() {
     this.input_el.onclick = (event) => {
       this.on_click(event);
+    };
+    this.input_el.oninput = (event) => {
+      this._value = parseFloat(this.input_el.value);
+      this.txt_div.textContent = "" + this._value;
     };
   }
 
@@ -79,7 +100,8 @@ export class GuiInputRange extends HTMLElement {
         break;
       case "value":
         this._value = parseFloat(newValue);
-        // this.input_el.setAttribute("value", newValue);
+        this.input_el.setAttribute("value", newValue);
+        this.txt_div.textContent = newValue;
         this.input_el.value = newValue;
         break;
       default:
@@ -126,6 +148,7 @@ export class GuiInputRange extends HTMLElement {
   set value(val: number) {
     this._value = val;
     this.input_el.setAttribute("value", "" + val);
+    this.txt_div.textContent = "" + val;
     this.triggerChange();
   }
 
