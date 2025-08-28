@@ -723,7 +723,7 @@ customElements.define("gui-color-picker", GuiColorPicker);
 // components/g2_combobox.ts
 var GuiCombobox = class extends HTMLElement {
   template_fragment;
-  _label = "Label";
+  _label = "";
   label_el;
   wrapper;
   _value = "";
@@ -779,6 +779,9 @@ var GuiCombobox = class extends HTMLElement {
     if (this.label_el) {
       this._label = str;
       this.label_el.innerText = str;
+    }
+    if (str === "") {
+      this.style.setProperty("--label-width", "0");
     }
   }
   set selectedIndex(index) {

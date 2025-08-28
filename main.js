@@ -58,5 +58,10 @@ combo.addEventListener("change", () => {
   // console.log(combo);
   // console.log(combo.selectedIndex);
 });
+let combo2 = new GuiCombobox();
+combo2.label = "";
+combo2.addOption("hello", "world");
+combo2.addOption("GoodBye");
+grp.append(combo2);
 
-combo.selectedIndex = 1;
+combo2.selectedIndex = 1;

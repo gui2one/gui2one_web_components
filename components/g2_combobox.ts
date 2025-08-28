@@ -1,7 +1,7 @@
 export class GuiCombobox extends HTMLElement {
   template_fragment: DocumentFragment;
 
-  _label: string = "Label";
+  _label: string = "";
   label_el: HTMLLabelElement;
   wrapper: HTMLDivElement;
 
@@ -56,13 +56,17 @@ export class GuiCombobox extends HTMLElement {
     this.shadowRoot!.appendChild(this.template_fragment.cloneNode(true));
     this.wrapper = this.shadowRoot!.querySelector(".wrapper") as HTMLDivElement;
     this.label_el = this.shadowRoot!.querySelector("label") as HTMLLabelElement;
-    // let slot = this.shadowRoot!.querySelector("slot");
   }
 
   set label(str: string) {
     if (this.label_el) {
       this._label = str;
       this.label_el.innerText = str;
+    }
+
+    if (str === "") {
+      this.style.setProperty("--label-width", "0");
+      // console.log("no label");
     }
   }
 
