@@ -1360,6 +1360,7 @@ var GuiInputRange = class extends HTMLElement {
       this.on_click(event);
     };
     this.input_el.oninput = (event) => {
+      this.on_change(event);
       this._value = parseFloat(this.input_el.value);
       this.txt_div.textContent = "" + this._value;
     };
