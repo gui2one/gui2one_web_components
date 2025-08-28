@@ -1795,7 +1795,7 @@ var GuiPanel = class extends HTMLElement {
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
       case "side":
-        this.wrapper_el.classList.add(newValue);
+        this.side = newValue;
         break;
       case "closed":
         if (newValue === "true" || newValue === "") {
@@ -1805,7 +1805,13 @@ var GuiPanel = class extends HTMLElement {
     }
   }
   set side(val) {
-    this.wrapper_el.classList.add(val);
+    if (val === "left") {
+      this.wrapper_el.classList.remove("right");
+      this.wrapper_el.classList.add("left");
+    } else if (val === "right") {
+      this.wrapper_el.classList.remove("left");
+      this.wrapper_el.classList.add("right");
+    }
   }
 };
 customElements.define("gui-panel", GuiPanel);

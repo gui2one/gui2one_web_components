@@ -219,7 +219,7 @@ export class GuiPanel extends HTMLElement {
   attributeChangedCallback(name: string, oldValue: any, newValue: any) {
     switch (name) {
       case "side":
-        this.wrapper_el.classList.add(newValue);
+        this.side = newValue;
         break;
       case "closed":
         if (newValue === "true" || newValue === "") {
@@ -230,8 +230,13 @@ export class GuiPanel extends HTMLElement {
   }
 
   set side(val: string) {
-    // this._side = val;
-    this.wrapper_el.classList.add(val);
+    if (val === "left") {
+      this.wrapper_el.classList.remove("right");
+      this.wrapper_el.classList.add("left");
+    } else if (val === "right") {
+      this.wrapper_el.classList.remove("left");
+      this.wrapper_el.classList.add("right");
+    }
   }
 }
 
