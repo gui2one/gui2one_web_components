@@ -6,6 +6,9 @@ export class GuiPanel extends HTMLElement {
     this.attachShadow({ mode: "open" });
     const styles = String.raw`
             <style>
+                :host{
+                    position : absolute;
+                }
                 .panel{
                     --scrollbar-width : 8px;
                     --scrollbar-track-color : transparent;
