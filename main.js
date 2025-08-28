@@ -12,8 +12,9 @@ import {
 // const { GuiInputVector } = require("./components/g2_input_vector");
 
 let panel = new GuiPanel();
+panel.side = "left";
 document.body.appendChild(panel);
-panel.setAttribute("side", "left");
+
 // console.log(panel);
 let vector = new GuiInputVector();
 vector.label = "Position";

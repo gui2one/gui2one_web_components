@@ -1804,6 +1804,9 @@ var GuiPanel = class extends HTMLElement {
         break;
     }
   }
+  set side(val) {
+    this.wrapper_el.classList.add(val);
+  }
 };
 customElements.define("gui-panel", GuiPanel);
 

@@ -228,6 +228,11 @@ export class GuiPanel extends HTMLElement {
         break;
     }
   }
+
+  set side(val: string) {
+    // this._side = val;
+    this.wrapper_el.classList.add(val);
+  }
 }
 
 customElements.define("gui-panel", GuiPanel);
