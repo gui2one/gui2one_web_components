@@ -11,7 +11,7 @@ import {
 
 let panel = new GuiPanel();
 panel.side = "left";
-panel.closed = "true";
+panel.closed = true;
 document.body.appendChild(panel);
 panel.addEventListener("close", () => console.log("closed"));
 panel.addEventListener("open", () => console.log("open"));
