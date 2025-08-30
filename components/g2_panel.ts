@@ -226,7 +226,9 @@ export class GuiPanel extends HTMLElement {
         break;
       case "closed":
         if (newValue === "true" || newValue === "") {
-          this.wrapper_el.classList.add("hidden");
+          this.closed = true;
+        } else {
+          this.closed = false;
         }
         break;
     }
@@ -239,6 +241,14 @@ export class GuiPanel extends HTMLElement {
     } else if (val === "right") {
       this.wrapper_el.classList.remove("left");
       this.wrapper_el.classList.add("right");
+    }
+  }
+
+  set closed(val: boolean) {
+    if (val) {
+      this.wrapper_el.classList.add("hidden");
+    } else {
+      this.wrapper_el.classList.remove("hidden");
     }
   }
 }

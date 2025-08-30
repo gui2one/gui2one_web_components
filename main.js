@@ -13,6 +13,7 @@ import {
 
 let panel = new GuiPanel();
 panel.side = "left";
+panel.closed = "true";
 document.body.appendChild(panel);
 
 // console.log(panel);
