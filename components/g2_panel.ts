@@ -245,6 +245,9 @@ export class GuiPanel extends HTMLElement {
     }
   }
 
+  get closed() {
+    return this.wrapper_el.classList.contains("hidden");
+  }
   set closed(val: boolean) {
     if (val) {
       this.wrapper_el.classList.add("hidden");

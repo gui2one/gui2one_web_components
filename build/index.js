@@ -1819,6 +1819,9 @@ var GuiPanel = class extends HTMLElement {
       this.wrapper_el.classList.add("right");
     }
   }
+  get closed() {
+    return this.wrapper_el.classList.contains("hidden");
+  }
   set closed(val) {
     if (val) {
       this.wrapper_el.classList.add("hidden");
