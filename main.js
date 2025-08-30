@@ -9,13 +9,12 @@ import {
   GuiInputRange,
 } from "./build/index.js";
 
-// const { GuiInputVector } = require("./components/g2_input_vector");
-
 let panel = new GuiPanel();
 panel.side = "left";
 panel.closed = "true";
 document.body.appendChild(panel);
-
+panel.addEventListener("close", () => console.log("closed"));
+panel.addEventListener("open", () => console.log("open"));
 // console.log(panel);
 let vector = new GuiInputVector();
 vector.label = "Position";

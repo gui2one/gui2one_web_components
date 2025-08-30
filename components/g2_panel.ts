@@ -8,6 +8,7 @@ export class GuiPanel extends HTMLElement {
             <style>
                 :host{
                     position : absolute;
+                    z-index : 2;
                 }
                 .panel{
                     --scrollbar-width : 8px;
@@ -200,10 +201,10 @@ export class GuiPanel extends HTMLElement {
       "#wrapper"
     ) as HTMLDivElement;
     close_btn?.addEventListener("click", (event: Event) => {
-      this.wrapper_el!.classList.add("hidden");
+      this.closed = true;
     });
     open_btn?.addEventListener("click", (event: Event) => {
-      this.wrapper_el!.classList.remove("hidden");
+      this.closed = false;
     });
 
     document.addEventListener("keypress", (event) => {
@@ -247,8 +248,10 @@ export class GuiPanel extends HTMLElement {
   set closed(val: boolean) {
     if (val) {
       this.wrapper_el.classList.add("hidden");
+      this.dispatchEvent(new Event("close"));
     } else {
       this.wrapper_el.classList.remove("hidden");
+      this.dispatchEvent(new Event("open"));
     }
   }
 }
