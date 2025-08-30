@@ -9,6 +9,7 @@ export class GuiPanel extends HTMLElement {
                 :host{
                     position : absolute;
                     z-index : 2;
+                    --label-width : 100px;
                 }
                 .panel{
                     --scrollbar-width : 8px;
