@@ -1,18 +1,21 @@
-export class GuiCollapsible extends HTMLElement{
-    template_fragment : DocumentFragment;
+export class GuiCollapsible extends HTMLElement {
+  template_fragment: DocumentFragment;
 
-    closed : boolean = true;
-    _title : string = "collaspible";
-    header_el : HTMLDivElement;
-    arrow_el : HTMLDivElement;
-    content_el : HTMLDivElement;
-    title_el : HTMLSpanElement;
-    constructor(){
-        super();
-        this.attachShadow({mode : "open"});
-        const styles = String.raw`
+  closed: boolean = true;
+  _title: string = "collaspible";
+  header_el: HTMLDivElement;
+  arrow_el: HTMLDivElement;
+  content_el: HTMLDivElement;
+  title_el: HTMLSpanElement;
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    const styles = String.raw`
         <style>
-
+            :host{
+                display : block;
+                width : 100%;
+            }
             .header{
                 display : flex;
                 align-items : center;
@@ -85,8 +88,8 @@ export class GuiCollapsible extends HTMLElement{
         
         </style>`;
 
-        this.closed = true;
-        const template = String.raw`
+    this.closed = true;
+    const template = String.raw`
             
             ${styles}
 
@@ -99,87 +102,85 @@ export class GuiCollapsible extends HTMLElement{
                 </div>
             </div>
         `;
-        this.template_fragment = document.createRange().createContextualFragment(template);
-        this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
+    this.template_fragment = document
+      .createRange()
+      .createContextualFragment(template);
+    this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
 
-        this.header_el = this.shadowRoot!.querySelector(".header") as HTMLDivElement;
-        this.arrow_el = this.shadowRoot!.querySelector(".header>.arrow") as HTMLDivElement;
-        this.title_el = this.shadowRoot!.querySelector("#title") as HTMLSpanElement;
-        
-        this.content_el = this.shadowRoot!.querySelector(".content") as HTMLDivElement;
+    this.header_el = this.shadowRoot!.querySelector(
+      ".header"
+    ) as HTMLDivElement;
+    this.arrow_el = this.shadowRoot!.querySelector(
+      ".header>.arrow"
+    ) as HTMLDivElement;
+    this.title_el = this.shadowRoot!.querySelector("#title") as HTMLSpanElement;
 
+    this.content_el = this.shadowRoot!.querySelector(
+      ".content"
+    ) as HTMLDivElement;
+  }
 
+  connectedCallback() {
+    if (this.closed) {
+      this.header_el.setAttribute("closed", "true");
+      this.content_el.setAttribute("closed", "true");
+      this.arrow_el.classList.add("closed");
+      this.header_el.classList.add("closed");
+      this.content_el.classList.add("closed");
     }
+    this.header_el.addEventListener("click", (event: MouseEvent) => {
+      this.arrow_el.classList.toggle("closed");
+      this.header_el.classList.toggle("closed");
+      this.content_el.classList.toggle("closed");
 
+      if (this.header_el.classList.contains("closed")) {
+        this.closed = true;
+      } else {
+        this.closed = false;
+        let ev = new Event("open");
+        this.dispatchEvent(ev);
+      }
+    });
+  }
 
-    connectedCallback(){
+  static get observedAttributes() {
+    return ["title", "closed"];
+  }
 
-        if(this.closed)
-        {
-            this.header_el.setAttribute("closed", "true");
-            this.content_el.setAttribute("closed", "true");
-            this.arrow_el.classList.add("closed");
-            this.header_el.classList.add("closed");
-            this.content_el.classList.add("closed");
-
-        }
-        this.header_el.addEventListener("click", (event : MouseEvent)=>{
-            this.arrow_el.classList.toggle("closed");
-            this.header_el.classList.toggle("closed");
-            this.content_el.classList.toggle("closed");
-
-            if(this.header_el.classList.contains("closed"))
-            {
-                this.closed = true;
-            }else{
-                this.closed = false;
-                let ev = new Event("open");
-                this.dispatchEvent(ev);
-            }
-        });
+  set title(val: string) {
+    this._title = val;
+    if (this.title_el) {
+      this.title_el.innerText = val;
     }
+  }
+  attributeChangedCallback(name: string, oldValue: any, newValue: any) {
+    switch (name) {
+      case "title":
+        this.title = newValue;
+        let span = this.shadowRoot?.querySelector(
+          ".header>span"
+        ) as HTMLSpanElement;
+        span.innerText = newValue;
+        break;
+      case "closed":
+        if (newValue === "") this.closed = true;
+        else if (newValue === "true") this.closed = true;
+        else if (newValue === "false") this.closed = false;
 
-    static get observedAttributes()
-    {
-        return ['title', 'closed'];
-    }
-
-    set title(val : string)
-    {
-        this._title = val;
-        if(this.title_el)
-        {
-            this.title_el.innerText = val;
-        }
-    }
-    attributeChangedCallback(name : string, oldValue : any, newValue : any) {
-        switch(name)
-        {
-            case 'title' :
-                this.title = newValue;
-                let span = this.shadowRoot?.querySelector(".header>span") as HTMLSpanElement;
-                span.innerText = newValue;
-                break;
-            case 'closed' :
-                if(newValue === "") this.closed = true;
-                else if(newValue === "true") this.closed = true;
-                else if(newValue === "false") this.closed = false;
-
-                if(this.closed)
-                {
-                    this.arrow_el.classList.add("closed");
-                    this.header_el.classList.add("closed");
-                    this.content_el.classList.add("closed");
-                }else{
-                    this.arrow_el.classList.remove("closed");
-                    this.header_el.classList.remove("closed");
-                    this.content_el.classList.remove("closed");
-                }
-                
-                break;
-            default : break;
+        if (this.closed) {
+          this.arrow_el.classList.add("closed");
+          this.header_el.classList.add("closed");
+          this.content_el.classList.add("closed");
+        } else {
+          this.arrow_el.classList.remove("closed");
+          this.header_el.classList.remove("closed");
+          this.content_el.classList.remove("closed");
         }
 
+        break;
+      default:
+        break;
     }
+  }
 }
 customElements.define("gui-collapsible", GuiCollapsible);

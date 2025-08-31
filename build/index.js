@@ -252,7 +252,10 @@ var GuiCollapsible = class extends HTMLElement {
     this.attachShadow({ mode: "open" });
     const styles = String.raw`
         <style>
-
+            :host{
+                display : block;
+                width : 100%;
+            }
             .header{
                 display : flex;
                 align-items : center;
@@ -340,10 +343,16 @@ var GuiCollapsible = class extends HTMLElement {
         `;
     this.template_fragment = document.createRange().createContextualFragment(template);
     this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
-    this.header_el = this.shadowRoot.querySelector(".header");
-    this.arrow_el = this.shadowRoot.querySelector(".header>.arrow");
+    this.header_el = this.shadowRoot.querySelector(
+      ".header"
+    );
+    this.arrow_el = this.shadowRoot.querySelector(
+      ".header>.arrow"
+    );
     this.title_el = this.shadowRoot.querySelector("#title");
-    this.content_el = this.shadowRoot.querySelector(".content");
+    this.content_el = this.shadowRoot.querySelector(
+      ".content"
+    );
   }
   connectedCallback() {
     if (this.closed) {
@@ -379,7 +388,9 @@ var GuiCollapsible = class extends HTMLElement {
     switch (name) {
       case "title":
         this.title = newValue;
-        let span = this.shadowRoot?.querySelector(".header>span");
+        let span = this.shadowRoot?.querySelector(
+          ".header>span"
+        );
         span.innerText = newValue;
         break;
       case "closed":
