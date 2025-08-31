@@ -7,7 +7,14 @@ import {
   GuiButton,
   GuiRow,
   GuiInputRange,
+  GuiAccordion,
+  GuiCollapsible,
 } from "./build/index.js";
+
+let lone_accordion = new GuiAccordion();
+document.body.appendChild(lone_accordion);
+let collapse1 = new GuiCollapsible();
+lone_accordion.append(collapse1);
 
 let panel = new GuiPanel();
 panel.side = "left";

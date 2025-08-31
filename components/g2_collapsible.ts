@@ -20,13 +20,14 @@ export class GuiCollapsible extends HTMLElement {
                 display : flex;
                 align-items : center;
                 cursor : pointer;
-                background-color : #222;
+                background-color : var(--collapsible-header-bg-color, #222);
                 margin : 0;
-                /* outline : 1px solid white; */
+                color : var(--font-color);
                 height : 2em;
-                margin-top : 0.25em;
+                margin-bottom : 0.25em;
                 padding-left : 0.5em; 
                 font-weight : bolder;
+                user-select : none;
             }
 
             .header:hover{
@@ -40,15 +41,12 @@ export class GuiCollapsible extends HTMLElement {
                 display : grid;
                 grid-template-rows : 1fr;
                 gap : 0.5em;
-                /* padding : 0.5em; */
+                background-color : var(--collapsible-bg-color, #333);
                 padding : 0.5em;
-                /* overflow-y : hidden; */
-                /* height : auto; */
+                
                 opacity : 1;
                 transform-origin : center top;
-                /* transform : scale3d(1.0, 1.0, 1.0); */
-
-                /* transition: grid-template-rows 0.2s ease-out; */
+                
                 transition: all 0.2s ease-out;
             }
             .content.closed{

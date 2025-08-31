@@ -3,13 +3,16 @@ export class GuiPanel extends HTMLElement {
   wrapper_el: HTMLDivElement;
   constructor() {
     super();
+
     this.attachShadow({ mode: "open" });
     const styles = String.raw`
+            
             <style>
                 :host{
                     position : absolute;
                     z-index : 2;
-                    --label-width : 100px;
+                    
+                    color : green;
                 }
                 .panel{
                     --scrollbar-width : 8px;
@@ -180,7 +183,6 @@ export class GuiPanel extends HTMLElement {
         `;
 
     const template = String.raw`
-            
             ${styles}
             <!-- <div id="wrapper" oncontextmenu="return false;"> -->
             <div id="wrapper" >

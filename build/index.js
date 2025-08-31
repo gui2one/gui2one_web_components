@@ -260,13 +260,14 @@ var GuiCollapsible = class extends HTMLElement {
                 display : flex;
                 align-items : center;
                 cursor : pointer;
-                background-color : #222;
+                background-color : var(--collapsible-header-bg-color, #222);
                 margin : 0;
-                /* outline : 1px solid white; */
+                color : var(--font-color);
                 height : 2em;
-                margin-top : 0.25em;
+                margin-bottom : 0.25em;
                 padding-left : 0.5em; 
                 font-weight : bolder;
+                user-select : none;
             }
 
             .header:hover{
@@ -280,15 +281,12 @@ var GuiCollapsible = class extends HTMLElement {
                 display : grid;
                 grid-template-rows : 1fr;
                 gap : 0.5em;
-                /* padding : 0.5em; */
+                background-color : var(--collapsible-bg-color, #333);
                 padding : 0.5em;
-                /* overflow-y : hidden; */
-                /* height : auto; */
+                
                 opacity : 1;
                 transform-origin : center top;
-                /* transform : scale3d(1.0, 1.0, 1.0); */
-
-                /* transition: grid-template-rows 0.2s ease-out; */
+                
                 transition: all 0.2s ease-out;
             }
             .content.closed{
@@ -1599,11 +1597,13 @@ var GuiPanel = class extends HTMLElement {
     super();
     this.attachShadow({ mode: "open" });
     const styles = String.raw`
+            
             <style>
                 :host{
                     position : absolute;
                     z-index : 2;
-                    --label-width : 100px;
+                    
+                    color : green;
                 }
                 .panel{
                     --scrollbar-width : 8px;
@@ -1773,7 +1773,6 @@ var GuiPanel = class extends HTMLElement {
             </style>
         `;
     const template = String.raw`
-            
             ${styles}
             <!-- <div id="wrapper" oncontextmenu="return false;"> -->
             <div id="wrapper" >
