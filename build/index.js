@@ -1,3 +1,9 @@
+// components/utils.ts
+function defineComponent(name, constructor) {
+  if (!customElements.get(name))
+    customElements.define(name, constructor);
+}
+
 // components/g2_accordion.ts
 var GuiAccordion = class extends HTMLElement {
   template_fragment;
@@ -46,7 +52,7 @@ var GuiAccordion = class extends HTMLElement {
   attributeChangedCallback(name, oldValue, newValue) {
   }
 };
-customElements.define("gui-accordion", GuiAccordion);
+defineComponent("gui-accordion", GuiAccordion);
 
 // components/g2_button.ts
 var GuiButton = class extends HTMLElement {
