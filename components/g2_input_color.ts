@@ -1,6 +1,6 @@
 import { GuiInputFloat } from "./g2_input_float";
 import { GuiColorPicker } from "./g2_color_picker";
-import { defineComponent } from "./utils";
+import { customDefineComponent } from "./utils";
 export class GuiInputColor extends HTMLElement {
   template_fragment: DocumentFragment;
 
@@ -109,4 +109,4 @@ export class GuiInputColor extends HTMLElement {
   }
 }
 
-defineComponent("gui-input-color", GuiInputColor);
+customDefineComponent("gui-input-color", GuiInputColor);

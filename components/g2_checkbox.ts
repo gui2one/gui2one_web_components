@@ -1,4 +1,4 @@
-import { defineComponent } from "./utils";
+import { customDefineComponent } from "./utils";
 
 export class GuiCheckbox extends HTMLElement {
   template_fragment: DocumentFragment;
@@ -143,4 +143,4 @@ export class GuiCheckbox extends HTMLElement {
     }
   }
 }
-defineComponent("gui-checkbox", GuiCheckbox);
+customDefineComponent("gui-checkbox", GuiCheckbox);

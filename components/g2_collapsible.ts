@@ -1,4 +1,4 @@
-import { defineComponent } from "./utils";
+import { customDefineComponent } from "./utils";
 
 export class GuiCollapsible extends HTMLElement {
   template_fragment: DocumentFragment;
@@ -183,4 +183,4 @@ export class GuiCollapsible extends HTMLElement {
     }
   }
 }
-defineComponent("gui-collapsible", GuiCollapsible);
+customDefineComponent("gui-collapsible", GuiCollapsible);

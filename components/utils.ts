@@ -1,3 +1,3 @@
-export function defineComponent(name: string, constructor: any) {
+export function customDefineComponent(name: string, constructor: any) {
   customElements.get(name) || customElements.define(name, constructor);
 }

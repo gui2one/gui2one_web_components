@@ -1,4 +1,4 @@
-import { defineComponent } from "./utils";
+import { customDefineComponent } from "./utils";
 
 export class GuiPanel extends HTMLElement {
   template_fragment: DocumentFragment;
@@ -264,4 +264,4 @@ export class GuiPanel extends HTMLElement {
   }
 }
 
-defineComponent("gui-panel", GuiPanel);
+customDefineComponent("gui-panel", GuiPanel);

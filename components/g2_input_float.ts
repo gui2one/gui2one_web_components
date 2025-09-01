@@ -1,4 +1,4 @@
-import { defineComponent } from "./utils";
+import { customDefineComponent } from "./utils";
 
 export class GuiInputFloat extends HTMLElement {
   _value: number;
@@ -285,4 +285,4 @@ export class GuiInputFloat extends HTMLElement {
   }
 }
 
-defineComponent("gui-input-float", GuiInputFloat);
+customDefineComponent("gui-input-float", GuiInputFloat);

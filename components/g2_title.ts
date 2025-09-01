@@ -1,4 +1,4 @@
-import { defineComponent } from "./utils";
+import { customDefineComponent } from "./utils";
 
 export class GuiTitle extends HTMLElement {
   title: string = "Hello, World!";
@@ -26,4 +26,4 @@ export class GuiTitle extends HTMLElement {
 }
 
 // Register the custom element
-defineComponent("gui-title", GuiTitle);
+customDefineComponent("gui-title", GuiTitle);

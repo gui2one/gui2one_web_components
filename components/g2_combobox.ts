@@ -1,4 +1,4 @@
-import { defineComponent } from "./utils";
+import { customDefineComponent } from "./utils";
 
 export class GuiCombobox extends HTMLElement {
   template_fragment: DocumentFragment;
@@ -175,4 +175,4 @@ export class GuiCombobox extends HTMLElement {
     }
   }
 }
-defineComponent("gui-combobox", GuiCombobox);
+customDefineComponent("gui-combobox", GuiCombobox);

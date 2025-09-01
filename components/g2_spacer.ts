@@ -1,4 +1,4 @@
-import { defineComponent } from "./utils";
+import { customDefineComponent } from "./utils";
 
 export class GuiSpacer extends HTMLElement {
   template_fragment: DocumentFragment;
@@ -48,4 +48,4 @@ export class GuiSpacer extends HTMLElement {
     }
   }
 }
-defineComponent("gui-spacer", GuiSpacer);
+customDefineComponent("gui-spacer", GuiSpacer);

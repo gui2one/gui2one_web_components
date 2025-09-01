@@ -1,4 +1,4 @@
-import { defineComponent } from "./utils";
+import { customDefineComponent } from "./utils";
 
 export class GuiButton extends HTMLElement {
   template_fragment: DocumentFragment;
@@ -65,4 +65,4 @@ export class GuiButton extends HTMLElement {
   }
 }
 
-defineComponent("gui-button", GuiButton);
+customDefineComponent("gui-button", GuiButton);

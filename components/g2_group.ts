@@ -1,4 +1,4 @@
-import { defineComponent } from "./utils";
+import { customDefineComponent } from "./utils";
 
 export class GuiGroup extends HTMLElement {
   template_fragment: DocumentFragment;
@@ -83,4 +83,4 @@ export class GuiGroup extends HTMLElement {
     }
   }
 }
-defineComponent("gui-group", GuiGroup);
+customDefineComponent("gui-group", GuiGroup);

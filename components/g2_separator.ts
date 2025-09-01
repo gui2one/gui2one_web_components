@@ -1,4 +1,4 @@
-import { defineComponent } from "./utils";
+import { customDefineComponent } from "./utils";
 
 export class GuiSeparator extends HTMLElement {
   template_fragment: DocumentFragment;
@@ -29,4 +29,4 @@ export class GuiSeparator extends HTMLElement {
 
   attributeChangedCallback(name: string, oldValue: any, newValue: any) {}
 }
-defineComponent("gui-separator", GuiSeparator);
+customDefineComponent("gui-separator", GuiSeparator);

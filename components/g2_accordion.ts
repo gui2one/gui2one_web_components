@@ -1,5 +1,5 @@
 import { GuiCollapsible } from "./g2_collapsible";
-import { defineComponent } from "./utils";
+import { customDefineComponent } from "./utils";
 export class GuiAccordion extends HTMLElement {
   template_fragment: DocumentFragment;
   collapsibles: GuiCollapsible[] = [];
@@ -57,4 +57,4 @@ export class GuiAccordion extends HTMLElement {
 
   attributeChangedCallback(name: string, oldValue: any, newValue: any) {}
 }
-defineComponent("gui-accordion", GuiAccordion);
+customDefineComponent("gui-accordion", GuiAccordion);

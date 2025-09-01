@@ -1,4 +1,4 @@
-import { defineComponent } from "./utils";
+import { customDefineComponent } from "./utils";
 
 function rgbToHsv(r, g, b) {
   const max = Math.max(r, g, b);
@@ -395,4 +395,4 @@ input[type="range"]:focus::-ms-track {
     // this.dispatchEvent(new Event("change"));
   }
 }
-defineComponent("gui-color-picker", GuiColorPicker);
+customDefineComponent("gui-color-picker", GuiColorPicker);

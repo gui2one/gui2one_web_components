@@ -1,4 +1,4 @@
-import { defineComponent } from "./utils";
+import { customDefineComponent } from "./utils";
 
 export class GuiRow extends HTMLElement {
   template_fragment: DocumentFragment;
@@ -39,4 +39,4 @@ export class GuiRow extends HTMLElement {
 
   attributeChangedCallback(name: string, oldValue: any, newValue: any) {}
 }
-defineComponent("gui-row", GuiRow);
+customDefineComponent("gui-row", GuiRow);

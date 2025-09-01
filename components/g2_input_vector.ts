@@ -1,5 +1,5 @@
 import { GuiInputFloat } from "./g2_input_float";
-import { defineComponent } from "./utils";
+import { customDefineComponent } from "./utils";
 export class GuiInputVector extends HTMLElement {
   template_fragment: DocumentFragment;
 
@@ -154,4 +154,4 @@ export class GuiInputVector extends HTMLElement {
   }
 }
 
-defineComponent("gui-input-vector", GuiInputVector);
+customDefineComponent("gui-input-vector", GuiInputVector);

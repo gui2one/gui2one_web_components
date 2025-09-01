@@ -1,5 +1,5 @@
 // components/utils.ts
-function defineComponent(name, constructor) {
+function customDefineComponent(name, constructor) {
   customElements.get(name) || customElements.define(name, constructor);
 }
 
@@ -51,7 +51,7 @@ var GuiAccordion = class extends HTMLElement {
   attributeChangedCallback(name, oldValue, newValue) {
   }
 };
-defineComponent("gui-accordion", GuiAccordion);
+customDefineComponent("gui-accordion", GuiAccordion);
 
 // components/g2_button.ts
 var GuiButton = class extends HTMLElement {
@@ -112,7 +112,7 @@ var GuiButton = class extends HTMLElement {
     }
   }
 };
-defineComponent("gui-button", GuiButton);
+customDefineComponent("gui-button", GuiButton);
 
 // components/g2_checkbox.ts
 var GuiCheckbox = class extends HTMLElement {
@@ -245,7 +245,7 @@ var GuiCheckbox = class extends HTMLElement {
     }
   }
 };
-defineComponent("gui-checkbox", GuiCheckbox);
+customDefineComponent("gui-checkbox", GuiCheckbox);
 
 // components/g2_collapsible.ts
 var GuiCollapsible = class extends HTMLElement {
@@ -422,7 +422,7 @@ var GuiCollapsible = class extends HTMLElement {
     }
   }
 };
-defineComponent("gui-collapsible", GuiCollapsible);
+customDefineComponent("gui-collapsible", GuiCollapsible);
 
 // components/g2_color_picker.ts
 function rgbToHsv(r, g, b) {
@@ -774,7 +774,7 @@ input[type="range"]:focus::-ms-track {
     this.sample_el.style.backgroundColor = `rgb(${values[0] * 255},${values[1] * 255},${values[2] * 255})`;
   }
 };
-defineComponent("gui-color-picker", GuiColorPicker);
+customDefineComponent("gui-color-picker", GuiColorPicker);
 
 // components/g2_combobox.ts
 var GuiCombobox = class extends HTMLElement {
@@ -923,7 +923,7 @@ var GuiCombobox = class extends HTMLElement {
     }
   }
 };
-defineComponent("gui-combobox", GuiCombobox);
+customDefineComponent("gui-combobox", GuiCombobox);
 
 // components/g2_group.ts
 var GuiGroup = class extends HTMLElement {
@@ -1002,7 +1002,7 @@ var GuiGroup = class extends HTMLElement {
     }
   }
 };
-defineComponent("gui-group", GuiGroup);
+customDefineComponent("gui-group", GuiGroup);
 
 // components/g2_input_color.ts
 var GuiInputColor = class extends HTMLElement {
@@ -1095,7 +1095,7 @@ var GuiInputColor = class extends HTMLElement {
     this.label_el.innerText = str;
   }
 };
-defineComponent("gui-input-color", GuiInputColor);
+customDefineComponent("gui-input-color", GuiInputColor);
 
 // components/g2_input_float.ts
 var GuiInputFloat = class extends HTMLElement {
@@ -1350,7 +1350,7 @@ var GuiInputFloat = class extends HTMLElement {
     }
   }
 };
-defineComponent("gui-input-float", GuiInputFloat);
+customDefineComponent("gui-input-float", GuiInputFloat);
 
 // components/g2_input_range.ts
 var GuiInputRange = class extends HTMLElement {
@@ -1505,7 +1505,7 @@ var GuiInputRange = class extends HTMLElement {
     (this.shadowRoot?.querySelector(".label span")).textContent = str;
   }
 };
-defineComponent("gui-input-range", GuiInputRange);
+customDefineComponent("gui-input-range", GuiInputRange);
 
 // components/g2_input_vector.ts
 var GuiInputVector = class extends HTMLElement {
@@ -1644,7 +1644,7 @@ var GuiInputVector = class extends HTMLElement {
     this.label_el.innerText = str;
   }
 };
-defineComponent("gui-input-vector", GuiInputVector);
+customDefineComponent("gui-input-vector", GuiInputVector);
 
 // components/g2_panel.ts
 var GuiPanel = class extends HTMLElement {
@@ -1900,7 +1900,7 @@ var GuiPanel = class extends HTMLElement {
     }
   }
 };
-defineComponent("gui-panel", GuiPanel);
+customDefineComponent("gui-panel", GuiPanel);
 
 // components/g2_row.ts
 var GuiRow = class extends HTMLElement {
@@ -1939,7 +1939,7 @@ var GuiRow = class extends HTMLElement {
   attributeChangedCallback(name, oldValue, newValue) {
   }
 };
-defineComponent("gui-row", GuiRow);
+customDefineComponent("gui-row", GuiRow);
 
 // components/g2_separator.ts
 var GuiSeparator = class extends HTMLElement {
@@ -1968,7 +1968,7 @@ var GuiSeparator = class extends HTMLElement {
   attributeChangedCallback(name, oldValue, newValue) {
   }
 };
-defineComponent("gui-separator", GuiSeparator);
+customDefineComponent("gui-separator", GuiSeparator);
 
 // components/g2_spacer.ts
 var GuiSpacer = class extends HTMLElement {
@@ -2012,7 +2012,7 @@ var GuiSpacer = class extends HTMLElement {
     }
   }
 };
-defineComponent("gui-spacer", GuiSpacer);
+customDefineComponent("gui-spacer", GuiSpacer);
 
 // components/g2_title.ts
 var GuiTitle = class extends HTMLElement {
@@ -2036,7 +2036,7 @@ var GuiTitle = class extends HTMLElement {
     `;
   }
 };
-defineComponent("gui-title", GuiTitle);
+customDefineComponent("gui-title", GuiTitle);
 
 // components/index.ts
 var components_default = {};
