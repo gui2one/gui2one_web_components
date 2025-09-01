@@ -1,6 +1,5 @@
 // components/utils.ts
 function customDefineComponent(name, constructor) {
-  customElements.get(name) || customElements.define(name, constructor);
   customElements.get(name) || window.customElements.define(name, constructor);
 }
 
