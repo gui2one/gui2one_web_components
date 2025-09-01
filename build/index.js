@@ -1,7 +1,6 @@
 // components/utils.ts
 function defineComponent(name, constructor) {
-  if (!customElements.get(name))
-    customElements.define(name, constructor);
+  customElements.get(name) || customElements.define(name, constructor);
 }
 
 // components/g2_accordion.ts
