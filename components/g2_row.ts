@@ -1,3 +1,5 @@
+import { defineComponent } from "./utils";
+
 export class GuiRow extends HTMLElement {
   template_fragment: DocumentFragment;
   constructor() {
@@ -37,4 +39,4 @@ export class GuiRow extends HTMLElement {
 
   attributeChangedCallback(name: string, oldValue: any, newValue: any) {}
 }
-customElements.define("gui-row", GuiRow);
+defineComponent("gui-row", GuiRow);

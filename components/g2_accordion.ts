@@ -58,4 +58,3 @@ export class GuiAccordion extends HTMLElement {
   attributeChangedCallback(name: string, oldValue: any, newValue: any) {}
 }
 defineComponent("gui-accordion", GuiAccordion);
-// customElements.define("gui-accordion", GuiAccordion);

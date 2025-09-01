@@ -1,22 +1,22 @@
 import { GuiInputFloat } from "./g2_input_float";
 import { GuiColorPicker } from "./g2_color_picker";
-export class GuiInputColor extends HTMLElement{
-    template_fragment : DocumentFragment;
+import { defineComponent } from "./utils";
+export class GuiInputColor extends HTMLElement {
+  template_fragment: DocumentFragment;
 
-    label_el : HTMLDivElement;
-    default_scalar : number = 0;
-    _label : string = "Color";
-    
-    _value : number[] = [0,0,0];
-    _default_value : number[] = [0,0,0];
-    
-    picker_el : GuiColorPicker;
-    constructor()
-    {
-        super();
-        this.attachShadow({mode : "open"});
+  label_el: HTMLDivElement;
+  default_scalar: number = 0;
+  _label: string = "Color";
 
-        const styles = String.raw`
+  _value: number[] = [0, 0, 0];
+  _default_value: number[] = [0, 0, 0];
+
+  picker_el: GuiColorPicker;
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+
+    const styles = String.raw`
             <style>
 
                 .wrapper{
@@ -36,7 +36,7 @@ export class GuiInputColor extends HTMLElement{
             </style>
         `;
 
-        const template_str = String.raw`
+    const template_str = String.raw`
 
             ${styles}
             <div class="wrapper">
@@ -47,71 +47,66 @@ export class GuiInputColor extends HTMLElement{
             </div>
         `;
 
-        this.template_fragment = document.createRange().createContextualFragment(template_str);
-        this.shadowRoot!.appendChild(this.template_fragment.cloneNode(true));
-    
-        this.label_el = this.shadowRoot!.querySelector(".label") as HTMLDivElement; 
+    this.template_fragment = document
+      .createRange()
+      .createContextualFragment(template_str);
+    this.shadowRoot!.appendChild(this.template_fragment.cloneNode(true));
 
-        this.picker_el = this.shadowRoot!.querySelector("gui-color-picker") as GuiColorPicker;
-        this.picker_el.addEventListener("change", (event : Event)=>{
-            // console.log(this.picker_el.value);
-            this.value = this.picker_el.value;
-        });
-        Promise.all([
-            customElements.whenDefined("gui-color-picker")
-        ]).then(()=>{
-            this.picker_el.value = this.value;
-        });
-        
+    this.label_el = this.shadowRoot!.querySelector(".label") as HTMLDivElement;
+
+    this.picker_el = this.shadowRoot!.querySelector(
+      "gui-color-picker"
+    ) as GuiColorPicker;
+    this.picker_el.addEventListener("change", (event: Event) => {
+      // console.log(this.picker_el.value);
+      this.value = this.picker_el.value;
+    });
+    Promise.all([customElements.whenDefined("gui-color-picker")]).then(() => {
+      this.picker_el.value = this.value;
+    });
+  }
+
+  connectedCallback() {}
+
+  static get observedAttributes() {
+    return ["default_scalar", "label"];
+  }
+
+  attributeChangedCallback(name: string, oldValue: any, newValue: any) {
+    switch (name) {
+      case "default_scalar":
+        this.default_scalar = parseFloat(newValue);
+        this.value = [
+          this.default_scalar,
+          this.default_scalar,
+          this.default_scalar,
+        ];
+        break;
+      case "label":
+        this.label = newValue;
+        this.label_el.innerText = newValue;
+        break;
+      default:
+        break;
     }
+  }
 
-    connectedCallback()
-    {
-    }
+  get value(): number[] {
+    return this._value;
+  }
 
-    static get observedAttributes()
-    {
-        return ["default_scalar", "label"];
-    }
+  set value(val: number[]) {
+    this._value = val;
+  }
 
-    attributeChangedCallback(name : string, oldValue : any, newValue : any)
-    {
-        switch(name)
-        {
-            case 'default_scalar' :
-                this.default_scalar = parseFloat(newValue);
-                this.value = [this.default_scalar, this.default_scalar, this.default_scalar];
-                break;
-            case 'label' :
-                this.label = newValue;
-                this.label_el.innerText = newValue;
-                break;
-            default : 
-                break;
-        }
-    }
+  set default_value(val: number[]) {
+    this._default_value = val;
+  }
 
-    get value() : number[]{
-        return this._value;
-    }
-
-    set value(val : number[])
-    {
-        this._value = val;
-    }
-
-    set default_value(val : number[])
-    {
-        this._default_value = val;
-    }
-
-    set label(str : string)
-    {
-        this._label = str;
-        this.label_el.innerText = str;
-    }
-
+  set label(str: string) {
+    this._label = str;
+    this.label_el.innerText = str;
+  }
 }
 
-
-customElements.define("gui-input-color", GuiInputColor);
+defineComponent("gui-input-color", GuiInputColor);

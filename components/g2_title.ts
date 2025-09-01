@@ -1,9 +1,11 @@
+import { defineComponent } from "./utils";
+
 export class GuiTitle extends HTMLElement {
-  title: string = 'Hello, World!';
+  title: string = "Hello, World!";
 
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' }); 
+    this.attachShadow({ mode: "open" });
   }
 
   connectedCallback() {
@@ -22,6 +24,6 @@ export class GuiTitle extends HTMLElement {
     `;
   }
 }
-  
+
 // Register the custom element
-customElements.define('gui-title', GuiTitle);
+defineComponent("gui-title", GuiTitle);

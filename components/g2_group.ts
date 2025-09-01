@@ -1,12 +1,14 @@
-export class GuiGroup extends HTMLElement{
-    template_fragment : DocumentFragment;
+import { defineComponent } from "./utils";
 
-    _label : string = "";
-    label_el : HTMLDivElement;
-    constructor(){
-        super();
-        this.attachShadow({mode : "open"});
-        const styles = String.raw`<style>
+export class GuiGroup extends HTMLElement {
+  template_fragment: DocumentFragment;
+
+  _label: string = "";
+  label_el: HTMLDivElement;
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    const styles = String.raw`<style>
 
             .wrapper{
                 position : relative;
@@ -36,7 +38,7 @@ export class GuiGroup extends HTMLElement{
                 display : none;
             }
         </style>`;
-        const template = String.raw`
+    const template = String.raw`
             ${styles}
 
 
@@ -47,43 +49,38 @@ export class GuiGroup extends HTMLElement{
             </div>
 
         `;
-        this.template_fragment = document.createRange().createContextualFragment(template);
-        this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
+    this.template_fragment = document
+      .createRange()
+      .createContextualFragment(template);
+    this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
 
-        this.label_el = this.shadowRoot!.querySelector(".label") as HTMLDivElement;
+    this.label_el = this.shadowRoot!.querySelector(".label") as HTMLDivElement;
+  }
+
+  connectedCallback() {}
+
+  static get observedAttributes() {
+    return ["label"];
+  }
+
+  get label() {
+    return this._label;
+  }
+  set label(str: string) {
+    if (this.label_el) {
+      this._label = str;
+      this.label_el.innerText = str;
     }
+  }
 
-
-    connectedCallback(){
+  attributeChangedCallback(name: string, oldValue: any, newValue: any) {
+    switch (name) {
+      case "label":
+        this.label = newValue;
+        break;
+      default:
+        break;
     }
-
-
-    static get observedAttributes(){
-        return ['label'];
-    }
-
-    get label()
-    {
-        return this._label;
-    }
-    set label(str : string)
-    {
-        if(this.label_el)
-        {
-            this._label = str;
-            this.label_el.innerText = str;
-        }
-    }
-
-
-    attributeChangedCallback(name : string, oldValue : any, newValue : any) {
-        switch(name)
-        {
-            case 'label' : 
-                this.label = newValue;
-                break;
-            default : break;
-        }
-    }
+  }
 }
-customElements.define("gui-group", GuiGroup);
+defineComponent("gui-group", GuiGroup);

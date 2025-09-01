@@ -1,3 +1,5 @@
+import { defineComponent } from "./utils";
+
 export class GuiPanel extends HTMLElement {
   template_fragment: DocumentFragment;
   wrapper_el: HTMLDivElement;
@@ -262,4 +264,4 @@ export class GuiPanel extends HTMLElement {
   }
 }
 
-customElements.define("gui-panel", GuiPanel);
+defineComponent("gui-panel", GuiPanel);

@@ -1,14 +1,16 @@
-export class GuiCheckbox extends HTMLElement{
-    template_fragment : DocumentFragment;
+import { defineComponent } from "./utils";
 
-    _label : string = "toggle";
-    label_el : HTMLLabelElement;
-    pretty_el : HTMLDivElement;
-    value : boolean = true;
-    constructor(){
-        super();
-        this.attachShadow({mode : "open"});
-        const styles = String.raw`<style>
+export class GuiCheckbox extends HTMLElement {
+  template_fragment: DocumentFragment;
+
+  _label: string = "toggle";
+  label_el: HTMLLabelElement;
+  pretty_el: HTMLDivElement;
+  value: boolean = true;
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    const styles = String.raw`<style>
             :host{
                 --padding-top : 0.3em;
                 --padding-bottom : 0.3em;
@@ -78,63 +80,67 @@ export class GuiCheckbox extends HTMLElement{
                 transform : scale(0.6) rotate(-45deg) ;
             }
         </style>`;
-        const template = String.raw`
+    const template = String.raw`
             ${styles}
 
             <div id="wrapper">
-            <label for="checkbox" class=" ${this.value ? 'checked': ''}">${this._label}</label>
-            <div class="pretty ${this.value ? 'checked': ''}">
+            <label for="checkbox" class=" ${this.value ? "checked" : ""}">${
+      this._label
+    }</label>
+            <div class="pretty ${this.value ? "checked" : ""}">
             </div>
-            <input id="checkbox" type="checkbox" ${this.value ? 'checked': ''} />
+            <input id="checkbox" type="checkbox" ${
+              this.value ? "checked" : ""
+            } />
             </div>
         `;
-        this.template_fragment = document.createRange().createContextualFragment(template);
-        this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
+    this.template_fragment = document
+      .createRange()
+      .createContextualFragment(template);
+    this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
 
-        this.label_el = this.shadowRoot!.querySelector("label") as HTMLLabelElement;
-        this.pretty_el = this.shadowRoot!.querySelector(".pretty") as HTMLDivElement;
+    this.label_el = this.shadowRoot!.querySelector("label") as HTMLLabelElement;
+    this.pretty_el = this.shadowRoot!.querySelector(
+      ".pretty"
+    ) as HTMLDivElement;
 
-        let checkbox = this.shadowRoot!.querySelector("#checkbox") as HTMLInputElement;
-        checkbox.addEventListener("change", (event : Event)=>{
-            let checkbox = (event.target as HTMLInputElement);
-            // console.log(event);
-            this.value = checkbox.toggleAttribute("checked");
-            this.pretty_el.classList.toggle("checked");
-            this.label_el.classList.toggle("checked");
-            let ev = new Event("change");
-            this.dispatchEvent(ev);
-        })
+    let checkbox = this.shadowRoot!.querySelector(
+      "#checkbox"
+    ) as HTMLInputElement;
+    checkbox.addEventListener("change", (event: Event) => {
+      let checkbox = event.target as HTMLInputElement;
+      // console.log(event);
+      this.value = checkbox.toggleAttribute("checked");
+      this.pretty_el.classList.toggle("checked");
+      this.label_el.classList.toggle("checked");
+      let ev = new Event("change");
+      this.dispatchEvent(ev);
+    });
+  }
+
+  connectedCallback() {}
+
+  static get observedAttributes() {
+    return ["label"];
+  }
+
+  set label(str: string) {
+    if (this.label_el) {
+      this.label_el.innerHTML = `<span>${str}</span>`;
     }
-
-
-    connectedCallback(){
+  }
+  attributeChangedCallback(name: string, oldValue: any, newValue: any) {
+    switch (name) {
+      case "value":
+        this.value = newValue;
+        break;
+      case "label":
+        this.label = newValue;
+        // this.label_el.innerText = newValue;
+        break;
+      default:
+        break;
     }
-
-
-    static get observedAttributes(){
-        return ["label"];
-    }
-
-
-    set label(str : string)
-    {
-        if(this.label_el)
-        {
-            this.label_el.innerHTML = `<span>${str}</span>`
-        }
-    }
-    attributeChangedCallback(name : string, oldValue : any, newValue : any) {
-        switch(name)
-        {
-            case 'value':
-                this.value = newValue
-                break;
-            case 'label':
-                this.label = newValue
-                // this.label_el.innerText = newValue;
-                break;
-            default : break
-        }
-    }
+  }
 }
-customElements.define("gui-checkbox", GuiCheckbox);
+defineComponent("gui-checkbox", GuiCheckbox);

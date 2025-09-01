@@ -113,7 +113,7 @@ var GuiButton = class extends HTMLElement {
     }
   }
 };
-customElements.define("gui-button", GuiButton);
+defineComponent("gui-button", GuiButton);
 
 // components/g2_checkbox.ts
 var GuiCheckbox = class extends HTMLElement {
@@ -208,8 +208,12 @@ var GuiCheckbox = class extends HTMLElement {
     this.template_fragment = document.createRange().createContextualFragment(template);
     this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
     this.label_el = this.shadowRoot.querySelector("label");
-    this.pretty_el = this.shadowRoot.querySelector(".pretty");
-    let checkbox = this.shadowRoot.querySelector("#checkbox");
+    this.pretty_el = this.shadowRoot.querySelector(
+      ".pretty"
+    );
+    let checkbox = this.shadowRoot.querySelector(
+      "#checkbox"
+    );
     checkbox.addEventListener("change", (event) => {
       let checkbox2 = event.target;
       this.value = checkbox2.toggleAttribute("checked");
@@ -242,7 +246,7 @@ var GuiCheckbox = class extends HTMLElement {
     }
   }
 };
-customElements.define("gui-checkbox", GuiCheckbox);
+defineComponent("gui-checkbox", GuiCheckbox);
 
 // components/g2_collapsible.ts
 var GuiCollapsible = class extends HTMLElement {
@@ -419,7 +423,7 @@ var GuiCollapsible = class extends HTMLElement {
     }
   }
 };
-customElements.define("gui-collapsible", GuiCollapsible);
+defineComponent("gui-collapsible", GuiCollapsible);
 
 // components/g2_color_picker.ts
 function rgbToHsv(r, g, b) {
@@ -438,7 +442,11 @@ function rgbToHsv(r, g, b) {
     }
     h /= 6;
   }
-  return { h: Math.round(h * 360), s: Math.round(s * 100), v: Math.round(v * 100) };
+  return {
+    h: Math.round(h * 360),
+    s: Math.round(s * 100),
+    v: Math.round(v * 100)
+  };
 }
 function hsvToRgb(h, s, v) {
   h /= 360;
@@ -645,26 +653,54 @@ input[type="range"]:focus::-ms-track {
         `;
     this.template_fragment = document.createRange().createContextualFragment(template);
     this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
-    this.hsv_ranges = this.shadowRoot?.querySelector("#hsv_ranges");
-    this.hue_range = this.shadowRoot?.querySelector("#hue_range");
-    this.sat_range = this.shadowRoot?.querySelector("#sat_range");
-    this.val_range = this.shadowRoot?.querySelector("#val_range");
+    this.hsv_ranges = this.shadowRoot?.querySelector(
+      "#hsv_ranges"
+    );
+    this.hue_range = this.shadowRoot?.querySelector(
+      "#hue_range"
+    );
+    this.sat_range = this.shadowRoot?.querySelector(
+      "#sat_range"
+    );
+    this.val_range = this.shadowRoot?.querySelector(
+      "#val_range"
+    );
     this.hue_range.addEventListener("input", (event) => {
-      let rgb = hsvToRgb(parseFloat(this.hue_range.value), parseFloat(this.sat_range.value), parseFloat(this.val_range.value));
+      let rgb = hsvToRgb(
+        parseFloat(this.hue_range.value),
+        parseFloat(this.sat_range.value),
+        parseFloat(this.val_range.value)
+      );
       this.value = [rgb.r, rgb.g, rgb.b];
     });
     this.sat_range.addEventListener("input", (event) => {
-      let rgb = hsvToRgb(parseFloat(this.hue_range.value), parseFloat(this.sat_range.value), parseFloat(this.val_range.value));
+      let rgb = hsvToRgb(
+        parseFloat(this.hue_range.value),
+        parseFloat(this.sat_range.value),
+        parseFloat(this.val_range.value)
+      );
       this.value = [rgb.r, rgb.g, rgb.b];
     });
     this.val_range.addEventListener("input", (event) => {
-      let rgb = hsvToRgb(parseFloat(this.hue_range.value), parseFloat(this.sat_range.value), parseFloat(this.val_range.value));
+      let rgb = hsvToRgb(
+        parseFloat(this.hue_range.value),
+        parseFloat(this.sat_range.value),
+        parseFloat(this.val_range.value)
+      );
       this.value = [rgb.r, rgb.g, rgb.b];
     });
-    this.rgb_ranges = this.shadowRoot?.querySelector("#rgb_ranges");
-    this.red_range = this.shadowRoot?.querySelector("#red_range");
-    this.green_range = this.shadowRoot?.querySelector("#green_range");
-    this.blue_range = this.shadowRoot?.querySelector("#blue_range");
+    this.rgb_ranges = this.shadowRoot?.querySelector(
+      "#rgb_ranges"
+    );
+    this.red_range = this.shadowRoot?.querySelector(
+      "#red_range"
+    );
+    this.green_range = this.shadowRoot?.querySelector(
+      "#green_range"
+    );
+    this.blue_range = this.shadowRoot?.querySelector(
+      "#blue_range"
+    );
     this.red_range.addEventListener("input", (event) => {
       let r = parseFloat(this.red_range.value);
       let g = parseFloat(this.green_range.value);
@@ -683,9 +719,15 @@ input[type="range"]:focus::-ms-track {
       let b = parseFloat(this.blue_range.value);
       this.value = [r, g, b];
     });
-    this.mode_btn = this.shadowRoot?.querySelector("#mode_btn");
-    this.sample_el = this.shadowRoot?.querySelector(".clr_sample");
-    this.dialog_el = this.shadowRoot?.querySelector("#clr_dialog");
+    this.mode_btn = this.shadowRoot?.querySelector(
+      "#mode_btn"
+    );
+    this.sample_el = this.shadowRoot?.querySelector(
+      ".clr_sample"
+    );
+    this.dialog_el = this.shadowRoot?.querySelector(
+      "#clr_dialog"
+    );
     this.sample_el.addEventListener("click", () => {
       let hsv = rgbToHsv(this.value[0], this.value[1], this.value[2]);
       this.hue_range.value = hsv.h.toString();
@@ -733,7 +775,7 @@ input[type="range"]:focus::-ms-track {
     this.sample_el.style.backgroundColor = `rgb(${values[0] * 255},${values[1] * 255},${values[2] * 255})`;
   }
 };
-customElements.define("gui-color-picker", GuiColorPicker);
+defineComponent("gui-color-picker", GuiColorPicker);
 
 // components/g2_combobox.ts
 var GuiCombobox = class extends HTMLElement {
@@ -882,7 +924,7 @@ var GuiCombobox = class extends HTMLElement {
     }
   }
 };
-customElements.define("gui-combobox", GuiCombobox);
+defineComponent("gui-combobox", GuiCombobox);
 
 // components/g2_group.ts
 var GuiGroup = class extends HTMLElement {
@@ -961,7 +1003,7 @@ var GuiGroup = class extends HTMLElement {
     }
   }
 };
-customElements.define("gui-group", GuiGroup);
+defineComponent("gui-group", GuiGroup);
 
 // components/g2_input_color.ts
 var GuiInputColor = class extends HTMLElement {
@@ -1007,13 +1049,13 @@ var GuiInputColor = class extends HTMLElement {
     this.template_fragment = document.createRange().createContextualFragment(template_str);
     this.shadowRoot.appendChild(this.template_fragment.cloneNode(true));
     this.label_el = this.shadowRoot.querySelector(".label");
-    this.picker_el = this.shadowRoot.querySelector("gui-color-picker");
+    this.picker_el = this.shadowRoot.querySelector(
+      "gui-color-picker"
+    );
     this.picker_el.addEventListener("change", (event) => {
       this.value = this.picker_el.value;
     });
-    Promise.all([
-      customElements.whenDefined("gui-color-picker")
-    ]).then(() => {
+    Promise.all([customElements.whenDefined("gui-color-picker")]).then(() => {
       this.picker_el.value = this.value;
     });
   }
@@ -1026,7 +1068,11 @@ var GuiInputColor = class extends HTMLElement {
     switch (name) {
       case "default_scalar":
         this.default_scalar = parseFloat(newValue);
-        this.value = [this.default_scalar, this.default_scalar, this.default_scalar];
+        this.value = [
+          this.default_scalar,
+          this.default_scalar,
+          this.default_scalar
+        ];
         break;
       case "label":
         this.label = newValue;
@@ -1050,7 +1096,7 @@ var GuiInputColor = class extends HTMLElement {
     this.label_el.innerText = str;
   }
 };
-customElements.define("gui-input-color", GuiInputColor);
+defineComponent("gui-input-color", GuiInputColor);
 
 // components/g2_input_float.ts
 var GuiInputFloat = class extends HTMLElement {
@@ -1186,7 +1232,9 @@ var GuiInputFloat = class extends HTMLElement {
     this.template_fragment = document.createRange().createContextualFragment(template);
     this.shadowRoot?.appendChild(this.template_fragment.cloneNode(true));
     this.label_el = this.shadowRoot.querySelector(".label");
-    this.value_input = this.shadowRoot.querySelector("input");
+    this.value_input = this.shadowRoot.querySelector(
+      "input"
+    );
   }
   connectedCallback() {
     document.addEventListener("keydown", (event) => {
@@ -1303,7 +1351,7 @@ var GuiInputFloat = class extends HTMLElement {
     }
   }
 };
-customElements.define("gui-input-float", GuiInputFloat);
+defineComponent("gui-input-float", GuiInputFloat);
 
 // components/g2_input_range.ts
 var GuiInputRange = class extends HTMLElement {
@@ -1458,7 +1506,7 @@ var GuiInputRange = class extends HTMLElement {
     (this.shadowRoot?.querySelector(".label span")).textContent = str;
   }
 };
-customElements.define("gui-input-range", GuiInputRange);
+defineComponent("gui-input-range", GuiInputRange);
 
 // components/g2_input_vector.ts
 var GuiInputVector = class extends HTMLElement {
@@ -1522,12 +1570,16 @@ var GuiInputVector = class extends HTMLElement {
     this.input_x = this.shadowRoot.querySelector("#input_x");
     this.input_y = this.shadowRoot.querySelector("#input_y");
     this.input_z = this.shadowRoot.querySelector("#input_z");
-    Promise.all([
-      customElements.whenDefined("gui-input-float")
-    ]).then(() => {
-      let label_x = this.input_x.shadowRoot.querySelector(".wrapper .label span");
-      let label_y = this.input_y.shadowRoot.querySelector(".wrapper .label span");
-      let label_z = this.input_z.shadowRoot.querySelector(".wrapper .label span");
+    Promise.all([customElements.whenDefined("gui-input-float")]).then(() => {
+      let label_x = this.input_x.shadowRoot.querySelector(
+        ".wrapper .label span"
+      );
+      let label_y = this.input_y.shadowRoot.querySelector(
+        ".wrapper .label span"
+      );
+      let label_z = this.input_z.shadowRoot.querySelector(
+        ".wrapper .label span"
+      );
       label_x.style.overflow = "unset";
       label_y.style.overflow = "unset";
       label_z.style.overflow = "unset";
@@ -1593,7 +1645,7 @@ var GuiInputVector = class extends HTMLElement {
     this.label_el.innerText = str;
   }
 };
-customElements.define("gui-input-vector", GuiInputVector);
+defineComponent("gui-input-vector", GuiInputVector);
 
 // components/g2_panel.ts
 var GuiPanel = class extends HTMLElement {
@@ -1849,7 +1901,7 @@ var GuiPanel = class extends HTMLElement {
     }
   }
 };
-customElements.define("gui-panel", GuiPanel);
+defineComponent("gui-panel", GuiPanel);
 
 // components/g2_row.ts
 var GuiRow = class extends HTMLElement {
@@ -1888,7 +1940,7 @@ var GuiRow = class extends HTMLElement {
   attributeChangedCallback(name, oldValue, newValue) {
   }
 };
-customElements.define("gui-row", GuiRow);
+defineComponent("gui-row", GuiRow);
 
 // components/g2_separator.ts
 var GuiSeparator = class extends HTMLElement {
@@ -1917,7 +1969,7 @@ var GuiSeparator = class extends HTMLElement {
   attributeChangedCallback(name, oldValue, newValue) {
   }
 };
-customElements.define("gui-separator", GuiSeparator);
+defineComponent("gui-separator", GuiSeparator);
 
 // components/g2_spacer.ts
 var GuiSpacer = class extends HTMLElement {
@@ -1961,7 +2013,7 @@ var GuiSpacer = class extends HTMLElement {
     }
   }
 };
-customElements.define("gui-spacer", GuiSpacer);
+defineComponent("gui-spacer", GuiSpacer);
 
 // components/g2_title.ts
 var GuiTitle = class extends HTMLElement {
@@ -1985,7 +2037,7 @@ var GuiTitle = class extends HTMLElement {
     `;
   }
 };
-customElements.define("gui-title", GuiTitle);
+defineComponent("gui-title", GuiTitle);
 
 // components/index.ts
 var components_default = {};

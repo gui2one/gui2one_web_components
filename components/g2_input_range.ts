@@ -1,3 +1,5 @@
+import { defineComponent } from "./utils";
+
 export class GuiInputRange extends HTMLElement {
   template_fragment: DocumentFragment;
   _label: string = "hey";
@@ -159,4 +161,4 @@ export class GuiInputRange extends HTMLElement {
       str;
   }
 }
-customElements.define("gui-input-range", GuiInputRange);
+defineComponent("gui-input-range", GuiInputRange);

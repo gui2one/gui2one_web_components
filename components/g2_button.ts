@@ -1,3 +1,5 @@
+import { defineComponent } from "./utils";
+
 export class GuiButton extends HTMLElement {
   template_fragment: DocumentFragment;
   _label: string = "Button Label";
@@ -62,4 +64,5 @@ export class GuiButton extends HTMLElement {
     }
   }
 }
-customElements.define("gui-button", GuiButton);
+
+defineComponent("gui-button", GuiButton);
