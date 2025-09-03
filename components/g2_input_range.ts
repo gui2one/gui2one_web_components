@@ -19,6 +19,7 @@ export class GuiInputRange extends HTMLElement {
 
             :host{
                 width : 100%;
+                color : var(--font-color);
             }
             .wrapper{
                 position : relative;

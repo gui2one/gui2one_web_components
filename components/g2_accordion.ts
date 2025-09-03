@@ -7,7 +7,9 @@ export class GuiAccordion extends HTMLElement {
     super();
     this.attachShadow({ mode: "open" });
     const styles = String.raw`<style>
-
+      :host{
+        color : var(--font-color);
+      }
         </style>`;
     const template = String.raw`
             ${styles}

@@ -11,7 +11,9 @@ var GuiAccordion = class extends HTMLElement {
     super();
     this.attachShadow({ mode: "open" });
     const styles = String.raw`<style>
-
+      :host{
+        color : var(--font-color);
+      }
         </style>`;
     const template = String.raw`
             ${styles}
@@ -1373,6 +1375,7 @@ var GuiInputRange = class extends HTMLElement {
 
             :host{
                 width : 100%;
+                color : var(--font-color);
             }
             .wrapper{
                 position : relative;
