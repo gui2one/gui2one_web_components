@@ -78,10 +78,10 @@ export class GuiCollapsible extends HTMLElement {
             }
 
             .inner {
-                overflow: hidden;
+                /* overflow: hidden;
                 display : flex;
                 flex-direction : column;
-                gap : 1em;
+                gap : 1em; */
                 /* width : 100%; */
             }
             
