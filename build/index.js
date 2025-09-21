@@ -1856,11 +1856,6 @@ var GuiPanel = class extends HTMLElement {
     open_btn?.addEventListener("click", (event) => {
       this.closed = false;
     });
-    document.addEventListener("keypress", (event) => {
-      if (event.key === "h") {
-        this.wrapper_el.classList.toggle("hidden");
-      }
-    });
   }
   connectedCallback() {
   }

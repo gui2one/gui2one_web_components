@@ -212,11 +212,12 @@ export class GuiPanel extends HTMLElement {
       this.closed = false;
     });
 
-    document.addEventListener("keypress", (event) => {
-      if (event.key === "h") {
-        this.wrapper_el!.classList.toggle("hidden");
-      }
-    });
+    // not in here !!!
+    // document.addEventListener("keypress", (event) => {
+    //   if (event.key === "h") {
+    //     this.wrapper_el!.classList.toggle("hidden");
+    //   }
+    // });
   }
 
   connectedCallback() {}
